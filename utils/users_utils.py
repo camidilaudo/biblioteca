@@ -1,6 +1,7 @@
 import users_data as ud
 
 
+# TODO: h los inputs deben ir solo en el main, separado de la logica de las funciones
 def registrar_usuario():
     """Registrar usuario en el sistema."""
     lista_usuarios = ud.usuarios
@@ -23,25 +24,8 @@ def registrar_usuario():
     contrasena.append(lista_contrasenas)
 
 
-# Funcion para logear el usuario.
-
-# Objetivo: La corriente función busca poder disernir si la persona interesada busca ingresar al sistema como usario o como administrador.
-# Datos de entrada: Nombre / contraseña.
-
-# Datos de salida: Bienvenida al usuario o al admi segun corresponda.
-
-# Desarrollo:
-
-# Primero el ingresante deberá elegir si quiere logearse como administrador o como usuario. Luego le pedirán ingresar
-# la contraseña correspondiente.
-# En caso de que eliga usuario, existe una lista con las contraseñas validas. Cuando veamos Diccionarios debemos agregar
-# la posibilidad de ingresar un nombre y vincularlo con una contraseña.
-
-# Asumo que hay 1 solo admi. Cuando veamos diccionario
-# si la contraseña está mal se le devuelve un mensaje de error
-# Por ahora el administrador tiene 1 sola contraseña y el usuario tambien
-
-
+# TODO: hay que cambiar la variable 'a' a una mas descriptiva y los inputs deben ir solo en el main, separado de la
+#  logica de las funciones
 def login_usuario(a):
     """Funcion para loguear el usuario. La corriente función busca poder disernir si la persona interesada busca ingresar
     al sistema como usuario o como administrador.
@@ -69,5 +53,3 @@ def login_usuario(a):
         tipo_de_usuario = "mal"
 
     return tipo_de_usuario
-
-

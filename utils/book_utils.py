@@ -126,7 +126,7 @@ def cambiar_status_libro(titulo, cant_pedidos):
         status_libro = "El libro no se encuentra disponible."
 
     return [status_libro, ejemplares_disponibles]
-
+#TODO: actualmente no tenemos "categoria" dentro de los libros, habria que agregarla o cambiar la logica de la funcion. Las recomendaciones no deberian estar harcodeadas si no que deberia traerlas de la matriz de libros segun el genero y la cant de disponibles
 def Recomendaciones(c, g):
     """Función para dar recomendaciones según categorias.
     :param c: str, categoria de la cual se quiere una recomendacion.
