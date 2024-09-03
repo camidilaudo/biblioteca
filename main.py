@@ -18,7 +18,17 @@ if numero == "1":
 
     iniciar_sesion = us.login_usuario(usuario)
 else:
-    registrar = us.registrar_usuario()
+    usuario = input("Ingrese un nombre de usuario: ")
+    contrasena = input("Ingrese la contrasena del usuario: ")
+    verificar_contrasena = input("Volvé a ingresar la contrasena : ")
+    registrar = us.registrar_usuario(usuario, contrasena, verificar_contrasena)
+    while registrar == False:
+    print("Usuario o contraseña incorrecto. ")
+    usuario = input("Ingrese un nombre de usuario: ")
+    contrasena = input("Ingrese la contrasena del usuario: ")
+    verificar_contrasena = input("Volvé a ingresar la contrasena : ")
+    registrar = us.registrar_usuario(usuario, contrasena, verificar_contrasena)
+    print("Usuario registrado correctamente !")
 
 # SI EL USUARIO QUE INICIA SEsIÓN ES EL CLIENTE
 if iniciar_sesion == "cliente":
