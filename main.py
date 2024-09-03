@@ -60,8 +60,6 @@ else:
             print("2- Editar libro.")
             print("3- Cambiar Status.")
             numero = input("ERROR. Ingresá un número : ")
-        #TODO: los datos de registrar_libro, editar_libro y status_libro deberia pasarlos por teclado el usuario
-        titulo = 
         if numero == "1":
             titulo = input("Ingrese el titulo : ")
             autor = input("Ingrese el autor : ")
