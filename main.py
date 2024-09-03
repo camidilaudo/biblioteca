@@ -1,22 +1,27 @@
+import utils.users_utils as us
+import utils.book_utils as bu
 # DECLARACIÓN DE VARIABLES :
 Lista_Usuarios = []
 Lista_Contrasenas = []
 
 # PROGRAMA PRINCIPAL :
 print("Bienvenido a la biblioteca...")
-print("1- Iniciar Seción.")
+print("1- Iniciar Sesión.")
 print("2- Registrarse.")
 
 numero = input("Ingrese un número : ")
 while numero != "1" and numero != "2":
     numero = input("Error. Ingrese un número correcto : ")
 if numero == "1":
-    # Iniciar_Seción = funcion_iniciar seción
-else:
-    registrar = registrar_usuario(Lista_Usuarios, Lista_Contrasenas)
 
-# SI EL USUARIO QUE INICIA SECIÓN ES EL CLIENTE
-if inicar_sesion == cliente: 
+    usuario = input("Ingrese tipo de usuario: ")
+
+    iniciar_sesion = us.login_usuario(usuario)
+else:
+    registrar = us.registrar_usuario()
+
+# SI EL USUARIO QUE INICIA SEsIÓN ES EL CLIENTE
+if iniciar_sesion == "cliente":
     print("1- Buscar libros.")
     print("2- Obtener libro.")
     numero = input("Ingresá un número : ")
@@ -25,12 +30,15 @@ if inicar_sesion == cliente:
         print("2- Obtener libro.")
         numero = input("Ingresá un número : ")
     if numero == "1":
-        buscar_libros = busqueda_libros(Clave, Valor)
+        #TODO: la clave y el valor la tiene que pasar el usuario por teclado
+        buscar_libros = bu.busqueda_libros(Clave, Valor)
     else:
-        alquilar_libro = obtener_libro(id_libro, ISBN)
+        # TODO: el ISBN lo tiene que pasar el usuario por teclado
+        alquilar_libro = bu.obtener_libro(ISBN)
 
 # SI EL USUARIO QUE INICIA SECIÓN ES EL BIBLIOTECARIO
 else:
+    #TODO: la variable bilbiotecario no esta definida, o deberia pasarse a un string
     if iniciar_sesion == bibliotecario:
         print("1- Cargar libros.")
         print("2- Editar libro.")
@@ -41,6 +49,7 @@ else:
             print("2- Editar libro.")
             print("3- Cambiar Status.")
             numero = input("ERROR. Ingresá un número : ")
+        #TODO: los datos de registrar_libro, editar_libro y status_libro deberia pasarlos por teclado el usuario
         if numero == "1":
             registrar_libros = cargar_libros(titulo, autor, genero, ISBN, editorial, anio_publicacion, serie_libros, nro_paginas, cant_ejemplares)
         elif numero == "2":
