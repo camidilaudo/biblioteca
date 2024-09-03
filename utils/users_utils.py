@@ -1,27 +1,20 @@
 import users_data as ud
 
 
-# TODO: h los inputs deben ir solo en el main, separado de la logica de las funciones
-def registrar_usuario():
-    """Registrar usuario en el sistema."""
+def registrar_usuario (nombre_usuario, contrasenia_usuario, contrasenia_usuario2):
     lista_usuarios = ud.usuarios
     lista_contrasenas = ud.contrasenas
-    usuario = input("Ingrese un nombre de usuario: ")
-    # VERIFICA SI EL NOMBRE DE USUARIO YA EXISTE
-    while usuario in lista_usuarios:
-        print("Ese usuario ya existe")
-        usuario = input("Ingrese un nombre de usuario: ")
-    contrasena = input("Ingrese la contrasena del usuario: ")
-    verificar_contrasena = input("Volvé a ingresar la contrasena : ")
-    # VERIFICA QUE LAS CONTRASEÑAS COINCIDAN
-    while contrasena == verificar_contrasena:
-        print("Error. Las contraseñas no coinciden, intente de nuevo. ")
-        contrasena = input("Ingrese la contrasena del usuario: ")
-        verificar_contrasena = input("Volvé a ingresar la contrasena : ")
-    print("Listo ", usuario, "!")
-    # SE GUARDAN EN LISTAS EL USUARIO Y LA CONTRASEÑA
-    usuario.append(lista_usuarios)
-    contrasena.append(lista_contrasenas)
+    usuario_registrado = True
+    # Verifica si el nombre de usuario ya existe
+    if nombre_usuario in usuarios: 
+        usuario_registrado = False
+    # Verifica si las contraseñas son iguales 
+    elif contrasenia_usuario != lista_contrasenas:
+        usuario_registrado = False
+    else:
+        nombre_usuario.append(lista_usuarios)
+        contrasena.append(lista_contrasenas)
+    return usuario_registrado
 
 
 # TODO: hay que cambiar la variable 'a' a una mas descriptiva y los inputs deben ir solo en el main, separado de la
