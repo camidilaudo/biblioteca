@@ -1,0 +1,68 @@
+#Supongamos que existen 3 categorias: ficción, no ficcion, poemas
+#  dentro de no ficcion existen 3 generos: historia, politica, ciencia
+# dentro de ficcion existen 4 generos: terror, romance, suspenso, fantasia
+# poesia tiene 2: nacional o traducciones
+
+# la función recibe dos parametros, la categoria y el genero
+# "A" es igual a ficcion
+    # 1 , 2, 3 es igual historia, politica, ciencia respectivamente
+# "B" es igual a no ficcion
+    # 1 , 2, 3 , 4 es igual a terror, romance, suspenso, fantasia respectivamente
+# "C" es igual a poesia 
+    # 1, 2 es igual a nacional o traducciones respectivamente
+
+def Recomendaciones (c, g): 
+    recom_historia = ["a"]
+    recom_politica = ["b"]
+    recom_ciencia = ["c"]
+    recom_terror = ["d"]
+    recom_romance = ["e"]
+    recom_suspenso= ["f"]
+    recom_fantasia= ["g"]
+    recom_nacional = ["h"]
+    recom_traduciones= ["i"]
+
+
+
+    if c == "A":
+        print ("funciono")
+        if g == 1:
+           recomendacion = recom_historia
+        elif g == 2:
+            recomendacion = recom_politica
+        elif g == 3:
+           recomendacion = recom_ciencia
+        else:
+            recomendacion = "categoria invalida"
+    elif c == "B":
+        if g == 4:
+           recomendacion = recom_terror
+        elif g == 5:
+            recomendacion = recom_romance
+        elif g == 6:
+           recomendacion = recom_suspenso
+        elif g == 7:
+           recomendacion = recom_fantasia
+        else:
+            recomendacion = "categoria invalida"
+    elif c == "C":
+        if g == 8:
+           recomendacion = recom_nacional
+        elif g == 9:
+            recomendacion = recom_traduciones
+        else:
+            recomendacion = "categoria invalida"
+
+    return recomendacion
+        
+    
+#Codigo principal
+
+categoria = input ("Ingrese A si desea una recomendación de Ficcion, B si es No ficcion y C si es poesia: ")
+
+genero = int( input ("Si eligió NO FICCION, ingrese 1 para Historia, 2 para o 3 para. Si eligió Ficcion ingrese 4 para 5 para, 6 para o 7 para; Si eligió POEMAS ingrese 8 para o 9 para I "))
+
+reco = Recomendaciones (categoria, genero)
+
+print ("Recomendaciones: " , reco) 
+
