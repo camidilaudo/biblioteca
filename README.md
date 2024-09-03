@@ -2,6 +2,9 @@
 Trabajo Practico Obligatorio Algoritmos I - UADE  
 Autores: Barrón, Melina -  Di Laudo, Camila - Melián, Daniela | Equipo 8
 
+# 🗺️ Arquitectura 
+![Diagrama de Arquitectura](./arquitectura_proyecto.drawio.png)
+
 # 🐍 Funciones
 
 ### Barron, Melina
