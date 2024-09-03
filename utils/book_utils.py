@@ -35,7 +35,6 @@ def cargar_libros(titulo, autor, genero, ISBN, editorial, anio_publicacion, seri
     :param cant_ejemplares: Int, cantidad de ejemplares del mismo libro que se está cargando.
     :return libros_cargados: List, lista de libros cargados a la biblioteca. """
 
-    nuevo_libro = []
     # chequear si el libro ya existe en la biblioteca
 
     libros = sum(fila.count(ISBN) for fila in bd.libros)
@@ -43,10 +42,11 @@ def cargar_libros(titulo, autor, genero, ISBN, editorial, anio_publicacion, seri
         for i, libro in enumerate(bd.libros):
             if libro[3] == ISBN:
                 bd.libros[i][8] += cant_ejemplares
+                bd.libros[i][10] += cant_ejemplares
 
     else:
         nuevo_libro = [autor, titulo, genero, ISBN, editorial, anio_publicacion, serie_libros, nro_paginas,
-                       cant_ejemplares, True]
+                       cant_ejemplares, True, cant_ejemplares]
         bd.libros.append(nuevo_libro)
 
     return bd.libros
@@ -55,7 +55,7 @@ def cargar_libros(titulo, autor, genero, ISBN, editorial, anio_publicacion, seri
 def obtener_libro(ISBN):
     """ Obtener un libro y su detalle segun su id interno o ISBN.
         :param ISBN: Int, International Standard Book Number del libro.
-        :return libro: Dict, informacion detallada del libro buscado.
+        :return libro: List, informacion detallada del libro buscado.
         """
     libro_encontrado = None
     for libro in bd.libros:
@@ -65,68 +65,65 @@ def obtener_libro(ISBN):
     return libro_encontrado
 
 
-# Tenemos la lista con todos los libros disponibles
-# La lista con todos los libros alquilados
-# La función compara el libro que se consulta con todos los libros presentes en ambas listas. Si lo encuentra en alguna
-# Devuelve el estado pertinente, si no lo encuentra en ninguna de las dos es porque no está en la biblioteca
-
-def estatus_libros(n):
-    disponible = ["emma"]
-    en_espera = ["orgullo y prejuicio"]
-    final = ""
-
-    if n in disponible:
-        return "disponible"
-    elif n in en_espera:
-        return "en_espera"
-
-
-# Codigo principal
-
-libro = input("Ingrese el libro de su consulta")
-libro_buscado = estatus_libros(libro)
-
-if libro_buscado == "disponible":
-    print("lo tenemos")
-elif libro_buscado == "en_espera":
-    print("Ahora está reservado, pero vuelve")
-else:
-    print("No contamos con ese libro en nuestra biblioteca")
-
-def editar_libros (titulo, autor, genero, ISBN, editorial, anio_publicacion, serie_libros, nro_paginas, cant_ejemplares, isbn_editar)
+def editar_libros(ISBN):
+    """Editar los metadatos de un libro.
+     :param ISBN: Int, International Standard Book Number del libro.
+     :return libro: List, lista con lops metadatos del libro si el libro existe o None si el libro no existe."""
     # Busca el libro por ISBN 
-    for libro in libros:
-        if libro[3] == isbn_editar:
+    for libro in bd.libros:
+        if libro[3] == ISBN:
             # Pregunta al usuario que va a editar
             print("Libro encontrado : ")
-            print(f"1. Autor: {bd.libros[i][0]}")
-            print(f"2. Título: {bd.libros[i][1]}")
-            print(f"3. Género: {bd.libros[i][2]}")
-            print(f"4. Editorial: {bd.libros[i][4]}")
-            print(f"5. Año de Publicación: {bd.libros[i][5]}")
-            print(f"6. Serie de Libros: {bd.libros[i][6]}")
-            print(f"7. Número de Páginas: {bd.libros[i][7]}")
-            print(f"8. Cantidad de Ejemplares: {bd.libros[i][8]}")
+            print(f"1. Autor: {libro[0]}")
+            print(f"2. Título: {libro[1]}")
+            print(f"3. Género: {libro[2]}")
+            print(f"4. Editorial: {libro[4]}")
+            print(f"5. Año de Publicación: {libro[5]}")
+            print(f"6. Serie de Libros: {libro[6]}")
+            print(f"7. Número de Páginas: {libro[7]}")
+            print(f"8. Cantidad de Ejemplares: {libro[8]}")
             numero = input("Ingresá un número para editar : ")
             if numero == "1":
-                bd.libros[i][0] = input("Ingrese el nuevo autor: ")
+                libro[0] = input("Ingrese el nuevo autor: ")
             elif numero == "2":
-                bd.libros[i][1] = input("Ingrese el nuevo título: ")
+                libro[1] = input("Ingrese el nuevo título: ")
             elif numero == "3":
-                bd.libros[i][2] = input("Ingrese el nuevo género: ")
+                libro[2] = input("Ingrese el nuevo género: ")
             elif numero == "4":
-                bd.libros[i][4] = input("Ingrese la nueva editorial: ")
+                libro[4] = input("Ingrese la nueva editorial: ")
             elif numero == "5":
-                bd.libros[i][5] = int(input("Ingrese el nuevo año de publicación: "))
+                libro[5] = int(input("Ingrese el nuevo año de publicación: "))
             elif numero == "6":
-                bd.libros[i][6] = input("Ingrese la nueva serie : ")
+                libro[6] = input("Ingrese la nueva serie : ")
             elif numero == "7":
-                bd.libros[i][7] = int(input("Ingrese el nuevo número de páginas: "))
+                libro[7] = int(input("Ingrese el nuevo número de páginas: "))
             elif numero == "8":
-                bd.libros[i][8] = int(input("Ingrese la nueva cantidad de ejemplares: "))
+                libro[8] = int(input("Ingrese la nueva cantidad de ejemplares: "))
             else:
                 print("Número no reconocido. No se realizó ningún cambio.")
-            return bd.libros[i]
+            return libro
 
     print("No se encontró un libro con ese ISBN.")
     return None
+
+def cambiar_status_libro(titulo, cant_pedidos):
+    """Cambia el estado de un libro segun la cantidad de pedidos que tiene.
+    :param titulo: Str, titulo del libro a pedir.
+    :param cant_pedidos: Int, cantidad de libros que se piden.
+    :return: list, estado del libro y ejemplares disponibles."""
+    libro = busqueda_libros("titulo", titulo)
+
+    status_libro = libro[9]
+    ejemplares_disponibles = libro[10]
+
+    if status_libro is True and ejemplares_disponibles > cant_pedidos:
+        libro[10] -= cant_pedidos
+    elif status_libro is True and ejemplares_disponibles == cant_pedidos:
+        libro[10] = 0
+        libro[9] = False
+    else:
+        status_libro = "El libro no se encuentra disponible."
+
+    return [status_libro, ejemplares_disponibles]
+
+
