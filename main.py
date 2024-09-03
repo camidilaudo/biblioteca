@@ -40,10 +40,11 @@ if iniciar_sesion == "cliente":
         print("2- Obtener libro.")
         numero = input("Ingresá un número : ")
     if numero == "1":
-        #TODO: la clave y el valor la tiene que pasar el usuario por teclado
+        Clave = str(input("Ingrese el campo para realizar la busqueda : "))
+        Valor = str(input("Ingrese la valor que desea registrar: "))
         buscar_libros = bu.busqueda_libros(Clave, Valor)
     else:
-        # TODO: el ISBN lo tiene que pasar el usuario por teclado
+        ISBN = int(input("Ingrese el ISBN del libro que quiere obtener: "))
         alquilar_libro = bu.obtener_libro(ISBN)
 
 # SI EL USUARIO QUE INICIA SECIÓN ES EL BIBLIOTECARIO
@@ -60,11 +61,21 @@ else:
             print("3- Cambiar Status.")
             numero = input("ERROR. Ingresá un número : ")
         #TODO: los datos de registrar_libro, editar_libro y status_libro deberia pasarlos por teclado el usuario
+        titulo = 
         if numero == "1":
+            titulo = input("Ingrese el titulo : ")
+            autor = input("Ingrese el autor : ")
+            genero = input("Ingrese el genero : ")
+            ISBN = input("Ingrese el ISBN : ")
+            editorial = input("Ingrese el editorial : ")
+            anio_publicacion = input("Ingrese el anio publicacion : ")
+            serie_libros = input("Ingrese el serie_libros : ")
+            nro_paginas = input("Ingrese el nro_paginas : ")
+            cant_ejemplares = input("Ingrese el la cantidad de ejemplares : ")
             registrar_libros = cargar_libros(titulo, autor, genero, ISBN, editorial, anio_publicacion, serie_libros, nro_paginas, cant_ejemplares)
         elif numero == "2":
             ISBN_editar = int(input("Ingrese el ISBN que quiere editar: "))
-            editar = editar_libros(titulo, autor, genero, ISBN, editorial, anio_publicacion, serie_libros, nro_paginas, cant_ejemplares, ISBN_editar)
+            editar = editar_libros(ISBN_editar)
         else: 
             libro = input("Ingrese el libro de su consulta")
             libro_buscado = estatus_libros(libro)
