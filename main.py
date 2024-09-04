@@ -51,7 +51,7 @@ if iniciar_sesion == "cliente":
 # SI EL USUARIO QUE INICIA SECIÓN ES EL BIBLIOTECARIO
 else:
     # TODO: la variable bilbiotecario no esta definida, o deberia pasarse a un string
-    if iniciar_sesion == bibliotecario:
+    if iniciar_sesion == "bibliotecario":
         print("1- Cargar libros.")
         print("2- Editar libro.")
         print("3- Cambiar Status.")
@@ -71,7 +71,7 @@ else:
             serie_libros = input("Ingrese el serie_libros : ")
             nro_paginas = input("Ingrese el nro_paginas : ")
             cant_ejemplares = input("Ingrese el la cantidad de ejemplares : ")
-            registrar_libros = cargar_libros(
+            registrar_libros = bu.cargar_libros(
                 titulo,
                 autor,
                 genero,
@@ -84,10 +84,10 @@ else:
             )
         elif numero == "2":
             ISBN_editar = int(input("Ingrese el ISBN que quiere editar: "))
-            editar = editar_libros(ISBN_editar)
+            editar = bu.editar_libros(ISBN_editar)
         else:
             libro = input("Ingrese el libro de su consulta")
-            libro_buscado = estatus_libros(libro)
+            libro_buscado = bu.busqueda_libros("titulo",libro)
             if libro_buscado == "disponible":
                 print("lo tenemos")
             elif libro_buscado == "en_espera":
