@@ -1,14 +1,14 @@
-import users_data as ud
+from data_store import users_data as ud
 
 
-def registrar_usuario (nombre_usuario, contrasenia_usuario, contrasenia_usuario2):
+def registrar_usuario(nombre_usuario, contrasenia_usuario, contrasenia_usuario2):
     lista_usuarios = ud.usuarios
     lista_contrasenas = ud.contrasenas
     usuario_registrado = True
     # Verifica si el nombre de usuario ya existe
-    if nombre_usuario in usuarios: 
+    if nombre_usuario in usuarios:
         usuario_registrado = False
-    # Verifica si las contraseñas son iguales 
+    # Verifica si las contraseñas son iguales
     elif contrasenia_usuario != lista_contrasenas:
         usuario_registrado = False
     else:

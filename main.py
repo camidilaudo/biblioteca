@@ -1,5 +1,6 @@
 import utils.users_utils as us
 import utils.book_utils as bu
+
 # DECLARACIÓN DE VARIABLES :
 Lista_Usuarios = []
 Lista_Contrasenas = []
@@ -23,11 +24,11 @@ else:
     verificar_contrasena = input("Volvé a ingresar la contrasena : ")
     registrar = us.registrar_usuario(usuario, contrasena, verificar_contrasena)
     while registrar == False:
-    print("Usuario o contraseña incorrecto. ")
-    usuario = input("Ingrese un nombre de usuario: ")
-    contrasena = input("Ingrese la contrasena del usuario: ")
-    verificar_contrasena = input("Volvé a ingresar la contrasena : ")
-    registrar = us.registrar_usuario(usuario, contrasena, verificar_contrasena)
+        print("Usuario o contraseña incorrecto. ")
+        usuario = input("Ingrese un nombre de usuario: ")
+        contrasena = input("Ingrese la contrasena del usuario: ")
+        verificar_contrasena = input("Volvé a ingresar la contrasena : ")
+        registrar = us.registrar_usuario(usuario, contrasena, verificar_contrasena)
     print("Usuario registrado correctamente !")
 
 # SI EL USUARIO QUE INICIA SEsIÓN ES EL CLIENTE
@@ -49,7 +50,7 @@ if iniciar_sesion == "cliente":
 
 # SI EL USUARIO QUE INICIA SECIÓN ES EL BIBLIOTECARIO
 else:
-    #TODO: la variable bilbiotecario no esta definida, o deberia pasarse a un string
+    # TODO: la variable bilbiotecario no esta definida, o deberia pasarse a un string
     if iniciar_sesion == bibliotecario:
         print("1- Cargar libros.")
         print("2- Editar libro.")
@@ -70,11 +71,21 @@ else:
             serie_libros = input("Ingrese el serie_libros : ")
             nro_paginas = input("Ingrese el nro_paginas : ")
             cant_ejemplares = input("Ingrese el la cantidad de ejemplares : ")
-            registrar_libros = cargar_libros(titulo, autor, genero, ISBN, editorial, anio_publicacion, serie_libros, nro_paginas, cant_ejemplares)
+            registrar_libros = cargar_libros(
+                titulo,
+                autor,
+                genero,
+                ISBN,
+                editorial,
+                anio_publicacion,
+                serie_libros,
+                nro_paginas,
+                cant_ejemplares,
+            )
         elif numero == "2":
             ISBN_editar = int(input("Ingrese el ISBN que quiere editar: "))
             editar = editar_libros(ISBN_editar)
-        else: 
+        else:
             libro = input("Ingrese el libro de su consulta")
             libro_buscado = estatus_libros(libro)
             if libro_buscado == "disponible":

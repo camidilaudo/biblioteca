@@ -1,17 +1,30 @@
-import books_data as bd
+from data_store import books_data as bd
 
 
 def busqueda_libros(clave, valor):
     """Búsqueda de libros segun: título, autor, género, ISBN, editorial, año de publicación, serie.
     :param clave: Str, nombre del campo por el cual se quiere realizar la búsqueda.
     :param valor: Str, valor del campo por el cual se quiere realizar la búsqueda.
-    :return libros: List, lista de titulos de libros que coinciden con la clave-valor enviados anteriormente y su status. """
+    :return libros: List, lista de titulos de libros que coinciden con la clave-valor enviados anteriormente y su status.
+    """
     libros = []
-    clave_posicion = [["autor", 0], ["titulo", 1], ["genero", 2], ["ISBN", 3], ["editorial", 4],
-                      ["año de publicacion", 5],
-                      ["serie", 6], ["nro de paginas", 7], ["ejemplares", 8]]
+    clave_posicion = [
+        ["autor", 0],
+        ["titulo", 1],
+        ["genero", 2],
+        ["ISBN", 3],
+        ["editorial", 4],
+        ["año de publicacion", 5],
+        ["serie", 6],
+        ["nro de paginas", 7],
+        ["ejemplares", 8],
+    ]
 
-    indice = [caracteristica[1] for caracteristica in clave_posicion if clave == caracteristica[0]][0]
+    indice = [
+        caracteristica[1]
+        for caracteristica in clave_posicion
+        if clave == caracteristica[0]
+    ][0]
 
     for libro in bd.libros:
         if libro[indice] == valor:
@@ -22,7 +35,17 @@ def busqueda_libros(clave, valor):
     return libros
 
 
-def cargar_libros(titulo, autor, genero, ISBN, editorial, anio_publicacion, serie_libros, nro_paginas, cant_ejemplares):
+def cargar_libros(
+    titulo,
+    autor,
+    genero,
+    ISBN,
+    editorial,
+    anio_publicacion,
+    serie_libros,
+    nro_paginas,
+    cant_ejemplares,
+):
     """Cargar libro en stock de biblioteca. Se pueden cargar varios ejemplares del mismo.
     :param titulo: Str, título del libro.
     :param autor: List, nombre del autor/es del libro.
@@ -33,7 +56,7 @@ def cargar_libros(titulo, autor, genero, ISBN, editorial, anio_publicacion, seri
     :param serie_libros: Str opcional, si el libro pertenece a una serie, escribirla. Caso contrario escribir None.
     :param nro_paginas: Int, número de páginas del libro.
     :param cant_ejemplares: Int, cantidad de ejemplares del mismo libro que se está cargando.
-    :return libros_cargados: List, lista de libros cargados a la biblioteca. """
+    :return libros_cargados: List, lista de libros cargados a la biblioteca."""
 
     # chequear si el libro ya existe en la biblioteca
 
@@ -45,18 +68,29 @@ def cargar_libros(titulo, autor, genero, ISBN, editorial, anio_publicacion, seri
                 bd.libros[i][10] += cant_ejemplares
 
     else:
-        nuevo_libro = [autor, titulo, genero, ISBN, editorial, anio_publicacion, serie_libros, nro_paginas,
-                       cant_ejemplares, True, cant_ejemplares]
+        nuevo_libro = [
+            autor,
+            titulo,
+            genero,
+            ISBN,
+            editorial,
+            anio_publicacion,
+            serie_libros,
+            nro_paginas,
+            cant_ejemplares,
+            True,
+            cant_ejemplares,
+        ]
         bd.libros.append(nuevo_libro)
 
     return bd.libros
 
 
 def obtener_libro(ISBN):
-    """ Obtener un libro y su detalle segun su id interno o ISBN.
-        :param ISBN: Int, International Standard Book Number del libro.
-        :return libro: List, informacion detallada del libro buscado.
-        """
+    """Obtener un libro y su detalle segun su id interno o ISBN.
+    :param ISBN: Int, International Standard Book Number del libro.
+    :return libro: List, informacion detallada del libro buscado.
+    """
     libro_encontrado = None
     for libro in bd.libros:
         if libro[3] == ISBN:
@@ -67,9 +101,10 @@ def obtener_libro(ISBN):
 
 def editar_libros(ISBN):
     """Editar los metadatos de un libro.
-     :param ISBN: Int, International Standard Book Number del libro.
-     :return libro: List, lista con lops metadatos del libro si el libro existe o None si el libro no existe."""
-    # Busca el libro por ISBN 
+    :param ISBN: Int, International Standard Book Number del libro.
+    :return libro: List, lista con lops metadatos del libro si el libro existe o None si el libro no existe.
+    """
+    # Busca el libro por ISBN
     for libro in bd.libros:
         if libro[3] == ISBN:
             # Pregunta al usuario que va a editar
@@ -126,30 +161,59 @@ def cambiar_status_libro(titulo, cant_pedidos):
         status_libro = "El libro no se encuentra disponible."
 
     return [status_libro, ejemplares_disponibles]
-#TODO: actualmente no tenemos "categoria" dentro de los libros, habria que agregarla o cambiar la logica de la funcion. Las recomendaciones no deberian estar harcodeadas si no que deberia traerlas de la matriz de libros segun el genero y la cant de disponibles
+
+
+# TODO: actualmente no tenemos "categoria" dentro de los libros, habria que agregarla o cambiar la logica de la funcion. Las recomendaciones no deberian estar harcodeadas si no que deberia traerlas de la matriz de libros segun el genero y la cant de disponibles
 def Recomendaciones(c, g):
     """Función para dar recomendaciones según categorias.
     :param c: str, categoria de la cual se quiere una recomendacion.
     :param g: str, genero dentro de la categoria.
     :return: list, lista de recomendaciones."""
-    recom_historia = ["Historia de la humanidad, de H.G. Wells", "Historia universal,de Arnold J. Toynbee",
-                      "Historia de la civilización,de Will Durant"]
-    recom_politica = ["La democracia en América,de Alexis de Tocquevill",
-                      "Los orígenes del totalitarismo, de Hannah Arendt", "El príncipe moderno, de Antonio Gramsci"]
-    recom_ciencia = ["El origen de las especies, de Charles Darwin", "Una nueva mente, de Daniel H. Pink",
-                     "El universo elegante, de Brian Greene"]
-    recom_terror = ["El resplandor, de Stephen King", "Cuentos de terror, de Edgar Allan Poe",
-                    "La llamada de Cthulhu y otros cuentos, de H.P. Lovecraft"]
-    recom_romance = ["Orgullo y prejuicio, de Jane Austen", "Cumbres borrascosas, de Emily Brontë",
-                     "Jane Eyre, de Charlotte Brontë"]
-    recom_suspenso = ["Perdida, de Gillian Flynn", "La chica del tren, de Paula Hawkins",
-                      "El silencio de los corderos, de Thomas Harris"]
-    recom_fantasia = ["El señor de los anillos, de J.R.R. Tolkien", "El nombre del viento,de Patrick Rothfuss",
-                      "La rueda del tiempo ,de Robert Jordan"]
-    recom_nacional = ["El hacedor, de Jorge Luis Borges", "Poesía completa, de Alfonsina Storni",
-                      "Los heraldos negros, de César Vallejo"]
-    recom_latino = ["Veinte poemas de amor y una canción desesperada, de Pablo Neruda",
-                    "Poemas en prosa, de Gabriela Mistral", "Muerte sin fin, de José Gorostiz"]
+    recom_historia = [
+        "Historia de la humanidad, de H.G. Wells",
+        "Historia universal,de Arnold J. Toynbee",
+        "Historia de la civilización,de Will Durant",
+    ]
+    recom_politica = [
+        "La democracia en América,de Alexis de Tocquevill",
+        "Los orígenes del totalitarismo, de Hannah Arendt",
+        "El príncipe moderno, de Antonio Gramsci",
+    ]
+    recom_ciencia = [
+        "El origen de las especies, de Charles Darwin",
+        "Una nueva mente, de Daniel H. Pink",
+        "El universo elegante, de Brian Greene",
+    ]
+    recom_terror = [
+        "El resplandor, de Stephen King",
+        "Cuentos de terror, de Edgar Allan Poe",
+        "La llamada de Cthulhu y otros cuentos, de H.P. Lovecraft",
+    ]
+    recom_romance = [
+        "Orgullo y prejuicio, de Jane Austen",
+        "Cumbres borrascosas, de Emily Brontë",
+        "Jane Eyre, de Charlotte Brontë",
+    ]
+    recom_suspenso = [
+        "Perdida, de Gillian Flynn",
+        "La chica del tren, de Paula Hawkins",
+        "El silencio de los corderos, de Thomas Harris",
+    ]
+    recom_fantasia = [
+        "El señor de los anillos, de J.R.R. Tolkien",
+        "El nombre del viento,de Patrick Rothfuss",
+        "La rueda del tiempo ,de Robert Jordan",
+    ]
+    recom_nacional = [
+        "El hacedor, de Jorge Luis Borges",
+        "Poesía completa, de Alfonsina Storni",
+        "Los heraldos negros, de César Vallejo",
+    ]
+    recom_latino = [
+        "Veinte poemas de amor y una canción desesperada, de Pablo Neruda",
+        "Poemas en prosa, de Gabriela Mistral",
+        "Muerte sin fin, de José Gorostiz",
+    ]
 
     if c == "A":
         if g == 1:
@@ -182,4 +246,3 @@ def Recomendaciones(c, g):
         recomendacion = "categoria invalida"
 
     return recomendacion
-
