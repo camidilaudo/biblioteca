@@ -15,11 +15,11 @@ while numero != "1" and numero != "2":
     numero = input("Error. Ingrese un número correcto : ")
 if numero == "1":
 
-    usuario = input("Ingrese tipo de usuario: ")
+    usuario = input("Ingrese tipo de usuario:  ")
 
     iniciar_sesion = us.login_usuario(usuario)
 else:
-    usuario = input("Ingrese un nombre de usuario: ")
+    usuario = input("Ingrese un nombre de usuario : ")
     contrasena = input("Ingrese la contrasena del usuario: ")
     verificar_contrasena = input("Volvé a ingresar la contrasena : ")
     registrar = us.registrar_usuario(usuario, contrasena, verificar_contrasena)
