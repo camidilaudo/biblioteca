@@ -15,7 +15,7 @@ while numero != "1" and numero != "2":
     numero = input("Error. Ingrese un número correcto : ")
 if numero == "1":
 
-    usuario = input("Ingrese tipo de usuario: ")
+    usuario = input("Ingrese tipo de usuario:  ")
 
     iniciar_sesion = us.login_usuario(usuario)
 else:
