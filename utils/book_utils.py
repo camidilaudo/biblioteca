@@ -1,4 +1,5 @@
 from data_store import books_data as bd
+from utils import users_utils as uu
 
 
 def busqueda_libros(clave, valor):
@@ -30,21 +31,22 @@ def busqueda_libros(clave, valor):
         if libro[indice] == valor:
             titulo = libro[1]
             disponibilidad = libro[9]
-            libros.append([titulo, disponibilidad])
+            isbn = libro[3]
+            libros.append([titulo, disponibilidad, isbn])
 
     return libros
 
 
 def cargar_libros(
-    titulo,
-    autor,
-    genero,
-    ISBN,
-    editorial,
-    anio_publicacion,
-    serie_libros,
-    nro_paginas,
-    cant_ejemplares,
+        titulo,
+        autor,
+        genero,
+        ISBN,
+        editorial,
+        anio_publicacion,
+        serie_libros,
+        nro_paginas,
+        cant_ejemplares,
 ):
     """Cargar libro en stock de biblioteca. Se pueden cargar varios ejemplares del mismo.
     :param titulo: Str, título del libro.
@@ -142,33 +144,46 @@ def editar_libros(ISBN):
     return None
 
 
-def cambiar_status_libro(titulo, cant_pedidos):
+# TODO: Meli -> Agregar logica en el main de si quiere llevar igual los libros pero en menor cantidad
+def alquilar_libro(titulo, cant_pedidos, nombre_usuario):
     """Cambia el estado de un libro segun la cantidad de pedidos que tiene.
     :param titulo: Str, titulo del libro a pedir.
     :param cant_pedidos: Int, cantidad de libros que se piden.
-    :return: list, estado del libro y ejemplares disponibles."""
-    libro = busqueda_libros("titulo", titulo)
+    :param nombre_usuario: Str, nombre del usuario que realiza el pedido.
+    :return: List, estado del libro y ejemplares disponibles."""
+    isbn = busqueda_libros("titulo", titulo)[2]
+
+    libro = obtener_libro(ISBN=isbn)
 
     status_libro = libro[9]
     ejemplares_disponibles = libro[10]
 
     if status_libro is True and ejemplares_disponibles > cant_pedidos:
         libro[10] -= cant_pedidos
+        uu.agregar_libro_historial(nombre_usuario, isbn)
+
+
     elif status_libro is True and ejemplares_disponibles == cant_pedidos:
         libro[10] = 0
         libro[9] = False
-    else:
-        status_libro = "El libro no se encuentra disponible."
+
+        uu.agregar_libro_historial(nombre_usuario, isbn)
 
     return [status_libro, ejemplares_disponibles]
 
 
 # TODO: actualmente no tenemos "categoria" dentro de los libros, habria que agregarla o cambiar la logica de la funcion. Las recomendaciones no deberian estar harcodeadas si no que deberia traerlas de la matriz de libros segun el genero y la cant de disponibles
-def Recomendaciones(c, g):
+def Recomendaciones(genero):
     """Función para dar recomendaciones según categorias.
     :param c: str, categoria de la cual se quiere una recomendacion.
     :param g: str, genero dentro de la categoria.
     :return: list, lista de recomendaciones."""
+
+    # buscar libros que matcheen con el genero -> lista
+    # generar un random desde 0 hasta el largo de la lista
+    # si el isbn del libro existe en el historial generar otro random.
+    # devolves la recomendacion que matcheo con el random
+
     recom_historia = [
         "Historia de la humanidad, de H.G. Wells",
         "Historia universal,de Arnold J. Toynbee",
