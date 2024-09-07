@@ -2,8 +2,8 @@ import utils.users_utils as us
 import utils.book_utils as bu
 
 # DECLARACIÓN DE VARIABLES :
-Lista_Usuarios = []
-Lista_Contrasenas = []
+lista_usuarios = []
+lista_contrasenas = []
 
 # PROGRAMA PRINCIPAL :
 print("Bienvenido a la biblioteca...")
