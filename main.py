@@ -1,9 +1,17 @@
 import utils.users_utils as us
 import utils.book_utils as bu
+import data_store.users_data as ud
+
+# TODO: main: Dani -> agregar funcion de historial,  y de editar libro. Meli -> carteles y prints del sistema en el
+#  login , recomendaciones
 
 # DECLARACIÓN DE VARIABLES :
+bibliotecario = 1
+cliente = 2
+usuario_contra_incorrecto = 3
 lista_usuarios = []
 lista_contrasenas = []
+
 
 # PROGRAMA PRINCIPAL :
 print("Bienvenido a la biblioteca...")
@@ -15,24 +23,39 @@ while numero != "1" and numero != "2":
     numero = input("Error. Ingrese un número correcto : ")
 if numero == "1":
 
-    usuario = input("Ingrese tipo de usuario:  ")
+    usuario = input("Ingrese nombre de usuario:  ")
 
     iniciar_sesion = us.login_usuario(usuario)
 else:
-    usuario = input("Ingrese un nombre de usuario : ")
-    contrasena = input("Ingrese la contrasena del usuario: ")
-    verificar_contrasena = input("Volvé a ingresar la contrasena : ")
-    registrar = us.registrar_usuario(usuario, contrasena, verificar_contrasena)
-    while registrar == False:
-        print("Usuario o contraseña incorrecto. ")
-        usuario = input("Ingrese un nombre de usuario: ")
+    usuario = input("Ingrese tipo de usuario:  ")
+    if usuario == bibliotecario:
+        contrasenia_general = input("ingresa la codigo de acceso: ")
+        while contrasenia_general != ud.contrasenia_general:
+            print("Codigo de acceso incorrecto")
+            contrasenia_general = input("ingresa la codigo de acceso: ")
+
+        nombre_usuario = input("Ingrese un nombre de usuario : ")
         contrasena = input("Ingrese la contrasena del usuario: ")
+
         verificar_contrasena = input("Volvé a ingresar la contrasena : ")
-        registrar = us.registrar_usuario(usuario, contrasena, verificar_contrasena)
-    print("Usuario registrado correctamente !")
+        registrar = us.registrar_usuario(nombre_usuario=nombre_usuario, contrasenia_usuario=contrasena)
+        while registrar is False:
+            print("Usuario o contraseña incorrecto. ")
+            usuario = input("Ingrese un nombre de usuario: ")
+            contrasena = input("Ingrese la contrasena del usuario: ")
+            verificar_contrasena = input("Volvé a ingresar la contrasena : ")
+            registrar = us.registrar_usuario(usuario, contrasena, verificar_contrasena)
+        print("Usuario registrado correctamente !")
+        iniciar_sesion = us.login_usuario(nombre_usuario, contrasena)
+
+while iniciar_sesion == usuario_contra_incorrecto:
+    print("Su usuario o contrasenia es incorrecta")
+    usuario = input("Ingrese nombre de usuario:  ")
+
+    iniciar_sesion = us.login_usuario(usuario)
 
 # SI EL USUARIO QUE INICIA SEsIÓN ES EL CLIENTE
-if iniciar_sesion == "cliente":
+if iniciar_sesion == cliente:
     print("1- Buscar libros.")
     print("2- Obtener libro.")
     numero = input("Ingresá un número : ")
@@ -49,9 +72,9 @@ if iniciar_sesion == "cliente":
         alquilar_libro = bu.obtener_libro(ISBN)
 
 # SI EL USUARIO QUE INICIA SECIÓN ES EL BIBLIOTECARIO
-else:
+elif iniciar_sesion == bibliotecario:
     # TODO: la variable bilbiotecario no esta definida, o deberia pasarse a un string
-    if iniciar_sesion == "bibliotecario":
+    if iniciar_sesion == bibliotecario:
         print("1- Cargar libros.")
         print("2- Editar libro.")
         print("3- Cambiar Status.")
@@ -87,7 +110,7 @@ else:
             editar = bu.editar_libros(ISBN_editar)
         else:
             libro = input("Ingrese el libro de su consulta")
-            libro_buscado = bu.busqueda_libros("titulo",libro)
+            libro_buscado = bu.busqueda_libros("titulo", libro)
             if libro_buscado == "disponible":
                 print("lo tenemos")
             elif libro_buscado == "en_espera":
