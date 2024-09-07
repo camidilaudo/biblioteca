@@ -6,11 +6,12 @@ import data_store.users_data as ud
 #  login , recomendaciones
 
 # DECLARACIÓN DE VARIABLES :
-Lista_Usuarios = []
-Lista_Contrasenas = []
 bibliotecario = 1
 cliente = 2
 usuario_contra_incorrecto = 3
+lista_usuarios = []
+lista_contrasenas = []
+
 
 # PROGRAMA PRINCIPAL :
 print("Bienvenido a la biblioteca...")
