@@ -1,28 +1,28 @@
+# noinspection PyUnresolvedReferences
 from data_store import users_data as ud
 
 
 # TODO: Agregar tipo_usuario a la logica
-def registrar_usuario(tipo_usuario, nombre_usuario, contrasenia_usuario, contrasenia_usuario2,
-                      contrasenia_sistema=None):
-    lista_usuarios = ud.usuarios
-    lista_contrasenas = ud.contrasenas
+def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
+    """ Verifica si el usuario que se ingresó ya existe
+    :param tipo_usuario: Int, 1 si es bibliotecario y 2 si es cliente
+    :param nombre: Str, nombre que ingresa el usuario para registrar
+    :param contrasenia_usuario: Str, contraseña que ingresa el usuario
+    :return usuario_registrado: Bool, devuelve True si se registro correctamente el usuario """
     usuario_registrado = True
 
     # Verifica si el nombre de usuario ya existe
-    if nombre_usuario in ud.usuarios:
+    if nombre in ud.usuarios:
         usuario_registrado = False
-    # Verifica si las contraseñas son iguales
-    elif contrasenia_usuario != contrasenia_usuario2:
-        usuario_registrado = False
+    # Agrega el tipo de usuario, nombre y contraseña a la matriz con los usuarios
     else:
-        nombre_usuario.append(lista_usuarios)
-        contrasenia_usuario.append(lista_contrasenas)
+        ud.usuarios.append([tipo_usuario, nombre, contrasenia_usuario])
     return usuario_registrado
 
 
 # TODO: hay que cambiar la variable 'a' a una mas descriptiva y los inputs deben ir solo en el main, separado de la
 #  logica de las funciones
-def login_usuario(nombre_usuario, contrasenia):
+def login_usuario(nombre_usuario, contrasenia_usuario):
     """Funcion para loguear el usuario. La corriente función busca poder disernir si la persona interesada busca
     ingresar
     al sistema como usuario o como administrador.
