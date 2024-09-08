@@ -24,52 +24,60 @@ while numero != "1" and numero != "2":
 if numero == "1":
 
     usuario = input("Ingrese nombre de usuario:  ")
+    contrasenia = input("Ingrese la contrasena del usuario: ")
 
-    iniciar_sesion = us.login_usuario(usuario)
+    iniciar_sesion = us.login_usuario(usuario, contrasenia)
 else:
-    usuario = input("Ingrese tipo de usuario:  ")
+    print("1- Biliotecario.")
+    print("2- Cliente.")
+    usuario = input("Ingrese un número para el tipo de usuario:  ")
     if usuario == bibliotecario:
-        contrasenia_general = input("ingresa la codigo de acceso: ")
-        while contrasenia_general != ud.contrasenia_general:
-            print("Codigo de acceso incorrecto")
-            contrasenia_general = input("ingresa la codigo de acceso: ")
+        contrasena_general = input("Ingrese el código de acceso: ")
+        while contrasena_general != ud.contrasenia_general:
+            contrasena_general = input("Error. Ingresa el código de acceso correcto: ")
 
-        nombre_usuario = input("Ingrese un nombre de usuario : ")
-        contrasena = input("Ingrese la contrasena del usuario: ")
-
+    nombre_usuario = input("Ingrese un nombre de usuario : ")
+    contrasenia = input("Ingrese la contrasena del usuario: ")
+    verificar_contrasena = input("Volvé a ingresar la contrasena : ")
+    while contrasenia != verificar_contrasena:
+        print("Error. Las contraseñas no coinciden")
+        contrasenia = input("Ingrese la contrasena del usuario: ")
         verificar_contrasena = input("Volvé a ingresar la contrasena : ")
-        registrar = us.registrar_usuario(nombre_usuario=nombre_usuario, contrasenia_usuario=contrasena)
-        while registrar is False:
-            print("Usuario o contraseña incorrecto. ")
-            usuario = input("Ingrese un nombre de usuario: ")
-            contrasena = input("Ingrese la contrasena del usuario: ")
-            verificar_contrasena = input("Volvé a ingresar la contrasena : ")
-            registrar = us.registrar_usuario(usuario, contrasena, verificar_contrasena)
-        print("Usuario registrado correctamente !")
-        iniciar_sesion = us.login_usuario(nombre_usuario, contrasena)
+    registrar = us.registrar_usuario(usuario, nombre_usuario, contrasenia)
+    while registrar is False:
+        print("El usuario ingresado ya existe. Volver a intentar: ")
+        usuario = input("Ingrese un nombre de usuario: ")
+        registrar = us.registrar_usuario(usuario, contrasenia, verificar_contrasena)
+    print("Usuario registrado correctamente !")
+    iniciar_sesion = us.login_usuario(nombre_usuario, contrasenia)
 
 while iniciar_sesion == usuario_contra_incorrecto:
     print("Su usuario o contrasenia es incorrecta")
     usuario = input("Ingrese nombre de usuario:  ")
-
-    iniciar_sesion = us.login_usuario(usuario)
+    contrasenia = input("Ingrese la contrasena del usuario: ")
+    iniciar_sesion = us.login_usuario(usuario, contrasenia)
 
 # SI EL USUARIO QUE INICIA SEsIÓN ES EL CLIENTE
 if iniciar_sesion == cliente:
     print("1- Buscar libros.")
     print("2- Obtener libro.")
+    print("3- Recomendaciones.")
     numero = input("Ingresá un número : ")
-    while numero != "1" and numero != "2":
+    while numero != "1" and numero != "2" and numero != "3":
         print("1- Buscar libros.")
-        print("2- Obtener libro.")
-        numero = input("Ingresá un número : ")
+        print("2- Obtener un libro.")
+        print("3- Recomendaciones.")
+        numero = input("Error. Ingresá un número correcto : ")
     if numero == "1":
         Clave = str(input("Ingrese el campo para realizar la busqueda : "))
         Valor = str(input("Ingrese la valor que desea registrar: "))
         buscar_libros = bu.busqueda_libros(Clave, Valor)
-    else:
+    elif numero == "2":
         ISBN = int(input("Ingrese el ISBN del libro que quiere obtener: "))
         alquilar_libro = bu.obtener_libro(ISBN)
+    else:
+        genero_libro = int(input("Ingrese un género: "))
+        recomentacion_libro = bu.Recomendaciones(genero_libro)
 
 # SI EL USUARIO QUE INICIA SECIÓN ES EL BIBLIOTECARIO
 elif iniciar_sesion == bibliotecario:
@@ -77,7 +85,7 @@ elif iniciar_sesion == bibliotecario:
     if iniciar_sesion == bibliotecario:
         print("1- Cargar libros.")
         print("2- Editar libro.")
-        print("3- Cambiar Status.")
+        print("3- Alquilar libro.")
         numero = input("Ingresá un número : ")
         while numero != "1" and numero != "2" and numero != "3":
             print("1- Cargar libros.")
@@ -110,10 +118,6 @@ elif iniciar_sesion == bibliotecario:
             editar = bu.editar_libros(ISBN_editar)
         else:
             libro = input("Ingrese el libro de su consulta")
-            libro_buscado = bu.busqueda_libros("titulo", libro)
-            if libro_buscado == "disponible":
-                print("lo tenemos")
-            elif libro_buscado == "en_espera":
-                print("Ahora está reservado, pero vuelve")
-            else:
-                print("No contamos con ese libro en nuestra biblioteca")
+            cantidad_pedidos = input("Ingrese la cantidad de pedidos")
+            usuario = input("Ingrese el nombre de ususario")
+            alquilar = bu.alquilar_libro(libro, cantidad_pedidos, usuario)
