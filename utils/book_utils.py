@@ -38,15 +38,15 @@ def busqueda_libros(clave, valor):
 
 
 def cargar_libros(
-        titulo,
-        autor,
-        genero,
-        ISBN,
-        editorial,
-        anio_publicacion,
-        serie_libros,
-        nro_paginas,
-        cant_ejemplares,
+    titulo,
+    autor,
+    genero,
+    ISBN,
+    editorial,
+    anio_publicacion,
+    serie_libros,
+    nro_paginas,
+    cant_ejemplares,
 ):
     """Cargar libro en stock de biblioteca. Se pueden cargar varios ejemplares del mismo.
     :param titulo: Str, título del libro.
@@ -101,7 +101,7 @@ def obtener_libro(ISBN):
     return libro_encontrado
 
 
-def editar_libros(ISBN):
+def editar_libros(ISBN, indice, valor):
     """Editar los metadatos de un libro.
     :param ISBN: Int, International Standard Book Number del libro.
     :return libro: List, lista con lops metadatos del libro si el libro existe o None si el libro no existe.
@@ -109,49 +109,16 @@ def editar_libros(ISBN):
     # Busca el libro por ISBN
     for libro in bd.libros:
         if libro[3] == ISBN:
-            # Pregunta al usuario que va a editar
-            print("Libro encontrado : ")
-            print(f"1. Autor: {libro[0]}")
-            print(f"2. Título: {libro[1]}")
-            print(f"3. Género: {libro[2]}")
-            print(f"4. Editorial: {libro[4]}")
-            print(f"5. Año de Publicación: {libro[5]}")
-            print(f"6. Serie de Libros: {libro[6]}")
-            print(f"7. Número de Páginas: {libro[7]}")
-            print(f"8. Cantidad de Ejemplares: {libro[8]}")
-            numero = input("Ingresá un número para editar : ")
-            if numero == "1":
-                libro[0] = input("Ingrese el nuevo autor: ")
-            elif numero == "2":
-                libro[1] = input("Ingrese el nuevo título: ")
-            elif numero == "3":
-                libro[2] = input("Ingrese el nuevo género: ")
-            elif numero == "4":
-                libro[4] = input("Ingrese la nueva editorial: ")
-            elif numero == "5":
-                libro[5] = int(input("Ingrese el nuevo año de publicación: "))
-            elif numero == "6":
-                libro[6] = input("Ingrese la nueva serie : ")
-            elif numero == "7":
-                libro[7] = int(input("Ingrese el nuevo número de páginas: "))
-            elif numero == "8":
-                libro[8] = int(input("Ingrese la nueva cantidad de ejemplares: "))
-            else:
-                print("Número no reconocido. No se realizó ningún cambio.")
-            return libro
-
-    print("No se encontró un libro con ese ISBN.")
-    return None
+            libro[indice] = valor
+    return libro
 
 
-# TODO: Meli -> Agregar logica en el main de si quiere llevar igual los libros pero en menor cantidad
-def alquilar_libro(titulo, cant_pedidos, nombre_usuario):
+def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
     """Cambia el estado de un libro segun la cantidad de pedidos que tiene.
-    :param titulo: Str, titulo del libro a pedir.
+    :param isbn: Str, titulo del libro a pedir.
     :param cant_pedidos: Int, cantidad de libros que se piden.
     :param nombre_usuario: Str, nombre del usuario que realiza el pedido.
     :return: List, estado del libro y ejemplares disponibles."""
-    isbn = busqueda_libros("titulo", titulo)[2]
 
     libro = obtener_libro(ISBN=isbn)
 
@@ -161,7 +128,6 @@ def alquilar_libro(titulo, cant_pedidos, nombre_usuario):
     if status_libro is True and ejemplares_disponibles > cant_pedidos:
         libro[10] -= cant_pedidos
         uu.agregar_libro_historial(nombre_usuario, isbn)
-
 
     elif status_libro is True and ejemplares_disponibles == cant_pedidos:
         libro[10] = 0

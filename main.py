@@ -1,6 +1,7 @@
 import utils.users_utils as us
 import utils.book_utils as bu
 import data_store.users_data as ud
+import utils.print_utils as pu
 
 # TODO: main: Dani -> agregar funcion de historial,  y de editar libro. Meli -> carteles y prints del sistema en el
 #  login , recomendaciones
@@ -9,9 +10,6 @@ import data_store.users_data as ud
 bibliotecario = 1
 cliente = 2
 usuario_contra_incorrecto = 3
-lista_usuarios = []
-lista_contrasenas = []
-
 
 # PROGRAMA PRINCIPAL :
 print("Bienvenido a la biblioteca...")
@@ -81,7 +79,6 @@ if iniciar_sesion == cliente:
 
 # SI EL USUARIO QUE INICIA SECIÓN ES EL BIBLIOTECARIO
 elif iniciar_sesion == bibliotecario:
-    # TODO: la variable bilbiotecario no esta definida, o deberia pasarse a un string
     if iniciar_sesion == bibliotecario:
         print("1- Cargar libros.")
         print("2- Editar libro.")
@@ -115,9 +112,41 @@ elif iniciar_sesion == bibliotecario:
             )
         elif numero == "2":
             ISBN_editar = int(input("Ingrese el ISBN que quiere editar: "))
-            editar = bu.editar_libros(ISBN_editar)
+            libro = bu.obtener_libro(ISBN=ISBN_editar)
+            while libro is None:
+                print(
+                    "El ISBN es incorrecto o no se encuentra el libro registrado. Por favor pruebe otra vez: "
+                )
+                ISBN_editar = int(input("Ingrese el ISBN que quiere editar: "))
+                libro = bu.obtener_libro(ISBN=ISBN_editar)
+
+            print("Libro encontrado: ")
+
+            pu.imprimir_libro(libro)
+
+            numero = int(input("Ingresá un número para editar : "))
+            while 7 < numero or numero < -1:
+                print("El numero ingresado es incorrecto.")
+                numero = input("Ingresá un número para editar : ")
+            if numero != -1:
+                nuevo_valor = input("Ingresá el nuevo valor:")
+                editar = bu.editar_libros(
+                    ISBN=ISBN_editar, indice=numero, valor=nuevo_valor
+                )
+            print("Libro editado con éxito: ")
+            pu.imprimir_libro(libro)
         else:
-            libro = input("Ingrese el libro de su consulta")
-            cantidad_pedidos = input("Ingrese la cantidad de pedidos")
-            usuario = input("Ingrese el nombre de ususario")
-            alquilar = bu.alquilar_libro(libro, cantidad_pedidos, usuario)
+            titulo = input("Ingrese el nombre del libro que quiere alquilar: ")
+            libros = bu.busqueda_libros("titulo", titulo)
+            print(f"Estos son los libros que coinciden con tu busqueda: {libros}")
+            continuar = int(input("Presione 1 para continuar, 2 si desea realizar otra busqueda o -1 para salir: "))
+            while continuar == 2:
+                titulo = input("Ingrese el nombre del libro que quiere alquilar: ")
+                libros = bu.busqueda_libros("titulo", titulo)
+                print(f"Estos son los libros que coinciden con tu busqueda: {libros}")
+            if continuar == 1:
+                isbn = input("Ingrese el ISBN del libro que quiere alquilar: ")
+                cantidad_pedidos = input("Ingrese la cantidad de pedidos: ")
+                usuario = input("Ingrese el nombre de ususario que va a alquilarlos: ")
+                libro_alquilado = bu.alquilar_libro(isbn, cantidad_pedidos, usuario)
+                print(f"El libro se alquilo con exito, quedan {libro_alquilado[1]} unidades disponibles.")

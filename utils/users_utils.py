@@ -1,14 +1,13 @@
-# noinspection PyUnresolvedReferences
 from data_store import users_data as ud
 
 
-# TODO: Agregar tipo_usuario a la logica
 def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
-    """ Verifica si el usuario que se ingresó ya existe
-    :param tipo_usuario: Int, 1 si es bibliotecario y 2 si es cliente
-    :param nombre: Str, nombre que ingresa el usuario para registrar
-    :param contrasenia_usuario: Str, contraseña que ingresa el usuario
-    :return usuario_registrado: Bool, devuelve True si se registro correctamente el usuario """
+    """Verifica si el usuario que se ingresó ya existe
+    :param tipo_usuario: Int, 1 si es bibliotecario y 2 si es cliente.
+    :param nombre: Str, nombre que ingresa el usuario para registrar.
+    :param contrasenia_usuario: Str, contraseña que ingresa el usuario.
+    :return usuario_registrado: Bool, devuelve True si se registró correctamente el usuario o False en caso contrario.
+    """
     usuario_registrado = True
 
     # Verifica si el nombre de usuario ya existe
@@ -54,7 +53,10 @@ def login_usuario(nombre_usuario, contrasenia_usuario):
 
 
 def agregar_libro_historial(nombre_usuario, isbn):
-    """"""
+    """Agrega el ISBN de un libro al historial del cliente.
+    :param nombre_usuario: Str, username del usuario que retiro el libro.
+    :param isbn: Int, código ISBN del libro que retiro.
+    :return historiales: Matrix, historial de todos los usuarios."""
     existe_usuario = False
     for i, historial in ud.historiales:
         if historial[0] == nombre_usuario:
