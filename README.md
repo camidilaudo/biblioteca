@@ -19,7 +19,8 @@ Autores: Barrón, Melina -  Di Laudo, Camila - Melián, Daniela | Equipo 8
 ### Melian, Daniela  
   - busqueda_libros  
  - cargar_libros  
- - obtener_libros  
+ - obtener_libros
+ - agregar_libro_historial  
 
 ## 🚀 Getting Started
 
