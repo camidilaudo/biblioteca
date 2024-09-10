@@ -1,5 +1,10 @@
+from data_store import users_data as ud
+
 from data_store import books_data as bd
+
 from utils import users_utils as uu
+
+import random
 
 
 def busqueda_libros(clave, valor):
@@ -138,92 +143,29 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
     return [status_libro, ejemplares_disponibles]
 
 
-# TODO: actualmente no tenemos "categoria" dentro de los libros, habria que agregarla o cambiar la logica de la funcion. Las recomendaciones no deberian estar harcodeadas si no que deberia traerlas de la matriz de libros segun el genero y la cant de disponibles
-def Recomendaciones(genero):
-    """Función para dar recomendaciones según categorias.
-    :param c: str, categoria de la cual se quiere una recomendacion.
-    :param g: str, genero dentro de la categoria.
-    :return: list, lista de recomendaciones."""
+def recomendaciones (genero , usuario):
 
-    # buscar libros que matcheen con el genero -> lista
-    # generar un random desde 0 hasta el largo de la lista
-    # si el isbn del libro existe en el historial generar otro random.
-    # devolves la recomendacion que matcheo con el random
+    todos_los_libros = bd.libros
+    historial = ud.historiales
+    recomendaciones_por_genero = []
 
-    recom_historia = [
-        "Historia de la humanidad, de H.G. Wells",
-        "Historia universal,de Arnold J. Toynbee",
-        "Historia de la civilización,de Will Durant",
-    ]
-    recom_politica = [
-        "La democracia en América,de Alexis de Tocquevill",
-        "Los orígenes del totalitarismo, de Hannah Arendt",
-        "El príncipe moderno, de Antonio Gramsci",
-    ]
-    recom_ciencia = [
-        "El origen de las especies, de Charles Darwin",
-        "Una nueva mente, de Daniel H. Pink",
-        "El universo elegante, de Brian Greene",
-    ]
-    recom_terror = [
-        "El resplandor, de Stephen King",
-        "Cuentos de terror, de Edgar Allan Poe",
-        "La llamada de Cthulhu y otros cuentos, de H.P. Lovecraft",
-    ]
-    recom_romance = [
-        "Orgullo y prejuicio, de Jane Austen",
-        "Cumbres borrascosas, de Emily Brontë",
-        "Jane Eyre, de Charlotte Brontë",
-    ]
-    recom_suspenso = [
-        "Perdida, de Gillian Flynn",
-        "La chica del tren, de Paula Hawkins",
-        "El silencio de los corderos, de Thomas Harris",
-    ]
-    recom_fantasia = [
-        "El señor de los anillos, de J.R.R. Tolkien",
-        "El nombre del viento,de Patrick Rothfuss",
-        "La rueda del tiempo ,de Robert Jordan",
-    ]
-    recom_nacional = [
-        "El hacedor, de Jorge Luis Borges",
-        "Poesía completa, de Alfonsina Storni",
-        "Los heraldos negros, de César Vallejo",
-    ]
-    recom_latino = [
-        "Veinte poemas de amor y una canción desesperada, de Pablo Neruda",
-        "Poemas en prosa, de Gabriela Mistral",
-        "Muerte sin fin, de José Gorostiz",
-    ]
+    for fila in range (len (todos_los_libros)):
+        if genero == todos_los_libros [fila] [2]:
+            recomendaciones_por_genero.append (todos_los_libros [fila] [3])
+    
+   # comparar la lista de recomendaciones_por_genero con el historial recorriendolo con un for. 
+   # si alguno de recomendaciones NO esta en el historial lo añado a una nueva lista
+   # el random lo aplico sobre esa lista nueva creada 
 
-    if c == "A":
-        if g == 1:
-            recomendacion = recom_historia
-        elif g == 2:
-            recomendacion = recom_politica
-        elif g == 3:
-            recomendacion = recom_ciencia
-        else:
-            recomendacion = "categoria invalida"
-    elif c == "B":
-        if g == 4:
-            recomendacion = recom_terror
-        elif g == 5:
-            recomendacion = recom_romance
-        elif g == 6:
-            recomendacion = recom_suspenso
-        elif g == 7:
-            recomendacion = recom_fantasia
-        else:
-            recomendacion = "categoria invalida"
-    elif c == "C":
-        if g == 8:
-            recomendacion = recom_nacional
-        elif g == 9:
-            recomendacion = recom_latino
-        else:
-            recomendacion = "categoria invalida"
-    else:
-        recomendacion = "categoria invalida"
+    aleatorio_libro = random.choice (recomendaciones_por_genero)
 
-    return recomendacion
+    for fila in range (len (historial)):
+        if usuario == historial [fila] [0]:
+            while aleatorio_libro in historial [fila]:
+                aleatorio_libro = random.choice (recomendaciones_por_genero)
+
+                #que pasa si el usuario leyo todos los libros de ese genero de la biblioteca? 
+    
+    for fila in range (len (todos_los_libros)):
+        if aleatorio_libro == todos_los_libros [fila] [3]:
+            return todos_los_libros [fila]
