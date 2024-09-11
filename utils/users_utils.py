@@ -11,6 +11,7 @@ def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
     usuario_registrado = True
 
     # Verifica si el nombre de usuario ya existe
+
     for nombre in ud.usuarios:
         if nombre == ud.usuarios[1]:
             usuario_registrado = False
@@ -31,12 +32,13 @@ def login_usuario(usuario, contra):
     """
     matriz_usuarios = ud.usuarios
     por_defecto = 3
-    for fila in range (len (matriz_usuarios)):
-        if usuario == matriz_usuarios [fila] [1]:
-            if contra == matriz_usuarios [fila] [2]:
-                return matriz_usuarios [fila] [0]
+    for fila in range(len(matriz_usuarios)):
+        if usuario == matriz_usuarios[fila][1]:
+            if contra == matriz_usuarios[fila][2]:
+                return matriz_usuarios[fila][0]
 
-    return por_defecto  
+    return por_defecto
+
 
 def agregar_libro_historial(nombre_usuario, isbn):
     """Agrega el ISBN de un libro al historial del cliente.

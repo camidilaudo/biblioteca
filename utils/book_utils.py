@@ -143,7 +143,13 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
     return [status_libro, ejemplares_disponibles]
 
 
-def recomendaciones (genero , usuario):
+def recomendaciones(genero , usuario):
+    """ Devuelve una recomendación segun el genero que pida el usuario. Chequea que no
+    sea un libro que haya leido anteriormente.
+    :param genero: Str, genero del cual el usuario quiere una recomendacion.
+    :param usuario: Str, usuario que pide la recomendacion.
+    :return libro: List, libro recomendado.
+    """
 
     todos_los_libros = bd.libros
     historial = ud.historiales
@@ -169,3 +175,15 @@ def recomendaciones (genero , usuario):
     for fila in range (len (todos_los_libros)):
         if aleatorio_libro == todos_los_libros [fila] [3]:
             return todos_los_libros [fila]
+
+
+def borrar_libro(ISBN):
+    """Eliminar libro de la biblioteca.
+    :param ISBN: Int, codigo ISBN del libro que se quiere eliminar de la biblioteca.
+    :return bd.libros: Matrix, biblioteca actualizada."""
+
+    for i, libro in bd.libros:
+        if ISBN == libro[3]:
+            del bd.libros[i]
+
+    return bd.libros

@@ -2,14 +2,10 @@ import utils.users_utils as us
 import utils.book_utils as bu
 import data_store.users_data as ud
 import utils.print_utils as pu
+import constantes as c
 
 # TODO: main: Dani -> agregar funcion de historial,  y de editar libro. Meli -> carteles y prints del sistema en el
 #  login , recomendaciones
-
-# DECLARACIÓN DE VARIABLES :
-bibliotecario = 1
-cliente = 2
-usuario_contra_incorrecto = 3
 
 # PROGRAMA PRINCIPAL :
 print("Bienvenido a la biblioteca...")
@@ -17,7 +13,7 @@ print("1- Iniciar Sesión.")
 print("2- Registrarse.")
 
 numero = input("Ingrese un número : ")
-while numero != "1" and numero != "2":
+while numero not in c.tipos_usuario:
     numero = input("Error. Ingrese un número correcto : ")
 if numero == "1":
 
@@ -29,7 +25,7 @@ else:
     print("1- Biliotecario.")
     print("2- Cliente.")
     usuario = input("Ingrese un número para el tipo de usuario:  ")
-    if usuario == bibliotecario:
+    if usuario == c.bibliotecario:
         contrasena_general = input("Ingrese el código de acceso: ")
         while contrasena_general != ud.contrasenia_general:
             contrasena_general = input("Error. Ingresa el código de acceso correcto: ")
@@ -49,14 +45,14 @@ else:
     print("Usuario registrado correctamente !")
     iniciar_sesion = us.login_usuario(nombre_usuario, contrasenia)
 
-while iniciar_sesion == usuario_contra_incorrecto:
+while iniciar_sesion not in c.tipos_usuario:
     print("Su usuario o contrasenia es incorrecta")
     usuario = input("Ingrese nombre de usuario:  ")
     contrasenia = input("Ingrese la contrasena del usuario: ")
     iniciar_sesion = us.login_usuario(usuario, contrasenia)
 
 # SI EL USUARIO QUE INICIA SEsIÓN ES EL CLIENTE
-if iniciar_sesion == cliente:
+if iniciar_sesion == c.cliente:
     print("1- Buscar libros.")
     print("2- Obtener libro.")
     print("3- Recomendaciones.")
@@ -79,8 +75,8 @@ if iniciar_sesion == cliente:
         pu.imprimir_libro(recomentacion_libro)
 
 # SI EL USUARIO QUE INICIA SECIÓN ES EL BIBLIOTECARIO
-elif iniciar_sesion == bibliotecario:
-    if iniciar_sesion == bibliotecario:
+elif iniciar_sesion == c.bibliotecario:
+    if iniciar_sesion == c.bibliotecario:
         print("1- Cargar libros.")
         print("2- Editar libro.")
         print("3- Alquilar libro.")
