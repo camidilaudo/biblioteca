@@ -11,8 +11,9 @@ def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
     usuario_registrado = True
 
     # Verifica si el nombre de usuario ya existe
-    if nombre in ud.usuarios:
-        usuario_registrado = False
+    for nombre in ud.usuarios:
+        if nombre == ud.usuarios[1]:
+            usuario_registrado = False
     # Agrega el tipo de usuario, nombre y contraseña a la matriz con los usuarios
     else:
         ud.usuarios.append([tipo_usuario, nombre, contrasenia_usuario])
