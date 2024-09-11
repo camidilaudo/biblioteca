@@ -114,8 +114,10 @@ elif iniciar_sesion == c.bibliotecario:
                 print(
                     "El ISBN es incorrecto o no se encuentra el libro registrado. Por favor pruebe otra vez: "
                 )
-                ISBN_editar = int(input("Ingrese el ISBN que quiere editar: "))
-                libro = bu.obtener_libro(ISBN=ISBN_editar)
+                ISBN_editar = int(input("Ingrese el ISBN del libro que quiere editar: "))
+                indice_editar = input("Ingrese el índice que quiere editar: ")
+                valor_editar = input("Ingrese el valor a reemplazar: ")
+                encontrar_libro = bu.obtener_libro(ISBN_editar, indice_editar, valor_editar)
 
             print("Libro encontrado: ")
 
