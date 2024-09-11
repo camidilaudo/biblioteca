@@ -74,8 +74,9 @@ if iniciar_sesion == cliente:
         ISBN = int(input("Ingrese el ISBN del libro que quiere obtener: "))
         alquilar_libro = bu.obtener_libro(ISBN)
     else:
-        genero_libro = int(input("Ingrese un género: "))
-        recomentacion_libro = bu.Recomendaciones(genero_libro)
+        genero_libro = input("Ingrese un género: ")
+        recomentacion_libro = bu.recomendaciones(genero_libro, usuario)
+        pu.imprimir_libro(recomentacion_libro)
 
 # SI EL USUARIO QUE INICIA SECIÓN ES EL BIBLIOTECARIO
 elif iniciar_sesion == bibliotecario:
