@@ -1,4 +1,6 @@
 from data_store import users_data as ud
+from data_store import books_data as bd
+
 
 
 def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
@@ -21,8 +23,6 @@ def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
     return usuario_registrado
 
 
-# TODO: hay que cambiar la variable 'a' a una mas descriptiva y los inputs deben ir solo en el main, separado de la
-#  logica de las funciones
 def login_usuario(usuario, contra):
     """Funcion para loguear el usuario. La corriente función busca poder disernir si la persona interesada busca
     ingresar
@@ -57,3 +57,21 @@ def agregar_libro_historial(nombre_usuario, isbn):
         ud.historiales.append([nombre_usuario, [isbn]])
 
     return ud.historiales
+
+
+def ver_propio_historial (usuario):
+
+    historial_general = ud.historiales
+    todos_los_libros = bd.libros
+    historial_nombres = []
+    i = 0
+    while usuario != historial_general [i][0]:
+        i = i+1
+
+    for isbn in historial_general [i +1]: 
+        for j in range (len(todos_los_libros)):
+                if isbn == todos_los_libros [j] [3]: 
+                    historial_nombres.append (todos_los_libros) [j][1]
+
+    return historial_nombres
+

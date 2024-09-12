@@ -56,6 +56,7 @@ if iniciar_sesion == c.cliente:
     print("1- Buscar libros.")
     print("2- Obtener libro.")
     print("3- Recomendaciones.")
+    print ("4- Ver mi historial")
     numero = input("Ingresá un número : ")
     while numero != "1" and numero != "2" and numero != "3":
         print("1- Buscar libros.")
@@ -69,6 +70,9 @@ if iniciar_sesion == c.cliente:
     elif numero == "2":
         ISBN = int(input("Ingrese el ISBN del libro que quiere obtener: "))
         alquilar_libro = bu.obtener_libro(ISBN)
+    elif numero == "4":
+        mi_historial = us.ver_propio_historial
+        print (mi_historial)
     else:
         genero_libro = input("Ingrese un género: ")
         recomentacion_libro = bu.recomendaciones(genero_libro, usuario)
