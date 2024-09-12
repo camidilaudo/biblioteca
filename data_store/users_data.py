@@ -2,7 +2,7 @@
 # CLIENTE tipo de usuario 2
 
 # MATRIZ USUARIOS
-usuarios = [[1, "meli", "sjdhas"], [2, "cami", "jshdjashd"], [2, "dani", "111111"]]
+usuarios = [[1, "meli", "123"], [2, "cami", "123"], [2, "dani", "1"]]
 
 contrasenia_general = "ADMIN123"
 

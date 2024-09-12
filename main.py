@@ -12,10 +12,10 @@ print("Bienvenido a la biblioteca...")
 print("1- Iniciar Sesión.")
 print("2- Registrarse.")
 
-numero = input("Ingrese un número : ")
+numero = int(input("Ingrese un número : "))
 while numero not in c.tipos_usuario:
     numero = input("Error. Ingrese un número correcto : ")
-if numero == "1":
+if numero == 1:
 
     usuario = input("Ingrese nombre de usuario:  ")
     contrasenia = input("Ingrese la contrasena del usuario: ")
