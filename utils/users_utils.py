@@ -2,7 +2,6 @@ from data_store import users_data as ud
 from data_store import books_data as bd
 
 
-
 def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
     """Verifica si el usuario que se ingresó ya existe
     :param tipo_usuario: Int, 1 si es bibliotecario y 2 si es cliente.
@@ -59,19 +58,21 @@ def agregar_libro_historial(nombre_usuario, isbn):
     return ud.historiales
 
 
-def ver_propio_historial (usuario):
+def ver_propio_historial(usuario):
+    """Funcion encargada de mostrar el historial de retiros del usuario.
+    :param usuario: Str, nombre del usuario.
+    :return historial_nombres: titulos del historial de retiros del usuario."""
 
     historial_general = ud.historiales
     todos_los_libros = bd.libros
     historial_nombres = []
     i = 0
-    while usuario != historial_general [i][0]:
-        i = i+1
+    while usuario != historial_general[i][0]:
+        i = i + 1
 
-    for isbn in historial_general [i +1]: 
-        for j in range (len(todos_los_libros)):
-                if isbn == todos_los_libros [j] [3]: 
-                    historial_nombres.append (todos_los_libros) [j][1]
+    for isbn in historial_general[i + 1]:
+        for j in range(len(todos_los_libros)):
+            if isbn == todos_los_libros[j][3]:
+                historial_nombres.append(todos_los_libros)[j][1]
 
     return historial_nombres
-

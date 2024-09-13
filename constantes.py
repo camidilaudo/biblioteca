@@ -6,5 +6,13 @@ cliente = 2
 tipos_usuario = [cliente, bibliotecario]
 
 # TIPOS DE GENERO
-generos = ["fantasia", "terror", "policial", "historia", "misterio", "realismo magico", "distopia", "ficcion"]
-
+generos = [
+    "fantasia",
+    "terror",
+    "policial",
+    "historia",
+    "misterio",
+    "realismo magico",
+    "distopia",
+    "ficcion",
+]
