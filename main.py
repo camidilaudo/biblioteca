@@ -12,10 +12,10 @@ print("Bienvenido a la biblioteca...")
 print("1- Iniciar Sesión.")
 print("2- Registrarse.")
 
-numero = input("Ingrese un número : ")
+numero = int(input("Ingrese un número : "))
 while numero not in c.tipos_usuario:
     numero = input("Error. Ingrese un número correcto : ")
-if numero == "1":
+if numero == 1:
 
     usuario = input("Ingrese nombre de usuario:  ")
     contrasenia = input("Ingrese la contrasena del usuario: ")
@@ -56,6 +56,7 @@ if iniciar_sesion == c.cliente:
     print("1- Buscar libros.")
     print("2- Obtener libro.")
     print("3- Recomendaciones.")
+    print("4- Ver mi historial")
     numero = input("Ingresá un número : ")
     while numero != "1" and numero != "2" and numero != "3":
         print("1- Buscar libros.")
@@ -69,6 +70,9 @@ if iniciar_sesion == c.cliente:
     elif numero == "2":
         ISBN = int(input("Ingrese el ISBN del libro que quiere obtener: "))
         alquilar_libro = bu.obtener_libro(ISBN)
+    elif numero == "4":
+        mi_historial = us.ver_propio_historial
+        print(mi_historial)
     else:
         genero_libro = input("Ingrese un género: ")
         recomentacion_libro = bu.recomendaciones(genero_libro, usuario)
@@ -114,10 +118,14 @@ elif iniciar_sesion == c.bibliotecario:
                 print(
                     "El ISBN es incorrecto o no se encuentra el libro registrado. Por favor pruebe otra vez: "
                 )
-                ISBN_editar = int(input("Ingrese el ISBN del libro que quiere editar: "))
+                ISBN_editar = int(
+                    input("Ingrese el ISBN del libro que quiere editar: ")
+                )
                 indice_editar = input("Ingrese el índice que quiere editar: ")
                 valor_editar = input("Ingrese el valor a reemplazar: ")
-                encontrar_libro = bu.obtener_libro(ISBN_editar, indice_editar, valor_editar)
+                encontrar_libro = bu.obtener_libro(
+                    ISBN_editar, indice_editar, valor_editar
+                )
 
             print("Libro encontrado: ")
 
@@ -138,7 +146,11 @@ elif iniciar_sesion == c.bibliotecario:
             titulo = input("Ingrese el nombre del libro que quiere alquilar: ")
             libros = bu.busqueda_libros("titulo", titulo)
             print(f"Estos son los libros que coinciden con tu busqueda: {libros}")
-            continuar = int(input("Presione 1 para continuar, 2 si desea realizar otra busqueda o -1 para salir: "))
+            continuar = int(
+                input(
+                    "Presione 1 para continuar, 2 si desea realizar otra busqueda o -1 para salir: "
+                )
+            )
             while continuar == 2:
                 titulo = input("Ingrese el nombre del libro que quiere alquilar: ")
                 libros = bu.busqueda_libros("titulo", titulo)
@@ -148,4 +160,6 @@ elif iniciar_sesion == c.bibliotecario:
                 cantidad_pedidos = input("Ingrese la cantidad de pedidos: ")
                 usuario = input("Ingrese el nombre de ususario que va a alquilarlos: ")
                 libro_alquilado = bu.alquilar_libro(isbn, cantidad_pedidos, usuario)
-                print(f"El libro se alquilo con exito, quedan {libro_alquilado[1]} unidades disponibles.")
+                print(
+                    f"El libro se alquilo con exito, quedan {libro_alquilado[1]} unidades disponibles."
+                )

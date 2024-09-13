@@ -109,6 +109,8 @@ def obtener_libro(ISBN):
 def editar_libros(ISBN, indice, valor):
     """Editar los metadatos de un libro.
     :param ISBN: Int, International Standard Book Number del libro.
+    :param indice: Int, indice del campo que se va a editar.
+    :param valor: Str, nuevo valor del campo que se va a editar.
     :return libro: List, lista con lops metadatos del libro si el libro existe o None si el libro no existe.
     """
     # Busca el libro por ISBN
@@ -143,8 +145,8 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
     return [status_libro, ejemplares_disponibles]
 
 
-def recomendaciones(genero , usuario):
-    """ Devuelve una recomendación segun el genero que pida el usuario. Chequea que no
+def recomendaciones(genero, usuario):
+    """Devuelve una recomendación segun el genero que pida el usuario. Chequea que no
     sea un libro que haya leido anteriormente.
     :param genero: Str, genero del cual el usuario quiere una recomendacion.
     :param usuario: Str, usuario que pide la recomendacion.
@@ -155,26 +157,26 @@ def recomendaciones(genero , usuario):
     historial = ud.historiales
     recomendaciones_por_genero = []
 
-    for fila in range (len (todos_los_libros)):
-        if genero == todos_los_libros [fila] [2]:
-            recomendaciones_por_genero.append (todos_los_libros [fila] [3])
-    
-   # comparar la lista de recomendaciones_por_genero con el historial recorriendolo con un for. 
-   # si alguno de recomendaciones NO esta en el historial lo añado a una nueva lista
-   # el random lo aplico sobre esa lista nueva creada 
+    for fila in range(len(todos_los_libros)):
+        if genero == todos_los_libros[fila][2]:
+            recomendaciones_por_genero.append(todos_los_libros[fila][3])
 
-    aleatorio_libro = random.choice (recomendaciones_por_genero)
+    # comparar la lista de recomendaciones_por_genero con el historial recorriendolo con un for.
+    # si alguno de recomendaciones NO esta en el historial lo añado a una nueva lista
+    # el random lo aplico sobre esa lista nueva creada
 
-    for fila in range (len (historial)):
-        if usuario == historial [fila] [0]:
-            while aleatorio_libro in historial [fila]:
-                aleatorio_libro = random.choice (recomendaciones_por_genero)
+    aleatorio_libro = random.choice(recomendaciones_por_genero)
 
-                #que pasa si el usuario leyo todos los libros de ese genero de la biblioteca? 
-    
-    for fila in range (len (todos_los_libros)):
-        if aleatorio_libro == todos_los_libros [fila] [3]:
-            return todos_los_libros [fila]
+    for fila in range(len(historial)):
+        if usuario == historial[fila][0]:
+            while aleatorio_libro in historial[fila]:
+                aleatorio_libro = random.choice(recomendaciones_por_genero)
+
+                # que pasa si el usuario leyo todos los libros de ese genero de la biblioteca?
+
+    for fila in range(len(todos_los_libros)):
+        if aleatorio_libro == todos_los_libros[fila][3]:
+            return todos_los_libros[fila]
 
 
 def borrar_libro(ISBN):
