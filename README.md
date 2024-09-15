@@ -2,6 +2,9 @@
 Trabajo Practico Obligatorio Algoritmos I - UADE  
 Autores: Barrón, Melina -  Di Laudo, Camila - Melián, Daniela | Equipo 8
 
+# 🎯 Objetivo
+Crear un sistema de gestión para bibliotecas que permita realizar un control del estado de los libros, realizar acciones sobre los mismos y un posterior seguimiento del comportamiento de los usuarios de la misma. 
+
 # 🗺️ Arquitectura 
 ![Diagrama de Arquitectura](./Diagrama-TPO.drawio.png)
 
