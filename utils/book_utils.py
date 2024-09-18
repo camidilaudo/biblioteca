@@ -83,7 +83,7 @@ def obtener_libro(ISBN):
     """
     libro_encontrado = None
     for libro in bd.libros:
-        if libro[3] == ISBN:
+        if libro["isbn"] == ISBN:
             libro_encontrado = libro
 
     return libro_encontrado
@@ -98,7 +98,7 @@ def editar_libros(ISBN, indice, valor):
     """
     # Busca el libro por ISBN
     for libro in bd.libros:
-        if libro[3] == ISBN:
+        if libro["isbn"] == ISBN:
             libro[indice] = valor
     return libro
 
@@ -112,16 +112,16 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
 
     libro = obtener_libro(ISBN=isbn)
 
-    status_libro = libro[9]
-    ejemplares_disponibles = libro[10]
+    status_libro = libro["disponibilidad"]
+    ejemplares_disponibles = libro["ejemplares_disponibles"]
 
     if status_libro is True and ejemplares_disponibles > cant_pedidos:
-        libro[10] -= cant_pedidos
+        libro["ejemplares_disponibles"] -= cant_pedidos
         uu.agregar_libro_historial(nombre_usuario, isbn)
 
     elif status_libro is True and ejemplares_disponibles == cant_pedidos:
-        libro[10] = 0
-        libro[9] = False
+        libro["ejemplares_disponibles"] = 0
+        libro["disponibilidad"] = False
 
         uu.agregar_libro_historial(nombre_usuario, isbn)
 
@@ -168,7 +168,7 @@ def borrar_libro(ISBN):
     :return bd.libros: Matrix, biblioteca actualizada."""
 
     for i, libro in bd.libros:
-        if ISBN == libro[3]:
+        if ISBN == libro["isbn"]:
             del bd.libros[i]
 
     return bd.libros
