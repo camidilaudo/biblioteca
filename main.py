@@ -4,8 +4,6 @@ import data_store.users_data as ud
 import utils.print_utils as pu
 import constantes as c
 
-# TODO: main: Dani -> agregar funcion de historial,  y de editar libro. Meli -> carteles y prints del sistema en el
-#  login , recomendaciones
 
 # PROGRAMA PRINCIPAL :
 print("Bienvenido a la biblioteca...")

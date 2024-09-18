@@ -14,29 +14,12 @@ def busqueda_libros(clave, valor):
     :return libros: List, lista de titulos de libros que coinciden con la clave-valor enviados anteriormente y su status.
     """
     libros = []
-    clave_posicion = [
-        ["autor", 0],
-        ["titulo", 1],
-        ["genero", 2],
-        ["ISBN", 3],
-        ["editorial", 4],
-        ["año de publicacion", 5],
-        ["serie", 6],
-        ["nro de paginas", 7],
-        ["ejemplares", 8],
-    ]
-
-    indice = [
-        caracteristica[1]
-        for caracteristica in clave_posicion
-        if clave == caracteristica[0]
-    ][0]
 
     for libro in bd.libros:
-        if libro[indice] == valor:
-            titulo = libro[1]
-            disponibilidad = libro[9]
-            isbn = libro[3]
+        if libro[clave] == valor:
+            titulo = libro["titulo"]
+            disponibilidad = libro["disponibilidad"]
+            isbn = libro["isbn"]
             libros.append([titulo, disponibilidad, isbn])
 
     return libros
@@ -66,14 +49,14 @@ def cargar_libros(
     :return libros_cargados: List, lista de libros cargados a la biblioteca."""
 
     # chequear si el libro ya existe en la biblioteca
-
-    libros = sum(fila.count(ISBN) for fila in bd.libros)
-    if libros > 0:
-        for i, libro in enumerate(bd.libros):
-            if libro[3] == ISBN:
-                bd.libros[i][8] += cant_ejemplares
-                bd.libros[i][10] += cant_ejemplares
-
+    libro_en_stock = False
+    for libro in bd.libros:
+        if libro["isbn"] == ISBN:
+            libro_en_stock = True
+    
+    if libro_en_stock:
+        libro["cant_ejemplares"] =+ cant_ejemplares
+        libro["ejemplares_disponibles"] =+cant_ejemplares
     else:
         nuevo_libro = [
             autor,
