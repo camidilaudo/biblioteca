@@ -4,14 +4,14 @@ import data_store.users_data as ud
 import utils.print_utils as pu
 import constantes as c
 
-# TODO: main: Dani -> agregar funcion de historial,  y de editar libro. Meli -> carteles y prints del sistema en el
-#  login , recomendaciones
 
 # PROGRAMA PRINCIPAL :
 print("Bienvenido a la biblioteca...")
 print("1- Iniciar Sesión.")
 print("2- Registrarse.")
 
+
+# Ingresar al sistema como usuario pre - existente
 numero = int(input("Ingrese un número : "))
 while numero not in c.tipos_usuario:
     numero = input("Error. Ingrese un número correcto : ")
@@ -21,6 +21,8 @@ if numero == 1:
     contrasenia = input("Ingrese la contrasena del usuario: ")
 
     iniciar_sesion = us.login_usuario(usuario, contrasenia)
+
+# Ingresar al sistema creando un nuevo usuario 
 else:
     print("1- Biliotecario.")
     print("2- Cliente.")
@@ -90,6 +92,8 @@ elif iniciar_sesion == c.bibliotecario:
             print("2- Editar libro.")
             print("3- Cambiar Status.")
             numero = input("ERROR. Ingresá un número : ")
+
+# CARGAR LIBRO
         if numero == "1":
             titulo = input("Ingrese el titulo : ")
             autor = input("Ingrese el autor : ")
@@ -111,6 +115,9 @@ elif iniciar_sesion == c.bibliotecario:
                 nro_paginas,
                 cant_ejemplares,
             )
+# TODO:Queremos que le muestre por pantalla el diccionario actualizado? 
+
+#Editar libro
         elif numero == "2":
             ISBN_editar = int(input("Ingrese el ISBN que quiere editar: "))
             libro = bu.obtener_libro(ISBN=ISBN_editar)
