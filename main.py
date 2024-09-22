@@ -118,6 +118,8 @@ elif iniciar_sesion == c.bibliotecario:
 # TODO:Queremos que le muestre por pantalla el diccionario actualizado? 
 
 #Editar libro
+
+#TODO cuando devuelve el libro actualizado, no muestra el nuevo dato en pantalla
         elif numero == "2":
             ISBN_editar = int(input("Ingrese el ISBN que quiere editar: "))
             libro = bu.obtener_libro(ISBN=ISBN_editar)
@@ -128,27 +130,25 @@ elif iniciar_sesion == c.bibliotecario:
                 ISBN_editar = int(
                     input("Ingrese el ISBN del libro que quiere editar: ")
                 )
-                indice_editar = input("Ingrese el índice que quiere editar: ")
-                valor_editar = input("Ingrese el valor a reemplazar: ")
-                encontrar_libro = bu.obtener_libro(
-                    ISBN_editar, indice_editar, valor_editar
+                libro= bu.obtener_libro(
+                    ISBN_editar
                 )
 
             print("Libro encontrado: ")
 
             pu.imprimir_libro(libro)
 
-            numero = int(input("Ingresá un número para editar : "))
+            numero = int(input("Ingresá un número para editar o -1 para salir: "))
             while 7 < numero or numero < -1:
                 print("El numero ingresado es incorrecto.")
-                numero = input("Ingresá un número para editar : ")
+                numero = int (input("Ingresá un número para editar : "))
             if numero != -1:
                 nuevo_valor = input("Ingresá el nuevo valor:")
                 editar = bu.editar_libros(
                     ISBN=ISBN_editar, indice=numero, valor=nuevo_valor
                 )
             print("Libro editado con éxito: ")
-            pu.imprimir_libro(libro)
+            pu.imprimir_libro(editar)
         else:
             titulo = input("Ingrese el nombre del libro que quiere alquilar: ")
             libros = bu.busqueda_libros("titulo", titulo)

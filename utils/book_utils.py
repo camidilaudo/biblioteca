@@ -4,6 +4,8 @@ from data_store import books_data as bd
 
 from utils import users_utils as uu
 
+import constantes as c
+
 import random
 
 
@@ -97,10 +99,14 @@ def editar_libros(ISBN, indice, valor):
     :return libro: List, lista con lops metadatos del libro si el libro existe o None si el libro no existe.
     """
     # Busca el libro por ISBN
+
+    claves_bd = c.claves_bd
+
     for libro in bd.libros:
         if libro["isbn"] == ISBN:
-            libro[indice] = valor
-    return libro
+           print (claves_bd [indice])
+           libro[claves_bd[indice]] = valor
+           return libro
 
 
 def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
@@ -140,9 +146,9 @@ def recomendaciones(genero, usuario):
     historial = ud.historiales
     recomendaciones_por_genero = []
 
-    for fila in range(len(todos_los_libros)):
-        if genero == todos_los_libros[fila][2]:
-            recomendaciones_por_genero.append(todos_los_libros[fila][3])
+    for libro in todos_los_libros:
+        if libro["genero"]== genero:
+            recomendaciones_por_genero.append(todos_los_libros["isbn"])
 
     # comparar la lista de recomendaciones_por_genero con el historial recorriendolo con un for.
     # si alguno de recomendaciones NO esta en el historial lo añado a una nueva lista
@@ -156,9 +162,10 @@ def recomendaciones(genero, usuario):
                 aleatorio_libro = random.choice(recomendaciones_por_genero)
 
                 # que pasa si el usuario leyo todos los libros de ese genero de la biblioteca?
+    
 
-    for fila in range(len(todos_los_libros)):
-        if aleatorio_libro == todos_los_libros[fila][3]:
+    for fila in todos_los_libros:
+        if aleatorio_libro == todos_los_libros["isbn"]:
             return todos_los_libros[fila]
 
 

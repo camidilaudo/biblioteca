@@ -14,7 +14,7 @@ def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
     # Verifica si el nombre de usuario ya existe
 
     for nombre in ud.usuarios:
-        if nombre == ud.usuarios[1]:
+        if nombre == ud.usuarios["nombre"]:
             usuario_registrado = False
     # Agrega el tipo de usuario, nombre y contraseña a la matriz con los usuarios
     else:
@@ -31,11 +31,10 @@ def login_usuario(usuario, contra):
     """
     matriz_usuarios = ud.usuarios
     por_defecto = 3
-    for fila in range(len(matriz_usuarios)):
-        if usuario == matriz_usuarios[fila][1]:
-            if contra == matriz_usuarios[fila][2]:
-                return matriz_usuarios[fila][0]
-
+    for i in matriz_usuarios:
+        if usuario == i["nombre"]:
+            if contra == i ["contrasena"]:
+                return i ["tipo_usuario"]
     return por_defecto
 
 
@@ -67,12 +66,12 @@ def ver_propio_historial(usuario):
     todos_los_libros = bd.libros
     historial_nombres = []
     i = 0
-    while usuario != historial_general[i][0]:
+    while usuario != historial_general["nombre"]:
         i = i + 1
 
     for isbn in historial_general[i + 1]:
-        for j in range(len(todos_los_libros)):
-            if isbn == todos_los_libros[j][3]:
-                historial_nombres.append(todos_los_libros)[j][1]
+        for j in todos_los_libros:
+            if isbn == todos_los_libros["isbn"]:
+                historial_nombres.append(todos_los_libros)["titulo"]
 
     return historial_nombres
