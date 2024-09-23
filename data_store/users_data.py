@@ -11,12 +11,12 @@ usuarios= [
     {
         "tipo_usuario": 2,
         "nombre": "dani",
-        "contrasena": "123"
+        "contrasenia": "123"
     },
     {
         "tipo_usuario": 1,
         "nombre": "meli",
-        "contrasena": "123"
+        "contrasenia": "123"
     },
 ]
 

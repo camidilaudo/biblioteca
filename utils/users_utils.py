@@ -33,8 +33,8 @@ def login_usuario(usuario, contra):
     por_defecto = 3
     for i in matriz_usuarios:
         if usuario == i["nombre"]:
-            if contra == i ["contrasena"]:
-                return i ["tipo_usuario"]
+            if contra == i["contrasena"]:
+                return i["tipo_usuario"]
     return por_defecto
 
 
@@ -44,11 +44,11 @@ def agregar_libro_historial(nombre_usuario, isbn):
     :param isbn: Int, código ISBN del libro que retiro.
     :return historiales: Matrix, historial de todos los usuarios."""
     existe_usuario = False
-    for i, historial in enumerate (ud.historiales):
+    for i, historial in enumerate(ud.historiales):
         if historial[0] == nombre_usuario:
             existe_usuario = True
             indice_historial = i
-            i = len(ud.historiales)+1
+            i = len(ud.historiales) + 1
 
     if existe_usuario is True:
         ud.historiales[indice_historial][1].append(isbn)
