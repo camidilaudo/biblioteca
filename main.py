@@ -119,7 +119,6 @@ elif iniciar_sesion == c.bibliotecario:
 
 #Editar libro
 
-#TODO cuando devuelve el libro actualizado, no muestra el nuevo dato en pantalla
         elif numero == "2":
             ISBN_editar = int(input("Ingrese el ISBN que quiere editar: "))
             libro = bu.obtener_libro(ISBN=ISBN_editar)
@@ -149,6 +148,9 @@ elif iniciar_sesion == c.bibliotecario:
                 )
             print("Libro editado con éxito: ")
             pu.imprimir_libro(editar)
+
+#alquilar libro
+
         else:
             titulo = input("Ingrese el nombre del libro que quiere alquilar: ")
             libros = bu.busqueda_libros("titulo", titulo)
@@ -158,15 +160,22 @@ elif iniciar_sesion == c.bibliotecario:
                     "Presione 1 para continuar, 2 si desea realizar otra busqueda o -1 para salir: "
                 )
             )
-            while continuar == 2:
-                titulo = input("Ingrese el nombre del libro que quiere alquilar: ")
-                libros = bu.busqueda_libros("titulo", titulo)
-                print(f"Estos son los libros que coinciden con tu busqueda: {libros}")
-            if continuar == 1:
-                isbn = input("Ingrese el ISBN del libro que quiere alquilar: ")
-                cantidad_pedidos = input("Ingrese la cantidad de pedidos: ")
-                usuario = input("Ingrese el nombre de ususario que va a alquilarlos: ")
-                libro_alquilado = bu.alquilar_libro(isbn, cantidad_pedidos, usuario)
-                print(
-                    f"El libro se alquilo con exito, quedan {libro_alquilado[1]} unidades disponibles."
-                )
+
+            bandera = True
+
+            while bandera: 
+                while continuar == 2:
+                    titulo = input("Ingrese el nombre del libro que quiere alquilar: ")
+                    libros = bu.busqueda_libros("titulo", titulo)
+                    print(f"Estos son los libros que coinciden con tu busqueda: {libros}")
+                    continuar= int(input("Presione 1 para continuar, 2 si desea realizar otra busqueda o -1 para salir: "))
+                
+                if continuar == 1:
+                    isbn = int(input("Ingrese el ISBN del libro que quiere alquilar: "))
+                    cantidad_pedidos = int(input("Ingrese la cantidad de pedidos: "))
+                    usuario = input("Ingrese el nombre de ususario que va a alquilarlos: ")
+                    libro_alquilado = bu.alquilar_libro(isbn, cantidad_pedidos, usuario)
+                    print(
+                        f"El libro se alquilo con exito, quedan {libro_alquilado[1]} unidades disponibles."
+                    )
+                    bandera = False

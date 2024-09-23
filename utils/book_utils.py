@@ -117,18 +117,19 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
     :return: List, estado del libro y ejemplares disponibles."""
 
     libro = obtener_libro(ISBN=isbn)
-
     status_libro = libro["disponibilidad"]
     ejemplares_disponibles = libro["ejemplares_disponibles"]
 
-    if status_libro is True and ejemplares_disponibles > cant_pedidos:
+    if status_libro and ejemplares_disponibles > cant_pedidos:
+        ejemplares_disponibles = libro["ejemplares_disponibles"] - cant_pedidos
         libro["ejemplares_disponibles"] -= cant_pedidos
         uu.agregar_libro_historial(nombre_usuario, isbn)
 
     elif status_libro is True and ejemplares_disponibles == cant_pedidos:
         libro["ejemplares_disponibles"] = 0
         libro["disponibilidad"] = False
-
+        ejemplares_disponibles = 0
+        status_libro = False
         uu.agregar_libro_historial(nombre_usuario, isbn)
 
     return [status_libro, ejemplares_disponibles]

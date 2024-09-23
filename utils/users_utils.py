@@ -44,10 +44,11 @@ def agregar_libro_historial(nombre_usuario, isbn):
     :param isbn: Int, código ISBN del libro que retiro.
     :return historiales: Matrix, historial de todos los usuarios."""
     existe_usuario = False
-    for i, historial in ud.historiales:
+    for i, historial in enumerate (ud.historiales):
         if historial[0] == nombre_usuario:
             existe_usuario = True
             indice_historial = i
+            i = len(ud.historiales)+1
 
     if existe_usuario is True:
         ud.historiales[indice_historial][1].append(isbn)
