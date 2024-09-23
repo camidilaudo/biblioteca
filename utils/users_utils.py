@@ -13,30 +13,35 @@ def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
 
     # Verifica si el nombre de usuario ya existe
 
-    for nombre in ud.usuarios:
-        if nombre == ud.usuarios[1]:
+    for usuario in ud.usuarios:
+        if nombre == usuario["nombre"]:
             usuario_registrado = False
     # Agrega el tipo de usuario, nombre y contraseña a la matriz con los usuarios
-    else:
-        ud.usuarios.append([tipo_usuario, nombre, contrasenia_usuario])
+
+    if usuario_registrado:
+        nuevo_usuario = {
+            "tipo_usuario": int(tipo_usuario),
+            "nombre": nombre,
+            "contrasenia": contrasenia_usuario
+        }
+        ud.usuarios.append(nuevo_usuario)
     return usuario_registrado
 
 
-def login_usuario(usuario, contra):
+def login_usuario(nombre_usuario, contra):
     """Funcion para loguear el usuario. La corriente función busca poder disernir si la persona interesada busca
     ingresar
     al sistema como usuario o como administrador.
-    :param a: Str, tipo de usuario. 1 es usuario y 2 es administrador.
-    :return:Str, tipo_de_usuario.
+    :param usuario: Str, nombre de usuario del cliente.
+    :return:Str, contraseña del usuario.
     """
-    matriz_usuarios = ud.usuarios
-    por_defecto = 3
-    for fila in range(len(matriz_usuarios)):
-        if usuario == matriz_usuarios[fila][1]:
-            if contra == matriz_usuarios[fila][2]:
-                return matriz_usuarios[fila][0]
-
-    return por_defecto
+    dic_usuarios = ud.usuarios
+    tipo_usuario = 3
+    for usuario in dic_usuarios:
+        if nombre_usuario == usuario["nombre"]:
+            if contra == usuario["contrasenia"]:
+                tipo_usuario = usuario["tipo_usuario"]
+    return tipo_usuario
 
 
 def agregar_libro_historial(nombre_usuario, isbn):
@@ -45,10 +50,11 @@ def agregar_libro_historial(nombre_usuario, isbn):
     :param isbn: Int, código ISBN del libro que retiro.
     :return historiales: Matrix, historial de todos los usuarios."""
     existe_usuario = False
-    for i, historial in ud.historiales:
+    for i, historial in enumerate(ud.historiales):
         if historial[0] == nombre_usuario:
             existe_usuario = True
             indice_historial = i
+            i = len(ud.historiales) + 1
 
     if existe_usuario is True:
         ud.historiales[indice_historial][1].append(isbn)
@@ -67,12 +73,12 @@ def ver_propio_historial(usuario):
     todos_los_libros = bd.libros
     historial_nombres = []
     i = 0
-    while usuario != historial_general[i][0]:
+    while usuario != historial_general["nombre"]:
         i = i + 1
 
     for isbn in historial_general[i + 1]:
-        for j in range(len(todos_los_libros)):
-            if isbn == todos_los_libros[j][3]:
-                historial_nombres.append(todos_los_libros)[j][1]
+        for j in todos_los_libros:
+            if isbn == todos_los_libros["isbn"]:
+                historial_nombres.append(todos_los_libros)["titulo"]
 
     return historial_nombres

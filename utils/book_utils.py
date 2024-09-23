@@ -4,6 +4,8 @@ from data_store import books_data as bd
 
 from utils import users_utils as uu
 
+import constantes as c
+
 import random
 
 
@@ -26,15 +28,15 @@ def busqueda_libros(clave, valor):
 
 
 def cargar_libros(
-    titulo,
-    autor,
-    genero,
-    ISBN,
-    editorial,
-    anio_publicacion,
-    serie_libros,
-    nro_paginas,
-    cant_ejemplares,
+        titulo,
+        autor,
+        genero,
+        ISBN,
+        editorial,
+        anio_publicacion,
+        serie_libros,
+        nro_paginas,
+        cant_ejemplares,
 ):
     """Cargar libro en stock de biblioteca. Se pueden cargar varios ejemplares del mismo.
     :param titulo: Str, título del libro.
@@ -53,24 +55,25 @@ def cargar_libros(
     for libro in bd.libros:
         if libro["isbn"] == ISBN:
             libro_en_stock = True
-    
+
     if libro_en_stock:
-        libro["cant_ejemplares"] =+ cant_ejemplares
-        libro["ejemplares_disponibles"] =+cant_ejemplares
+        libro["cant_ejemplares"] = + cant_ejemplares
+        libro["ejemplares_disponibles"] = +cant_ejemplares
     else:
-        nuevo_libro = [
-            autor,
-            titulo,
-            genero,
-            ISBN,
-            editorial,
-            anio_publicacion,
-            serie_libros,
-            nro_paginas,
-            cant_ejemplares,
-            True,
-            cant_ejemplares,
-        ]
+
+        nuevo_libro = {
+            "autor": autor,
+            "titulo": titulo,
+            "genero": genero,
+            "isbn": ISBN,
+            "editorial": editorial,
+            "anio_publicacion": anio_publicacion,
+            "serie": serie_libros,
+            "nro_paginas": nro_paginas,
+            "cant_ejemplares": cant_ejemplares,
+            "disponibilidad": True,
+            "ejemplares_disponibles": cant_ejemplares,
+        }
         bd.libros.append(nuevo_libro)
 
     return bd.libros
@@ -97,10 +100,14 @@ def editar_libros(ISBN, indice, valor):
     :return libro: List, lista con lops metadatos del libro si el libro existe o None si el libro no existe.
     """
     # Busca el libro por ISBN
+
+    claves_bd = c.claves_bd
+
     for libro in bd.libros:
         if libro["isbn"] == ISBN:
-            libro[indice] = valor
-    return libro
+            print(claves_bd[indice])
+            libro[claves_bd[indice]] = valor
+            return libro
 
 
 def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
@@ -111,18 +118,19 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
     :return: List, estado del libro y ejemplares disponibles."""
 
     libro = obtener_libro(ISBN=isbn)
-
     status_libro = libro["disponibilidad"]
     ejemplares_disponibles = libro["ejemplares_disponibles"]
 
-    if status_libro is True and ejemplares_disponibles > cant_pedidos:
+    if status_libro and ejemplares_disponibles > cant_pedidos:
+        ejemplares_disponibles = libro["ejemplares_disponibles"] - cant_pedidos
         libro["ejemplares_disponibles"] -= cant_pedidos
         uu.agregar_libro_historial(nombre_usuario, isbn)
 
     elif status_libro is True and ejemplares_disponibles == cant_pedidos:
         libro["ejemplares_disponibles"] = 0
         libro["disponibilidad"] = False
-
+        ejemplares_disponibles = 0
+        status_libro = False
         uu.agregar_libro_historial(nombre_usuario, isbn)
 
     return [status_libro, ejemplares_disponibles]
@@ -140,9 +148,9 @@ def recomendaciones(genero, usuario):
     historial = ud.historiales
     recomendaciones_por_genero = []
 
-    for fila in range(len(todos_los_libros)):
-        if genero == todos_los_libros[fila][2]:
-            recomendaciones_por_genero.append(todos_los_libros[fila][3])
+    for libro in todos_los_libros:
+        if libro["genero"] == genero:
+            recomendaciones_por_genero.append(todos_los_libros["isbn"])
 
     # comparar la lista de recomendaciones_por_genero con el historial recorriendolo con un for.
     # si alguno de recomendaciones NO esta en el historial lo añado a una nueva lista
@@ -157,8 +165,8 @@ def recomendaciones(genero, usuario):
 
                 # que pasa si el usuario leyo todos los libros de ese genero de la biblioteca?
 
-    for fila in range(len(todos_los_libros)):
-        if aleatorio_libro == todos_los_libros[fila][3]:
+    for fila in todos_los_libros:
+        if aleatorio_libro == todos_los_libros["isbn"]:
             return todos_los_libros[fila]
 
 

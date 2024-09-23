@@ -1,8 +1,24 @@
 # ADMIN tipo de usuario 1
 # CLIENTE tipo de usuario 2
 
-# MATRIZ USUARIOS
-usuarios = [[1, "meli", "123"], [2, "cami", "123"], [2, "dani", "1"]]
+# DICCIONARIO USUARIOS
+usuarios= [
+    {
+        "tipo_usuario": 2,
+        "nombre": "dani",
+        "contrasenia": "123"
+    },
+    {
+        "tipo_usuario": 2,
+        "nombre": "dani",
+        "contrasenia": "123"
+    },
+    {
+        "tipo_usuario": 1,
+        "nombre": "meli",
+        "contrasenia": "123"
+    },
+]
 
 contrasenia_general = "ADMIN123"
 
