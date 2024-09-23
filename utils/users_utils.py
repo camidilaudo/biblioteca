@@ -29,9 +29,9 @@ def login_usuario(usuario, contra):
     :param a: Str, tipo de usuario. 1 es usuario y 2 es administrador.
     :return:Str, tipo_de_usuario.
     """
-    matriz_usuarios = ud.usuarios
+    dic_usuarios = ud.usuarios
     por_defecto = 3
-    for i in matriz_usuarios:
+    for i in dic_usuarios:
         if usuario == i["nombre"]:
             if contra == i["contrasena"]:
                 return i["tipo_usuario"]

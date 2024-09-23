@@ -1,7 +1,7 @@
 # ADMIN tipo de usuario 1
 # CLIENTE tipo de usuario 2
 
-# MATRIZ USUARIOS
+# DICCIONARIO USUARIOS
 usuarios= [
     {
         "tipo_usuario": 2,
