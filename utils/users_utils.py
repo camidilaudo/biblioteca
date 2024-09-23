@@ -1,3 +1,5 @@
+import pdb
+
 from data_store import users_data as ud
 from data_store import books_data as bd
 
@@ -54,7 +56,6 @@ def agregar_libro_historial(nombre_usuario, isbn):
         if historial[0] == nombre_usuario:
             existe_usuario = True
             indice_historial = i
-            i = len(ud.historiales) + 1
 
     if existe_usuario is True:
         ud.historiales[indice_historial][1].append(isbn)
@@ -68,17 +69,16 @@ def ver_propio_historial(usuario):
     """Funcion encargada de mostrar el historial de retiros del usuario.
     :param usuario: Str, nombre del usuario.
     :return historial_nombres: titulos del historial de retiros del usuario."""
-
     historial_general = ud.historiales
-    todos_los_libros = bd.libros
     historial_nombres = []
     i = 0
-    while usuario != historial_general["nombre"]:
+    pdb.set_trace()
+    while usuario != historial_general[i][0]:
         i = i + 1
 
-    for isbn in historial_general[i + 1]:
-        for j in todos_los_libros:
-            if isbn == todos_los_libros["isbn"]:
-                historial_nombres.append(todos_los_libros)["titulo"]
+    for isbn in historial_general[i][1]:
+        for libro in bd.libros:
+            if isbn == libro["isbn"]:
+                historial_nombres.append(libro["titulo"])
 
     return historial_nombres

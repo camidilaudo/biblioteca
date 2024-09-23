@@ -2,7 +2,7 @@
 # CLIENTE tipo de usuario 2
 
 # DICCIONARIO USUARIOS
-usuarios= [
+usuarios = [
     {
         "tipo_usuario": 2,
         "nombre": "dani",
@@ -26,8 +26,8 @@ contrasenia_general = "ADMIN123"
 
 # filas de la matriz = [nombre de usuario,[ISBN1, ISBN2]]
 historiales = [
-    ["meli"],
-    [9780747532743, 9780553573404],
-    ["dani"],
-    [9780007136834, 9780307474728],
+    ["meli",
+     [9780747532743, 9780553573404]],
+    ["dani",
+     [9780007136834, 9780307474728]],
 ]
