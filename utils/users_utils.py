@@ -1,4 +1,4 @@
-import pdb
+
 
 from data_store import users_data as ud
 from data_store import books_data as bd
@@ -72,7 +72,7 @@ def ver_propio_historial(usuario):
     historial_general = ud.historiales
     historial_nombres = []
     i = 0
-    pdb.set_trace()
+
     while usuario != historial_general[i][0]:
         i = i + 1
 

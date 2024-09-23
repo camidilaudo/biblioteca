@@ -20,7 +20,6 @@ usuarios = [
     },
 ]
 
-contrasenia_general = "ADMIN123"
 
 # MATRIZ DE HISTORIAL
 

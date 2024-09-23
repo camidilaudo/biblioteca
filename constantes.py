@@ -4,6 +4,7 @@
 bibliotecario = 1
 cliente = 2
 tipos_usuario = [cliente, bibliotecario]
+contrasenia_general = "ADMIN123"
 
 # TIPOS DE GENERO
 generos = [

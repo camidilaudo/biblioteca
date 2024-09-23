@@ -1,4 +1,4 @@
-import pdb
+
 
 import utils.users_utils as us
 import utils.book_utils as bu
@@ -64,11 +64,11 @@ def main():
     else:
         print("1- Bibliotecario.")
         print("2- Cliente.")
-        usuario = input("Ingrese un número para el tipo de usuario:  ")
+        usuario = int(input("Ingrese un número para el tipo de usuario:  "))
         if usuario == c.bibliotecario:
-            contrasena_general = input("Ingrese el código de acceso: ")
-            while contrasena_general != ud.contrasenia_general:
-                contrasena_general = input("ERROR. Ingresa el código de acceso correcto: ")
+            contrasenia_general = input("Ingrese el código de acceso: ")
+            while contrasenia_general != c.contrasenia_general:
+                contrasenia_general = input("ERROR. Ingresa el código de acceso correcto: ")
         registrar = False
         while registrar is False:
             nombre_usuario = input("Ingrese un nombre de usuario : ")
@@ -93,7 +93,7 @@ def main():
 
     # SI EL USUARIO QUE INICIA SEsIÓN ES EL CLIENTE
     numero = 0
-    while numero != -1:
+    while numero != "-1":
         print(f"¡Bienvenido {nombre_usuario}!")
         print("")
         print("Elegí una opción para continuar: ")
@@ -237,10 +237,11 @@ def main():
 
                 # alquilar libro
 
-                elif numero == 3:
+                elif numero == "3":
                     titulo = input("Ingrese el nombre del libro que quiere alquilar: ")
                     libros = bu.busqueda_libros("titulo", valor=titulo)
-                    print(f"Estos son los libros que coinciden con tu busqueda: {libros}")
+                    print(f"Estos son los libros que coinciden con tu busqueda: ")
+                    pu.imprimir_res_busqueda(libros)
                     continuar = int(
                         input(
                             "Presione 1 para continuar, 2 si desea realizar otra busqueda o -1 para salir: "
