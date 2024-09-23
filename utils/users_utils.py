@@ -20,7 +20,7 @@ def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
 
     if usuario_registrado:
         nuevo_usuario = {
-            "tipo_usuario": tipo_usuario,
+            "tipo_usuario": int(tipo_usuario),
             "nombre": nombre,
             "contrasenia": contrasenia_usuario
         }
