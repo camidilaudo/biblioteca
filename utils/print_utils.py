@@ -1,3 +1,5 @@
+import os
+
 # Funciones para imprimir por pantalla
 
 
@@ -30,3 +32,12 @@ def imprimir_historial(lista):
     print("Los libros que leiste hasta el momento son: ")
     for titulo in lista:
         print(f"Título: {titulo}")
+
+
+def limpiar_terminal():
+    """Función encargada de limpiar la terminal."""
+    if os.name == "nt":
+        os.system("cls")
+    else:
+        os.system("clear")
+

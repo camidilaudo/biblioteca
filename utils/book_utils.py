@@ -144,30 +144,26 @@ def recomendaciones(genero, usuario):
     :return libro: List, libro recomendado.
     """
 
-    todos_los_libros = bd.libros
-    historial = ud.historiales
     recomendaciones_por_genero = []
+    historial_preexistente = []
+    aleatorio_libro = None
 
-    for libro in todos_los_libros:
-        if libro["genero"] == genero:
-            recomendaciones_por_genero.append(todos_los_libros["isbn"])
+    for historial_usuario in ud.historiales:
+        if usuario == historial_usuario[0]:
+            historial_preexistente = historial_usuario[1]
+
+    for libro in bd.libros:
+        if (libro["genero"].lower() == genero) and (libro["isbn"] not in historial_preexistente):
+            recomendaciones_por_genero.append(libro)
 
     # comparar la lista de recomendaciones_por_genero con el historial recorriendolo con un for.
     # si alguno de recomendaciones NO esta en el historial lo añado a una nueva lista
     # el random lo aplico sobre esa lista nueva creada
 
-    aleatorio_libro = random.choice(recomendaciones_por_genero)
+    if len(recomendaciones_por_genero) > 0:
+        aleatorio_libro = random.choice(recomendaciones_por_genero)
 
-    for fila in range(len(historial)):
-        if usuario == historial[fila][0]:
-            while aleatorio_libro in historial[fila]:
-                aleatorio_libro = random.choice(recomendaciones_por_genero)
-
-                # que pasa si el usuario leyo todos los libros de ese genero de la biblioteca?
-
-    for fila in todos_los_libros:
-        if aleatorio_libro == todos_los_libros["isbn"]:
-            return todos_los_libros[fila]
+    return aleatorio_libro
 
 
 def borrar_libro(ISBN):

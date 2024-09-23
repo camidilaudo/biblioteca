@@ -10,21 +10,56 @@ import constantes as c
 
 # PROGRAMA PRINCIPAL :
 def main():
-    print("Bienvenido a la biblioteca...")
+    print("██████╗ ██╗███████╗███╗   ██╗██╗   ██╗███████╗███╗   ██╗██╗██████╗  ██████╗")
+    print("██╔══██╗██║██╔════╝████╗  ██║██║   ██║██╔════╝████╗  ██║██║██╔══██╗██╔═══██╗")
+    print("██████╔╝██║█████╗  ██╔██╗ ██║██║   ██║█████╗  ██╔██╗ ██║██║██║  ██║██║   ██║")
+    print("██╔══██╗██║██╔══╝  ██║╚██╗██║╚██╗ ██╔╝██╔══╝  ██║╚██╗██║██║██║  ██║██║   ██║")
+    print("██████╔╝██║███████╗██║ ╚████║ ╚████╔╝ ███████╗██║ ╚████║██║██████╔╝╚██████╔╝")
+    print("╚═════╝ ╚═╝╚══════╝╚═╝  ╚═══╝  ╚═══╝  ╚══════╝╚═╝  ╚═══╝╚═╝╚═════╝  ╚═════╝ ")
+
+    print(" █████╗     ██╗      █████╗ ")
+    print("██╔══██╗    ██║     ██╔══██╗ ")
+    print("███████║    ██║     ███████║  ")
+    print("██╔══██║    ██║     ██╔══██║ ")
+    print("██║  ██║    ███████╗██║  ██║  ")
+    print("╚═╝  ╚═╝    ╚══════╝╚═╝  ╚═╝  ")
+
+    print("██████╗ ██╗██████╗ ██╗     ██╗ ██████╗ ████████╗███████╗ ██████╗ █████╗ ")
+    print("██╔══██╗██║██╔══██╗██║     ██║██╔═══██╗╚══██╔══╝██╔════╝██╔════╝██╔══██╗")
+    print("██████╔╝██║██████╔╝██║     ██║██║   ██║   ██║   █████╗  ██║     ███████║")
+    print("██╔══██╗██║██╔══██╗██║     ██║██║   ██║   ██║   ██╔══╝  ██║     ██╔══██║")
+    print("██████╔╝██║██████╔╝███████╗██║╚██████╔╝   ██║   ███████╗╚██████╗██║  ██║")
+    print("╚═════╝ ╚═╝╚═════╝ ╚══════╝╚═╝ ╚═════╝    ╚═╝   ╚══════╝ ╚═════╝╚═╝  ╚═╝")
+
+    print("                                      _   _")
+    print("_ __   _____      _____ _ __ ___  __| | | |__  _   _ ")
+    print("| '_ \ / _ \ \ /\ / / _ \ '__/ _ \/ _` | | '_ \| | | |")
+    print("| |_) | (_) \ V  V /  __/ | |  __/ (_| | | |_) | |_| |")
+    print("| .__/ \___/ \_/\_/ \___|_|  \___|\__,_| |_.__/ \__, |")
+    print("|_|__              _    _   _       _           |___/ ")
+    print("| __ )  ___   ___ | | _| | | |_   _| |__              ")
+    print("|  _ \ / _ \ / _ \| |/ / |_| | | | | '_ \             ")
+    print("| |_) | (_) | (_) |   <|  _  | |_| | |_) |            ")
+    print("|____/ \___/ \___/|_|\_\_| |_|\__,_|_.__/             ")
+
+    input("Para continuar presione ENTER: ")
+
+    pu.limpiar_terminal()
+    print("Ingrese una opción: ")
     print("1- Iniciar Sesión.")
     print("2- Registrarse.")
 
     # Ingresar al sistema como usuario pre - existente
     numero = int(input("Ingrese un número : "))
     while numero not in c.tipos_usuario:
-        numero = int(input("Error. Ingrese un número correcto : "))
+        numero = int(input("ERROR. Ingrese un número correcto : "))
     if numero == 1:
 
-        usuario = input("Ingrese nombre de usuario:  ")
-        contrasenia = input("Ingrese la contrasena del usuario: ")
+        nombre_usuario = input("Ingrese nombre de usuario:  ")
+        contrasenia = input("Ingrese la contraseña del usuario: ")
 
-        iniciar_sesion = us.login_usuario(usuario, contrasenia)
-
+        iniciar_sesion = us.login_usuario(nombre_usuario, contrasenia)
+        pu.limpiar_terminal()
     # Ingresar al sistema creando un nuevo usuario
     else:
         print("1- Bibliotecario.")
@@ -33,7 +68,7 @@ def main():
         if usuario == c.bibliotecario:
             contrasena_general = input("Ingrese el código de acceso: ")
             while contrasena_general != ud.contrasenia_general:
-                contrasena_general = input("Error. Ingresa el código de acceso correcto: ")
+                contrasena_general = input("ERROR. Ingresa el código de acceso correcto: ")
         registrar = False
         while registrar is False:
             nombre_usuario = input("Ingrese un nombre de usuario : ")
@@ -46,19 +81,22 @@ def main():
             registrar = us.registrar_usuario(usuario, nombre_usuario, contrasenia)
             if registrar is False:
                 print("El usuario ingresado ya existe. Volver a intentar: ")
-
+        pu.limpiar_terminal()
         print("Usuario registrado correctamente !")
         iniciar_sesion = us.login_usuario(nombre_usuario, contrasenia)
 
     while iniciar_sesion not in c.tipos_usuario:
         print("Su usuario o contrasenia es incorrecta")
-        usuario = input("Ingrese nombre de usuario:  ")
+        nombre_usuario = input("Ingrese nombre de usuario:  ")
         contrasenia = input("Ingrese la contrasena del usuario: ")
-        iniciar_sesion = us.login_usuario(usuario, contrasenia)
+        iniciar_sesion = us.login_usuario(nombre_usuario, contrasenia)
 
     # SI EL USUARIO QUE INICIA SEsIÓN ES EL CLIENTE
     numero = 0
     while numero != -1:
+        print(f"¡Bienvenido {nombre_usuario}!")
+        print("")
+        print("Elegí una opción para continuar: ")
         if iniciar_sesion == c.cliente:
             print("1- Buscar libros.")
             print("2- Buscar información detallada de un libro.")
@@ -66,33 +104,54 @@ def main():
             print("4- Ver mi historial")
             print("O presione -1 para finalizar.")
             numero = input("Ingresá un número : ")
+            print("---------------------------------------------------------------")
             while numero != "1" and numero != "2" and numero != "3" and numero != "4" and numero != "-1":
+                print("ERROR. Opción incorrecta.")
+                print("")
+                print("Elegí una opción para continuar: ")
                 print("1- Buscar libros.")
                 print("2- Obtener un libro.")
                 print("3- Recomendaciones.")
                 print("4- Ver mi historial")
                 print("O presione -1 para finalizar.")
-                numero = input("Error. Ingresá un número correcto : ")
+                numero = input("Ingresá un número correcto : ")
+                print("---------------------------------------------------------------")
             if numero == "1":
                 clave = str(input("Ingrese el campo por el cual va a realizar la búsqueda: "))
                 valor = str(input("Ingrese el valor del campo: "))
                 libros_encontrados = bu.busqueda_libros(clave, valor)
                 print(f"Se encontraron {len(libros_encontrados)}")
                 pu.imprimir_res_busqueda(libros_encontrados)
+                print("---------------------------------------------------------------")
+                input("Para continuar presione ENTER: ")
 
             elif numero == "2":
                 ISBN = int(input("Ingrese el ISBN del libro que quiere obtener informacion detallada: "))
                 libro = bu.obtener_libro(ISBN)
                 pu.imprimir_libro(libro)
+                print("---------------------------------------------------------------")
+                input("Para continuar presione ENTER: ")
             elif numero == "4":
-                mi_historial = us.ver_propio_historial(usuario=usuario)
+                mi_historial = us.ver_propio_historial(usuario=nombre_usuario)
                 pu.imprimir_historial(mi_historial)
+                print("---------------------------------------------------------------")
+                input("Para continuar presione ENTER: ")
             elif numero == "3":
                 genero_libro = input("Ingrese un género: ")
-                recomendacion_libro = bu.recomendaciones(genero_libro, usuario)
-                pu.imprimir_libro(recomendacion_libro)
+                recomendacion_libro = bu.recomendaciones(genero_libro, nombre_usuario)
+                if recomendacion_libro is None:
+                    print("¡Te leiste todos los libros de esta categoria!")
+                    print("Podes volver a probar con otro genero.")
+                else:
+                    print("Te recomendamos este libro: ")
+                    print("")
+                    pu.imprimir_libro(recomendacion_libro)
+                print("---------------------------------------------------------------")
+                input("Para continuar presione ENTER: ")
             else:
                 print("¡Muchas gracias por visitar nuestra biblioteca!")
+
+            pu.limpiar_terminal()
 
         # SI EL USUARIO QUE INICIA SESIÓN ES EL BIBLIOTECARIO
         elif iniciar_sesion == c.bibliotecario:
@@ -102,10 +161,15 @@ def main():
                 print("3- Alquilar libro.")
                 print("O presione -1 para finalizar.")
                 numero = input("Ingresá un número : ")
+                print("---------------------------------------------------------------")
                 while numero != "1" and numero != "2" and numero != "3" and numero != "-1":
-                    print("1- Cargar libros.")
-                    print("2- Editar libro.")
-                    print("3- Cambiar Status.")
+                    print("ERROR. Opción incorrecta.")
+                    print("")
+                    print("Elegí una opción para continuar: ")
+                    print("1- Buscar libros.")
+                    print("2- Obtener un libro.")
+                    print("3- Recomendaciones.")
+                    print("4- Ver mi historial")
                     print("O presione -1 para finalizar.")
                     numero = input("ERROR. Ingresá un número : ")
 
@@ -135,6 +199,7 @@ def main():
                     for libro in registrar_libros:
                         print("***************************************************************")
                         pu.imprimir_libro(libro)
+                    input("Para continuar presione ENTER: ")
 
 
 
@@ -204,6 +269,7 @@ def main():
                             bandera = False
                 else:
                     print("¡Muchas gracias por visitar nuestra biblioteca!")
+                pu.limpiar_terminal()
 
 
 main()
