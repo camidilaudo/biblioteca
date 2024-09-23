@@ -18,7 +18,7 @@ def busqueda_libros(clave, valor):
     libros = []
 
     for libro in bd.libros:
-        if libro[clave].lower() == valor:
+        if libro[clave].lower() == valor.lower():
             titulo = libro["titulo"]
             disponibilidad = libro["disponibilidad"]
             isbn = libro["isbn"]
