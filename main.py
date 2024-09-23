@@ -2,6 +2,7 @@ import utils.users_utils as us
 import utils.book_utils as bu
 import data_store.users_data as ud
 import utils.print_utils as pu
+import data_store.books_data as bd
 import constantes as c
 
 
@@ -115,7 +116,12 @@ def main():
                     nro_paginas,
                     cant_ejemplares,
                 )
-            # TODO:Queremos que le muestre por pantalla el diccionario actualizado?
+                print("Estos son los libros que estan actualmente en la biblioteca: ")
+                for libro in registrar_libros:
+                    print("***************************************************************")
+                    pu.imprimir_libro(libro)
+
+
 
             # Editar libro
 

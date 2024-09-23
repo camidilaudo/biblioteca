@@ -28,15 +28,15 @@ def busqueda_libros(clave, valor):
 
 
 def cargar_libros(
-    titulo,
-    autor,
-    genero,
-    ISBN,
-    editorial,
-    anio_publicacion,
-    serie_libros,
-    nro_paginas,
-    cant_ejemplares,
+        titulo,
+        autor,
+        genero,
+        ISBN,
+        editorial,
+        anio_publicacion,
+        serie_libros,
+        nro_paginas,
+        cant_ejemplares,
 ):
     """Cargar libro en stock de biblioteca. Se pueden cargar varios ejemplares del mismo.
     :param titulo: Str, título del libro.
@@ -55,24 +55,25 @@ def cargar_libros(
     for libro in bd.libros:
         if libro["isbn"] == ISBN:
             libro_en_stock = True
-    
+
     if libro_en_stock:
-        libro["cant_ejemplares"] =+ cant_ejemplares
-        libro["ejemplares_disponibles"] =+cant_ejemplares
+        libro["cant_ejemplares"] = + cant_ejemplares
+        libro["ejemplares_disponibles"] = +cant_ejemplares
     else:
-        nuevo_libro = [
-            autor,
-            titulo,
-            genero,
-            ISBN,
-            editorial,
-            anio_publicacion,
-            serie_libros,
-            nro_paginas,
-            cant_ejemplares,
-            True,
-            cant_ejemplares,
-        ]
+
+        nuevo_libro = {
+            "autor": autor,
+            "titulo": titulo,
+            "genero": genero,
+            "isbn": ISBN,
+            "editorial": editorial,
+            "anio_publicacion": anio_publicacion,
+            "serie": serie_libros,
+            "nro_paginas": nro_paginas,
+            "cant_ejemplares": cant_ejemplares,
+            "disponibilidad": True,
+            "ejemplares_disponibles": cant_ejemplares,
+        }
         bd.libros.append(nuevo_libro)
 
     return bd.libros
@@ -104,9 +105,9 @@ def editar_libros(ISBN, indice, valor):
 
     for libro in bd.libros:
         if libro["isbn"] == ISBN:
-           print (claves_bd [indice])
-           libro[claves_bd[indice]] = valor
-           return libro
+            print(claves_bd[indice])
+            libro[claves_bd[indice]] = valor
+            return libro
 
 
 def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
@@ -148,7 +149,7 @@ def recomendaciones(genero, usuario):
     recomendaciones_por_genero = []
 
     for libro in todos_los_libros:
-        if libro["genero"]== genero:
+        if libro["genero"] == genero:
             recomendaciones_por_genero.append(todos_los_libros["isbn"])
 
     # comparar la lista de recomendaciones_por_genero con el historial recorriendolo con un for.
@@ -163,7 +164,6 @@ def recomendaciones(genero, usuario):
                 aleatorio_libro = random.choice(recomendaciones_por_genero)
 
                 # que pasa si el usuario leyo todos los libros de ese genero de la biblioteca?
-    
 
     for fila in todos_los_libros:
         if aleatorio_libro == todos_los_libros["isbn"]:
