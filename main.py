@@ -14,7 +14,7 @@ def main():
     # Ingresar al sistema como usuario pre - existente
     numero = int(input("Ingrese un número : "))
     while numero not in c.tipos_usuario:
-        numero = input("Error. Ingrese un número correcto : ")
+        numero = int(input("Error. Ingrese un número correcto : "))
     if numero == 1:
 
         usuario = input("Ingrese nombre de usuario:  ")
@@ -31,19 +31,19 @@ def main():
             contrasena_general = input("Ingrese el código de acceso: ")
             while contrasena_general != ud.contrasenia_general:
                 contrasena_general = input("Error. Ingresa el código de acceso correcto: ")
-
-        nombre_usuario = input("Ingrese un nombre de usuario : ")
-        contrasenia = input("Ingrese la contrasena del usuario: ")
-        verificar_contrasena = input("Volvé a ingresar la contrasena : ")
-        while contrasenia != verificar_contrasena:
-            print("Error. Las contraseñas no coinciden")
+        registrar = False
+        while registrar is False:
+            nombre_usuario = input("Ingrese un nombre de usuario : ")
             contrasenia = input("Ingrese la contrasena del usuario: ")
             verificar_contrasena = input("Volvé a ingresar la contrasena : ")
-        registrar = us.registrar_usuario(usuario, nombre_usuario, contrasenia)
-        while registrar is False:
-            print("El usuario ingresado ya existe. Volver a intentar: ")
-            usuario = input("Ingrese un nombre de usuario: ")
-            registrar = us.registrar_usuario(usuario, contrasenia, verificar_contrasena)
+            while contrasenia != verificar_contrasena:
+                print("Error. Las contraseñas no coinciden")
+                contrasenia = input("Ingrese la contrasena del usuario: ")
+                verificar_contrasena = input("Volvé a ingresar la contrasena : ")
+            registrar = us.registrar_usuario(usuario, nombre_usuario, contrasenia)
+            if registrar is False:
+                print("El usuario ingresado ya existe. Volver a intentar: ")
+
         print("Usuario registrado correctamente !")
         iniciar_sesion = us.login_usuario(nombre_usuario, contrasenia)
 

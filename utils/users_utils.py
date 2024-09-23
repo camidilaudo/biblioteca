@@ -13,29 +13,35 @@ def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
 
     # Verifica si el nombre de usuario ya existe
 
-    for nombre in ud.usuarios:
-        if nombre == ud.usuarios["nombre"]:
+    for usuario in ud.usuarios:
+        if nombre == usuario["nombre"]:
             usuario_registrado = False
     # Agrega el tipo de usuario, nombre y contraseña a la matriz con los usuarios
-    else:
-        ud.usuarios.append([tipo_usuario, nombre, contrasenia_usuario])
+
+    if usuario_registrado:
+        nuevo_usuario = {
+            "tipo_usuario": tipo_usuario,
+            "nombre": nombre,
+            "contrasenia": contrasenia_usuario
+        }
+        ud.usuarios.append(nuevo_usuario)
     return usuario_registrado
 
 
-def login_usuario(usuario, contra):
+def login_usuario(nombre_usuario, contra):
     """Funcion para loguear el usuario. La corriente función busca poder disernir si la persona interesada busca
     ingresar
     al sistema como usuario o como administrador.
-    :param a: Str, tipo de usuario. 1 es usuario y 2 es administrador.
-    :return:Str, tipo_de_usuario.
+    :param usuario: Str, nombre de usuario del cliente.
+    :return:Str, contraseña del usuario.
     """
     dic_usuarios = ud.usuarios
-    por_defecto = 3
-    for i in dic_usuarios:
-        if usuario == i["nombre"]:
-            if contra == i["contrasena"]:
-                return i["tipo_usuario"]
-    return por_defecto
+    tipo_usuario = 3
+    for usuario in dic_usuarios:
+        if nombre_usuario == usuario["nombre"]:
+            if contra == usuario["contrasenia"]:
+                tipo_usuario = usuario["tipo_usuario"]
+    return tipo_usuario
 
 
 def agregar_libro_historial(nombre_usuario, isbn):
