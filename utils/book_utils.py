@@ -28,15 +28,15 @@ def busqueda_libros(clave, valor):
 
 
 def cargar_libros(
-        titulo,
-        autor,
-        genero,
-        ISBN,
-        editorial,
-        anio_publicacion,
-        serie_libros,
-        nro_paginas,
-        cant_ejemplares,
+    titulo,
+    autor,
+    genero,
+    ISBN,
+    editorial,
+    anio_publicacion,
+    serie_libros,
+    nro_paginas,
+    cant_ejemplares,
 ):
     """Cargar libro en stock de biblioteca. Se pueden cargar varios ejemplares del mismo.
     :param titulo: Str, título del libro.
@@ -57,7 +57,7 @@ def cargar_libros(
             libro_en_stock = True
 
     if libro_en_stock:
-        libro["cant_ejemplares"] = + cant_ejemplares
+        libro["cant_ejemplares"] = +cant_ejemplares
         libro["ejemplares_disponibles"] = +cant_ejemplares
     else:
 
@@ -91,6 +91,7 @@ def obtener_libro(ISBN):
 
     return libro_encontrado
 
+
 def editar_libros(ISBN, indice, valor):
     """Editar los metadatos de un libro.
     :param ISBN: Int, International Standard Book Number del libro.
@@ -108,7 +109,6 @@ def editar_libros(ISBN, indice, valor):
             libro[claves_bd[indice]] = valor
             libro_editado = libro
     return libro_editado
-
 
 
 def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
@@ -157,7 +157,9 @@ def recomendaciones(genero, usuario):
             historial_preexistente = historial_usuario[1]
 
     for libro in bd.libros:
-        if (libro["genero"].lower() == genero) and (libro["isbn"] not in historial_preexistente):
+        if (libro["genero"].lower() == genero) and (
+            libro["isbn"] not in historial_preexistente
+        ):
             recomendaciones_por_genero.append(libro)
 
     # comparar la lista de recomendaciones_por_genero con el historial recorriendolo con un for.
@@ -175,7 +177,7 @@ def borrar_libro(ISBN):
     :param ISBN: Int, codigo ISBN del libro que se quiere eliminar de la biblioteca.
     :return bd.libros: Matrix, biblioteca actualizada."""
     bandera = False
-    for i, libro in enumerate (bd.libros):
+    for i, libro in enumerate(bd.libros):
         if ISBN == libro["isbn"]:
             del bd.libros[i]
             bandera = True

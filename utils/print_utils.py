@@ -40,4 +40,3 @@ def limpiar_terminal():
         os.system("cls")
     else:
         os.system("clear")
-
