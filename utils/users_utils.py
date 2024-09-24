@@ -1,5 +1,3 @@
-
-
 from data_store import users_data as ud
 from data_store import books_data as bd
 
@@ -24,7 +22,7 @@ def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
         nuevo_usuario = {
             "tipo_usuario": int(tipo_usuario),
             "nombre": nombre,
-            "contrasenia": contrasenia_usuario
+            "contrasenia": contrasenia_usuario,
         }
         ud.usuarios.append(nuevo_usuario)
     return usuario_registrado
@@ -81,5 +79,4 @@ def ver_propio_historial(usuario):
         for libro in bd.libros:
             if isbn == libro["isbn"]:
                 historial_nombres.append(libro["titulo"])
-
-    return historial_nombres
+        return historial_nombres

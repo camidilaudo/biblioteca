@@ -1,6 +1,5 @@
 libros = [
     # [Autor, Título, Género, ISBN, Editorial, Año de Publicación, Serie, Nro. Páginas, Cant. Ejemplares, Disponibilidad, Ejemplares Disponibles]
-
     {
         "autor": "J.K. Rowling",
         "titulo": "Harry Potter y la Piedra Filosofal",
