@@ -29,7 +29,7 @@ def main():
 
     # Ingresar al sistema como usuario pre - existente
     numero_inicio = int(input("Ingrese un número : "))
-    while numero_inicio not in c.tipos_usuario:
+    while numero_inicio not in [1, 2]:
         numero_inicio = int(input("ERROR. Ingrese un número correcto : "))
     if numero_inicio == 1:
 
@@ -86,11 +86,11 @@ def main():
             numero = input("Ingresá un número : ")
             print("---------------------------------------------------------------")
             while (
-                numero != "1"
-                and numero != "2"
-                and numero != "3"
-                and numero != "4"
-                and numero != "-1"
+                    numero != "1"
+                    and numero != "2"
+                    and numero != "3"
+                    and numero != "4"
+                    and numero != "-1"
             ):
                 print("ERROR. Opción incorrecta.")
                 print("")
@@ -172,11 +172,11 @@ def main():
                 numero = input("Ingresá un número : ")
                 print("---------------------------------------------------------------")
                 while (
-                    numero != "1"
-                    and numero != "2"
-                    and numero != "3"
-                    and numero != "-1"
-                    and numero != "4"
+                        numero != "1"
+                        and numero != "2"
+                        and numero != "3"
+                        and numero != "-1"
+                        and numero != "4"
                 ):
                     print("ERROR. Opción incorrecta.")
                     print("")
