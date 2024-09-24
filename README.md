@@ -15,6 +15,7 @@ Crear un sistema de gestión para bibliotecas que permita realizar un control de
  - login_usuario  
  - cambiar_status_usuario
  - borrar_libro
+ - ver_propio_historial
     
 ### Di Laudo, Camila  
  - registrar_usuarios  
