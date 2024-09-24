@@ -4,7 +4,7 @@
 # DICCIONARIO USUARIOS
 usuarios = [
     {"tipo_usuario": 2, "nombre": "dani", "contrasenia": "123"},
-    {"tipo_usuario": 2, "nombre": "dani", "contrasenia": "123"},
+    {"tipo_usuario": 2, "nombre": "cami", "contrasenia": "123"},
     {"tipo_usuario": 1, "nombre": "meli", "contrasenia": "123"},
 ]
 
