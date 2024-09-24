@@ -81,5 +81,5 @@ def ver_propio_historial(usuario):
         for libro in bd.libros:
             if isbn == libro["isbn"]:
                 historial_nombres.append(libro["titulo"])
+        return historial_nombres
 
-    return historial_nombres

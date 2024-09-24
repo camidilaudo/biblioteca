@@ -91,7 +91,6 @@ def obtener_libro(ISBN):
 
     return libro_encontrado
 
-
 def editar_libros(ISBN, indice, valor):
     """Editar los metadatos de un libro.
     :param ISBN: Int, International Standard Book Number del libro.
@@ -102,12 +101,14 @@ def editar_libros(ISBN, indice, valor):
     # Busca el libro por ISBN
 
     claves_bd = c.claves_bd
+    libro_editado = None
 
     for libro in bd.libros:
         if libro["isbn"] == ISBN:
-            print(claves_bd[indice])
             libro[claves_bd[indice]] = valor
-            return libro
+            libro_editado = libro
+    return libro_editado
+
 
 
 def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
@@ -132,6 +133,9 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
         ejemplares_disponibles = 0
         status_libro = False
         uu.agregar_libro_historial(nombre_usuario, isbn)
+    elif status_libro is True and ejemplares_disponibles > cant_pedidos:
+        ejemplares_disponibles = -1
+        status_libro = False
 
     return [status_libro, ejemplares_disponibles]
 
@@ -170,9 +174,10 @@ def borrar_libro(ISBN):
     """Eliminar libro de la biblioteca.
     :param ISBN: Int, codigo ISBN del libro que se quiere eliminar de la biblioteca.
     :return bd.libros: Matrix, biblioteca actualizada."""
-
-    for i, libro in bd.libros:
+    bandera = False
+    for i, libro in enumerate (bd.libros):
         if ISBN == libro["isbn"]:
             del bd.libros[i]
+            bandera = True
 
-    return bd.libros
+    return bandera

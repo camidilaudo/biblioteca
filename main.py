@@ -28,10 +28,10 @@ def main():
     print("2- Registrarse.")
 
     # Ingresar al sistema como usuario pre - existente
-    numero = int(input("Ingrese un número : "))
-    while numero not in c.tipos_usuario:
-        numero = int(input("ERROR. Ingrese un número correcto : "))
-    if numero == 1:
+    numero_inicio = int(input("Ingrese un número : "))
+    while numero_inicio not in c.tipos_usuario:
+        numero_inicio = int(input("ERROR. Ingrese un número correcto : "))
+    if numero_inicio == 1:
 
         nombre_usuario = input("Ingrese nombre de usuario:  ")
         contrasenia = input("Ingrese la contraseña del usuario: ")
@@ -94,6 +94,7 @@ def main():
                 print("O presione -1 para finalizar.")
                 numero = input("Ingresá un número correcto : ")
                 print("---------------------------------------------------------------")
+# Buscar libro
             if numero == "1":
                 clave = str(input("Ingrese el campo por el cual va a realizar la búsqueda: "))
                 valor = str(input("Ingrese el valor del campo: "))
@@ -102,6 +103,8 @@ def main():
                 pu.imprimir_res_busqueda(libros_encontrados)
                 print("---------------------------------------------------------------")
                 input("Para continuar presione ENTER: ")
+
+#Info especifica del libro
 
             elif numero == "2":
                 ISBN = int(input("Ingrese el ISBN del libro que quiere obtener informacion detallada: "))
@@ -112,11 +115,20 @@ def main():
                     print("No encontramos el libro, volve a intentar!")
                 print("---------------------------------------------------------------")
                 input("Para continuar presione ENTER: ")
-            elif numero == "4":
-                mi_historial = us.ver_propio_historial(usuario=nombre_usuario)
-                pu.imprimir_historial(mi_historial)
+
+#ver propio historial
+
+            elif numero== "4":
+                if numero_inicio == 2:
+                    print ("Todavia no tienes libros en tu historial")
+                else: 
+                     mi_historial = us.ver_propio_historial(usuario=nombre_usuario)
+                     pu.imprimir_historial(mi_historial)
                 print("---------------------------------------------------------------")
                 input("Para continuar presione ENTER: ")
+
+#recomendaciones
+
             elif numero == "3":
                 genero_libro = input("Ingrese un género: ")
                 recomendacion_libro = bu.recomendaciones(genero_libro, nombre_usuario)
@@ -134,16 +146,18 @@ def main():
 
             pu.limpiar_terminal()
 
-        # SI EL USUARIO QUE INICIA SESIÓN ES EL BIBLIOTECARIO
+  # SI EL USUARIO QUE INICIA SESIÓN ES EL BIBLIOTECARIO
+
         elif iniciar_sesion == c.bibliotecario:
             if iniciar_sesion == c.bibliotecario:
                 print("1- Cargar libros.")
                 print("2- Editar libro.")
                 print("3- Alquilar libro.")
+                print("4- Borrar libro.")
                 print("O presione -1 para finalizar.")
                 numero = input("Ingresá un número : ")
                 print("---------------------------------------------------------------")
-                while numero != "1" and numero != "2" and numero != "3" and numero != "-1":
+                while numero != "1" and numero != "2" and numero != "3" and numero != "-1" and numero != "4":
                     print("ERROR. Opción incorrecta.")
                     print("")
                     print("Elegí una opción para continuar: ")
@@ -154,7 +168,7 @@ def main():
                     print("O presione -1 para finalizar.")
                     numero = input("ERROR. Ingresá un número : ")
 
-                # CARGAR LIBRO
+  # CARGAR LIBRO
                 if numero == "1":
                     titulo = input("Ingrese el titulo : ")
                     autor = input("Ingrese el autor : ")
@@ -182,9 +196,7 @@ def main():
                         pu.imprimir_libro(libro)
                     input("Para continuar presione ENTER: ")
 
-
-
-                # Editar libro
+ # Editar libro
 
                 elif numero == "2":
                     ISBN_editar = int(input("Ingrese el ISBN que quiere editar: "))
@@ -205,18 +217,23 @@ def main():
                     pu.imprimir_libro(libro)
 
                     numero = int(input("Ingresá un número para editar o -1 para salir: "))
-                    while 7 < numero or numero < -1:
+                    while 9 < numero or numero < -1:
                         print("El numero ingresado es incorrecto.")
                         numero = int(input("Ingresá un número para editar : "))
                     if numero != -1:
                         nuevo_valor = input("Ingresá el nuevo valor:")
-                        editar = bu.editar_libros(
+                        libro_editado = bu.editar_libros(
                             ISBN=ISBN_editar, indice=numero, valor=nuevo_valor
                         )
-                    print("Libro editado con éxito: ")
-                    pu.imprimir_libro(editar)
+                        if libro_editado is not None:
+                            print("Libro editado con éxito: ")
+                            pu.imprimir_libro(libro_editado)
+                        else:
+                            print("Libro no encontrado")
+                    input("Para continuar presione ENTER: ")
 
-                # alquilar libro
+
+# alquilar libro
 
                 elif numero == "3":
                     titulo = input("Ingrese el nombre del libro que quiere alquilar: ")
@@ -249,6 +266,12 @@ def main():
                                 f"El libro se alquilo con exito, quedan {libro_alquilado[1]} unidades disponibles."
                             )
                             bandera = False
+                
+                elif numero == "4":
+                    libro_borrado = int (input ("Ingrese en ISBN del libro que desea borrar: "))
+                    borrar_libro = bu.borrar_libro (libro_borrado)
+                    if borrar_libro == True:
+                        print ("Su libro se ha borrado con exito")
                 else:
                     print("¡Muchas gracias por visitar nuestra biblioteca!")
                 pu.limpiar_terminal()
