@@ -89,11 +89,11 @@ def main():
             numero = input("Ingresá un número : ")
             print("---------------------------------------------------------------")
             while (
-                numero != "1"
-                and numero != "2"
-                and numero != "3"
-                and numero != "4"
-                and numero != "-1"
+                    numero != "1"
+                    and numero != "2"
+                    and numero != "3"
+                    and numero != "4"
+                    and numero != "-1"
             ):
                 print("ERROR. Opción incorrecta.")
                 print("")
@@ -175,11 +175,11 @@ def main():
                 numero = input("Ingresá un número : ")
                 print("---------------------------------------------------------------")
                 while (
-                    numero != "1"
-                    and numero != "2"
-                    and numero != "3"
-                    and numero != "-1"
-                    and numero != "4"
+                        numero != "1"
+                        and numero != "2"
+                        and numero != "3"
+                        and numero != "-1"
+                        and numero != "4"
                 ):
                     print("ERROR. Opción incorrecta.")
                     print("")
@@ -248,7 +248,10 @@ def main():
                         print("El numero ingresado es incorrecto.")
                         numero = int(input("Ingresá un número para editar : "))
                     if numero != -1:
-                        nuevo_valor = input("Ingresá el nuevo valor:")
+                        if numero in (4, 6, 7, 9):
+                            nuevo_valor = int(input("Ingresá el nuevo valor:"))
+                        else:
+                            nuevo_valor = input("Ingresá el nuevo valor:")
                         libro_editado = bu.editar_libros(
                             ISBN=ISBN_editar, indice=numero, valor=nuevo_valor
                         )
