@@ -9,7 +9,7 @@ import constantes as c
 # PROGRAMA PRINCIPAL :
 def main():
     print(
-        r"____  _                           _     _                     _         _     _ _     _ _       _                 ")
+        r" ____  _                           _     _                     _         _     _ _     _ _       _                 ")
     print(
         r"| __ )(_) ___ _ ____   _____ _ __ (_) __| | ___  ___    __ _  | | __ _  | |__ (_) |__ | (_) ___ | |_ ___  ___ __ _ ")
     print(
