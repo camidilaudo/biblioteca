@@ -72,11 +72,12 @@ def ver_propio_historial(usuario):
     historial_nombres = []
     i = 0
 
-    while usuario != historial_general[i][0]:
+    while (i < len(historial_general)) and usuario != historial_general[i][0]:
         i = i + 1
 
-    for isbn in historial_general[i][1]:
-        for libro in bd.libros:
-            if isbn == libro["isbn"]:
-                historial_nombres.append(libro["titulo"])
-        return historial_nombres
+    if i < len(historial_general):
+        for isbn in historial_general[i][1]:
+            for libro in bd.libros:
+                if isbn == libro["isbn"]:
+                    historial_nombres.append(libro["titulo"])
+            return historial_nombres

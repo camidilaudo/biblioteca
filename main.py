@@ -137,7 +137,10 @@ def main():
                     print("Todavia no tienes libros en tu historial")
                 else:
                     mi_historial = us.ver_propio_historial(usuario=nombre_usuario)
-                    pu.imprimir_historial(mi_historial)
+                    if not mi_historial:
+                        print("No tenes historial todavia!.")
+                    else:
+                        pu.imprimir_historial(mi_historial)
                 print("---------------------------------------------------------------")
                 input("Para continuar presione ENTER: ")
 
