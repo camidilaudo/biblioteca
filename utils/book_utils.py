@@ -52,13 +52,16 @@ def cargar_libros(
 
     # chequear si el libro ya existe en la biblioteca
     libro_en_stock = False
+    nuevo_libro = None
     for libro in bd.libros:
         if libro["isbn"] == ISBN:
             libro_en_stock = True
+            nuevo_libro = libro
 
     if libro_en_stock:
-        libro["cant_ejemplares"] = +cant_ejemplares
-        libro["ejemplares_disponibles"] = +cant_ejemplares
+        nuevo_libro["cant_ejemplares"] = +cant_ejemplares
+        nuevo_libro["ejemplares_disponibles"] = +cant_ejemplares
+        nuevo_libro["disponibilidad"] = True
     else:
 
         nuevo_libro = {
