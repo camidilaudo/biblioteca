@@ -193,12 +193,12 @@ def main():
                     titulo = input("Ingrese el titulo : ")
                     autor = input("Ingrese el autor : ")
                     genero = input("Ingrese el genero : ")
-                    ISBN = input("Ingrese el ISBN : ")
+                    ISBN = int(input("Ingrese el ISBN : "))
                     editorial = input("Ingrese el editorial : ")
-                    anio_publicacion = input("Ingrese el anio publicacion : ")
+                    anio_publicacion = int(input("Ingrese el anio publicacion : "))
                     serie_libros = input("Ingrese el serie_libros : ")
-                    nro_paginas = input("Ingrese el nro_paginas : ")
-                    cant_ejemplares = input("Ingrese el la cantidad de ejemplares : ")
+                    nro_paginas = int(input("Ingrese el nro_paginas : "))
+                    cant_ejemplares = int(input("Ingrese el la cantidad de ejemplares : "))
                     registrar_libros = bu.cargar_libros(
                         titulo,
                         autor,
