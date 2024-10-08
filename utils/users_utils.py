@@ -1,3 +1,4 @@
+import re
 from data_store import users_data as ud
 from data_store import books_data as bd
 
@@ -81,3 +82,20 @@ def ver_propio_historial(usuario):
                 if isbn == libro["isbn"]:
                     historial_nombres.append(libro["titulo"])
             return historial_nombres
+
+
+def validar_contrasenia(contrasenia):
+    """Valida que la contraseña ingresada respete los siguientes requesitos:
+    - Contener (al menos) un número.
+    - Contener (al menos) una letra minúscula.
+    - Contener (al menos) una letra mayuscula.
+    - Contener (al menos) un símbolo.
+    - Que el largo de la cadena sea entre 8 o 15 caracteres.
+    :param contrasenia: str, contraseña creada por el usuario.
+    :return match: bool, si la contraseña cumple con el patron o no."""
+    patron = r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,15}$"
+    match = bool(re.match(patron, contrasenia))
+    return
+
+
+
