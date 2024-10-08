@@ -54,10 +54,15 @@ def main():
             nombre_usuario = input("Ingrese un nombre de usuario : ")
             contrasenia = input("Ingrese la contraseña del usuario: ")
             verificar_contrasenia = input("Volvé a ingresar la contraseña : ")
-            while contrasenia != verificar_contrasenia:
-                print("Error. Las contraseñas no coinciden")
+            cumple_requisito = us.validar_contrasenia(contrasenia)
+            while (contrasenia != verificar_contrasenia) or not cumple_requisito:
+                if contrasenia != verificar_contrasenia:
+                    print("Error. Las contraseñas no coinciden")
+                else:
+                    print("Tu contraseña es debil.")
                 contrasenia = input("Ingrese la contraseña del usuario: ")
                 verificar_contrasenia = input("Volvé a ingresar la contraseña : ")
+                cumple_requisito = us.validar_contrasenia(contrasenia)
             registrar = us.registrar_usuario(usuario, nombre_usuario, contrasenia)
             if registrar is False:
                 print("El usuario ingresado ya existe. Volver a intentar: ")

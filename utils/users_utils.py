@@ -93,9 +93,10 @@ def validar_contrasenia(contrasenia):
     - Que el largo de la cadena sea entre 8 o 15 caracteres.
     :param contrasenia: str, contraseña creada por el usuario.
     :return match: bool, si la contraseña cumple con el patron o no."""
-    patron = r"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,15}$"
+    patron = r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.]).{8,15}$"
     match = bool(re.match(patron, contrasenia))
-    return
+    print(match)
+    return match
 
 
-
+validar_contrasenia("Banquetita5746.")
