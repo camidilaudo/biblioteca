@@ -8,10 +8,7 @@ import constantes as c
 
 import random
 
-
-stock = lambda ISBN: any(libro["isbn"] == ISBN for libro in bd.libros)
-
-
+stock = lambda ISBN: True if [libro for libro in bd.libros if libro["isbn"] == ISBN] else False
 
 def busqueda_libros(clave, valor):
     """Búsqueda de libros segun: título, autor, género, ISBN, editorial, año de publicación, serie.
