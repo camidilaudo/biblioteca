@@ -15,14 +15,8 @@ def busqueda_libros(clave, valor):
     :param valor: Str, valor del campo por el cual se quiere realizar la búsqueda.
     :return libros: List, lista de titulos de libros que coinciden con la clave-valor enviados anteriormente y su status.
     """
-    libros = []
 
-    for libro in bd.libros:
-        if str(libro[clave]).lower() == valor.lower():
-            titulo = libro["titulo"]
-            disponibilidad = libro["disponibilidad"]
-            isbn = libro["isbn"]
-            libros.append([titulo, disponibilidad, isbn])
+    libros = [libro for libro in bd.libros if str(libro[clave]).lower() == valor.lower()]
 
     return libros
 

@@ -22,9 +22,9 @@ def imprimir_res_busqueda(lista):
     """Funcion encargada de imprimir los resultados de una búsqueda de libros."""
     for libro in lista:
         print("***************************************************************")
-        print(f"Título: {libro[0]}")
-        print(f"Disponibilidad: {libro[1]}")
-        print(f"ISBN: {libro[2]}")
+        print(f"Título: {libro['titulo']}")
+        print(f"Disponibilidad: {libro['disponibilidad']}")
+        print(f"ISBN: {libro['isbn']}")
 
 
 def imprimir_historial(lista):
