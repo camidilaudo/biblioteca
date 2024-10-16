@@ -76,14 +76,11 @@ def main():
         iniciar_sesion = us.login_usuario(nombre_usuario, contrasenia)
 
     # SI EL USUARIO QUE INICIA SEsIÓN ES EL CLIENTE
-    numero = 0
-    while numero != "-1":
-        print(f"¡Bienvenido {nombre_usuario}!")
-        print("")
-        if iniciar_sesion == c.cliente:
+
+    if iniciar_sesion == c.cliente:
             mu.menu_cliente()
     # SI EL USUARIO QUE INICIA SESIÓN ES EL BIBLIOTECARIO
-        elif iniciar_sesion == c.bibliotecario:
+    elif iniciar_sesion == c.bibliotecario:
             mu.menu_bibliotecario()
 
 main()

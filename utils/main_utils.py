@@ -1,6 +1,7 @@
 import utils.print_utils as pu
 import utils.book_utils as bu
 
+
 def menu_cliente():
     pu.imprimir_menu_cliente()
     numero = input("Ingresá un número : ")
@@ -75,6 +76,9 @@ def menu_cliente():
         print("¡Muchas gracias por visitar nuestra biblioteca!")
 
     pu.limpiar_terminal()
+    return numero
+
+
 def menu_bibliotecario():
     pu.imprimir_menu_bibliotecario()
     numero = input("Ingresá un número : ")

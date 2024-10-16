@@ -13,6 +13,6 @@ usuarios = [
 
 # filas de la matriz = [nombre de usuario,[ISBN1, ISBN2]]
 historiales = [
-    ["meli", [9780747532743, 9780553573404]],
+    ["cami", [9780747532743, 9780553573404]],
     ["dani", [9780007136834, 9780307474728]],
 ]
