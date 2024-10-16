@@ -95,8 +95,4 @@ def validar_contrasenia(contrasenia):
     :return match: bool, si la contraseña cumple con el patron o no."""
     patron = r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.]).{8,15}$"
     match = bool(re.match(patron, contrasenia))
-    print(match)
     return match
-
-
-validar_contrasenia("Banquetita5746.")

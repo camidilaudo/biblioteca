@@ -8,6 +8,7 @@ import constantes as c
 
 import random
 
+stock = lambda ISBN: True if [libro for libro in bd.libros if libro["isbn"] == ISBN] else False
 
 def busqueda_libros(clave, valor):
     """Búsqueda de libros segun: título, autor, género, ISBN, editorial, año de publicación, serie.
@@ -15,28 +16,22 @@ def busqueda_libros(clave, valor):
     :param valor: Str, valor del campo por el cual se quiere realizar la búsqueda.
     :return libros: List, lista de titulos de libros que coinciden con la clave-valor enviados anteriormente y su status.
     """
-    libros = []
 
-    for libro in bd.libros:
-        if str(libro[clave]).lower() == valor.lower():
-            titulo = libro["titulo"]
-            disponibilidad = libro["disponibilidad"]
-            isbn = libro["isbn"]
-            libros.append([titulo, disponibilidad, isbn])
+    libros = [libro for libro in bd.libros if str(libro[clave]).lower() == valor.lower()]
 
     return libros
 
 
 def cargar_libros(
-    titulo,
-    autor,
-    genero,
-    ISBN,
-    editorial,
-    anio_publicacion,
-    serie_libros,
-    nro_paginas,
-    cant_ejemplares,
+        titulo,
+        autor,
+        genero,
+        ISBN,
+        editorial,
+        anio_publicacion,
+        serie_libros,
+        nro_paginas,
+        cant_ejemplares,
 ):
     """Cargar libro en stock de biblioteca. Se pueden cargar varios ejemplares del mismo.
     :param titulo: Str, título del libro.
@@ -51,14 +46,11 @@ def cargar_libros(
     :return libros_cargados: List, lista de libros cargados a la biblioteca."""
 
     # chequear si el libro ya existe en la biblioteca
-    libro_en_stock = False
-    for libro in bd.libros:
-        if libro["isbn"] == ISBN:
-            libro_en_stock = True
-
+    libro_en_stock = stock(ISBN=ISBN)
     if libro_en_stock:
-        libro["cant_ejemplares"] = +cant_ejemplares
-        libro["ejemplares_disponibles"] = +cant_ejemplares
+        libro = obtener_libro(ISBN)
+        libro["cant_ejemplares"] += cant_ejemplares
+        libro["ejemplares_disponibles"] += cant_ejemplares
     else:
 
         nuevo_libro = {
@@ -158,7 +150,7 @@ def recomendaciones(genero, usuario):
 
     for libro in bd.libros:
         if (libro["genero"].lower() == genero) and (
-            libro["isbn"] not in historial_preexistente
+                libro["isbn"] not in historial_preexistente
         ):
             recomendaciones_por_genero.append(libro)
 
