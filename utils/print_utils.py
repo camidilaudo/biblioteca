@@ -40,3 +40,20 @@ def limpiar_terminal():
         os.system("cls")
     else:
         os.system("clear")
+
+
+def imprimir_menu_cliente():
+    print("Elegí una opción para continuar: ")
+    print("1- Buscar libros.")
+    print("2- Buscar información detallada de un libro.")
+    print("3- Recomendaciones.")
+    print("4- Ver mi historial")
+    print("O presione -1 para finalizar.")
+
+def imprimir_menu_bibliotecario():
+    print("Elegí una opción para continuar: ")
+    print("1- Cargar libros.")
+    print("2- Editar libro.")
+    print("3- Alquilar libro.")
+    print("4- Borrar libro.")
+    print("O presione -1 para finalizar.")
