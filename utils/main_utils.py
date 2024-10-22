@@ -183,12 +183,15 @@ def menu_bibliotecario():
     elif numero == "3":
         titulo = input("Ingrese el nombre del libro que quiere alquilar: ")
         libros = bu.busqueda_libros("titulo", valor=titulo)
-        if not libros:
+        while not libros:
             print ("No contamos con ese libro en la biblioteca")
-        else: 
+            titulo = input("Ingrese el nombre de otro libro o -1 para salir: ")
+            libros = bu.busqueda_libros("titulo", valor=titulo)
+
+
+        if libros:
             print(f"Estos son los libros que coinciden con tu búsqueda: ")
             pu.imprimir_res_busqueda(libros)
-
             continuar = int(input("Presione 1 para continuar, 2 si desea realizar otra búsqueda o -1 para salir: "))
 
             bandera = True
