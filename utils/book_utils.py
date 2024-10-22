@@ -1,3 +1,5 @@
+import pdb
+
 from data_store import users_data as ud
 
 from data_store import books_data as bd
@@ -7,8 +9,12 @@ from utils import users_utils as uu
 import constantes as c
 
 import random
+import json
 
-stock = lambda ISBN: True if [libro for libro in bd.libros if libro["isbn"] == ISBN] else False
+stock = lambda isbn: (
+    True if [libro for libro in bd.libros if libro["isbn"] == isbn] else False
+)
+
 
 def busqueda_libros(clave, valor):
     """Búsqueda de libros segun: título, autor, género, ISBN, editorial, año de publicación, serie.
@@ -16,21 +22,34 @@ def busqueda_libros(clave, valor):
     :param valor: Str, valor del campo por el cual se quiere realizar la búsqueda.
     :return libros: List, lista de titulos de libros que coinciden con la clave-valor enviados anteriormente y su status.
     """
+    libros = []
+    with open('./data_store/books_data.json', 'r', encoding='utf-8') as file:
+        biblioteca = dict(json.load(file))
 
-    libros = [libro for libro in bd.libros if str(libro[clave]).lower() == valor.lower()]
+        for libro in biblioteca:
+            if str(biblioteca[libro][clave].lower()) == valor.lower():
+                libros.append(biblioteca[libro])
+    pdb.set_trace()
+
+    # libros = [
+    #     libro for libro in biblioteca if str(libro[clave]).lower() == valor.lower()
+    # ]
 
     return libros
 
+
+busqueda_libros("titulo", "los juegos del hambre")
+
 def cargar_libros(
-        titulo,
-        autor,
-        genero,
-        ISBN,
-        editorial,
-        anio_publicacion,
-        serie_libros,
-        nro_paginas,
-        cant_ejemplares,
+    titulo,
+    autor,
+    genero,
+    ISBN,
+    editorial,
+    anio_publicacion,
+    serie_libros,
+    nro_paginas,
+    cant_ejemplares,
 ):
     """Cargar libro en stock de biblioteca. Se pueden cargar varios ejemplares del mismo.
     :param titulo: Str, título del libro.
@@ -109,7 +128,7 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
     :param nombre_usuario: Str, nombre del usuario que realiza el pedido.
     :return: List, estado del libro y ejemplares disponibles."""
 
-    libro = obtener_libro(ISBN=isbn) 
+    libro = obtener_libro(ISBN=isbn)
     status_libro = libro["disponibilidad"]
     ejemplares_disponibles = libro["ejemplares_disponibles"]
 
@@ -149,7 +168,7 @@ def recomendaciones(genero, usuario):
 
     for libro in bd.libros:
         if (libro["genero"].lower() == genero) and (
-                libro["isbn"] not in historial_preexistente
+            libro["isbn"] not in historial_preexistente
         ):
             recomendaciones_por_genero.append(libro)
 

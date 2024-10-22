@@ -11,11 +11,11 @@ def menu_cliente(nombre_usuario):
         numero = input("Ingresá un número : ")
         print("---------------------------------------------------------------")
         while (
-                numero != "1"
-                and numero != "2"
-                and numero != "3"
-                and numero != "4"
-                and numero != "-1"
+            numero != "1"
+            and numero != "2"
+            and numero != "3"
+            and numero != "4"
+            and numero != "-1"
         ):
             print("ERROR. Opción incorrecta.")
             print("")
@@ -29,7 +29,9 @@ def menu_cliente(nombre_usuario):
             es_valido = c.validar_constantes(clave)
             while es_valido is False:
                 print("Ese campo no existe en nuestra biblioteca, prueba con otro")
-                clave = str(input("Ingrese el campo por el cual va a realizar la búsqueda: "))
+                clave = str(
+                    input("Ingrese el campo por el cual va a realizar la búsqueda: ")
+                )
                 es_valido = c.validar_constantes(clave)
 
             valor = str(input("Ingrese el valor del campo: "))
@@ -99,11 +101,11 @@ def menu_bibliotecario():
         numero = input("Ingresá un número : ")
         print("---------------------------------------------------------------")
         while (
-                numero != "1"
-                and numero != "2"
-                and numero != "3"
-                and numero != "-1"
-                and numero != "4"
+            numero != "1"
+            and numero != "2"
+            and numero != "3"
+            and numero != "-1"
+            and numero != "4"
         ):
             print("ERROR. Opción incorrecta.")
             print("")
@@ -132,13 +134,9 @@ def menu_bibliotecario():
                 nro_paginas,
                 cant_ejemplares,
             )
-            print(
-                "Estos son los libros que estan actualmente en la biblioteca: "
-            )
+            print("Estos son los libros que estan actualmente en la biblioteca: ")
             for libro in registrar_libros:
-                print(
-                    "***************************************************************"
-                )
+                print("***************************************************************")
                 pu.imprimir_libro(libro)
             input("Para continuar presione ENTER: ")
 
@@ -160,9 +158,7 @@ def menu_bibliotecario():
 
             pu.imprimir_libro(libro)
 
-            numero = int(
-                input("Ingresá un número para editar o -1 para salir: ")
-            )
+            numero = int(input("Ingresá un número para editar o -1 para salir: "))
             while 9 < numero or numero < -1:
                 print("El numero ingresado es incorrecto.")
                 numero = int(input("Ingresá un número para editar : "))
@@ -191,7 +187,11 @@ def menu_bibliotecario():
             if libros:
                 print(f"Estos son los libros que coinciden con tu búsqueda: ")
                 pu.imprimir_res_busqueda(libros)
-                continuar = int(input("Presione 1 para continuar, 2 si desea realizar otra búsqueda o -1 para salir: "))
+                continuar = int(
+                    input(
+                        "Presione 1 para continuar, 2 si desea realizar otra búsqueda o -1 para salir: "
+                    )
+                )
 
                 bandera = True
 
@@ -228,9 +228,7 @@ def menu_bibliotecario():
                         bandera = False
 
         elif numero == "4":
-            libro_borrado = int(
-                input("Ingrese en ISBN del libro que desea borrar: ")
-            )
+            libro_borrado = int(input("Ingrese en ISBN del libro que desea borrar: "))
             borrar_libro = bu.borrar_libro(libro_borrado)
             if borrar_libro:
                 print("Su libro se ha borrado con exito.")
