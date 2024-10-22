@@ -23,14 +23,12 @@ def menu_cliente(nombre_usuario):
     # Buscar libro
     if numero == "1":
 
-        clave = str(
-            input("Ingrese el campo por el cual va a realizar la búsqueda: ")
-        )
-        clave = c.validar_constantes (clave)
-        while clave == 0:
+        clave =input("Ingrese el campo por el cual va a realizar la búsqueda: ")
+        es_valido = c.validar_constantes (clave)
+        while es_valido is False:
             print ("Ese campo no existe en nuestra biblioteca, prueba con otro")
             clave= str(input("Ingrese el campo por el cual va a realizar la búsqueda: "))
-            clave = c.validar_constantes (clave)
+            es_valido = c.validar_constantes (clave)
 
         valor = str(input("Ingrese el valor del campo: "))
         libros_encontrados = bu.busqueda_libros(clave, valor)
@@ -60,11 +58,11 @@ def menu_cliente(nombre_usuario):
     # Recomendaciones
     elif numero == "3":
         genero_libro = input("Ingrese un género: ")
-        genero_libro = c.validar_constantes (genero_libro)
-        while genero_libro == 0:
+        genero_valido = c.validar_constantes (genero_libro)
+        while genero_valido is False:
             print ("El género ingresado es incorrecto, por favor volver a ingresar")
             genero_libro = input("Ingrese un género: ")
-            genero_libro = c.validar_constantes (genero_libro)
+            genero_valido= c.validar_constantes (genero_libro)
 
 
         recomendacion_libro = bu.recomendaciones(genero_libro, nombre_usuario)

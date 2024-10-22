@@ -51,9 +51,9 @@ claves_bd = {
 
 def validar_constantes (clave):
 
-    validacion = clave
+    validacion = True
 
-    if validacion not in valor_bd and validacion not in generos:
-        validacion = 0 
+    if (clave not in valor_bd) and (clave not in generos):
+        validacion = False 
  
     return validacion
