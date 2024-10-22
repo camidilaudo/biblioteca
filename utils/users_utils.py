@@ -37,7 +37,7 @@ def login_usuario(nombre_usuario, contra):
     :return:Str, contraseña del usuario.
     """
     dic_usuarios = ud.usuarios
-    tipo_usuario = 3
+    tipo_usuario = -1
     for usuario in dic_usuarios:
         if nombre_usuario == usuario["nombre"]:
             if contra == usuario["contrasenia"]:
