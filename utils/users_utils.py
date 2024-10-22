@@ -29,7 +29,7 @@ def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
     return usuario_registrado
 
 
-def login_usuario(nombre_usuario, contra):
+def login_usuario(nombre_usuario, contrasenia):
     """Funcion para loguear el usuario. La corriente función busca poder disernir si la persona interesada busca
     ingresar
     al sistema como usuario o como administrador.
@@ -40,7 +40,7 @@ def login_usuario(nombre_usuario, contra):
     tipo_usuario = 3
     for usuario in dic_usuarios:
         if nombre_usuario == usuario["nombre"]:
-            if contra == usuario["contrasenia"]:
+            if contrasenia == usuario["contrasenia"]:
                 tipo_usuario = usuario["tipo_usuario"]
     return tipo_usuario
 
@@ -81,7 +81,7 @@ def ver_propio_historial(usuario):
             for libro in bd.libros:
                 if isbn == libro["isbn"]:
                     historial_nombres.append(libro["titulo"])
-            return historial_nombres
+        return historial_nombres
 
 
 def validar_contrasenia(contrasenia):

@@ -78,7 +78,7 @@ def main():
     # SI EL USUARIO QUE INICIA SEsIÓN ES EL CLIENTE
 
     if iniciar_sesion == c.cliente:
-            mu.menu_cliente()
+            mu.menu_cliente(nombre_usuario)
     # SI EL USUARIO QUE INICIA SESIÓN ES EL BIBLIOTECARIO
     elif iniciar_sesion == c.bibliotecario:
             mu.menu_bibliotecario()

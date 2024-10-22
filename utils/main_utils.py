@@ -1,8 +1,9 @@
 import utils.print_utils as pu
 import utils.book_utils as bu
+import utils.users_utils as us
+import constantes as c
 
-
-def menu_cliente():
+def menu_cliente(nombre_usuario):
     pu.imprimir_menu_cliente()
     numero = input("Ingresá un número : ")
     print("---------------------------------------------------------------")
@@ -21,15 +22,25 @@ def menu_cliente():
 
     # Buscar libro
     if numero == "1":
+
         clave = str(
             input("Ingrese el campo por el cual va a realizar la búsqueda: ")
         )
+        clave = c.validar_constantes (clave)
+        while clave == 0:
+            print ("Ese campo no existe en nuestra biblioteca, prueba con otro")
+            clave= str(input("Ingrese el campo por el cual va a realizar la búsqueda: "))
+            clave = c.validar_constantes (clave)
+
         valor = str(input("Ingrese el valor del campo: "))
         libros_encontrados = bu.busqueda_libros(clave, valor)
-        print(f"Se encontraron {len(libros_encontrados)}")
-        pu.imprimir_res_busqueda(libros_encontrados)
-        print("---------------------------------------------------------------")
-        input("Para continuar presione ENTER: ")
+        if libros_encontrados == []:
+            print ("No contamos con ese libro en nuestra biblioteca")
+            print(f"Se encontraron {len(libros_encontrados)}")
+        else:
+            pu.imprimir_res_busqueda(libros_encontrados)
+            print("---------------------------------------------------------------")
+            input("Para continuar presione ENTER: ")
 
     # Info especifica del libro
     elif numero == "2":
@@ -49,6 +60,13 @@ def menu_cliente():
     # Recomendaciones
     elif numero == "3":
         genero_libro = input("Ingrese un género: ")
+        genero_libro = c.validar_constantes (genero_libro)
+        while genero_libro == 0:
+            print ("El género ingresado es incorrecto, por favor volver a ingresar")
+            genero_libro = input("Ingrese un género: ")
+            genero_libro = c.validar_constantes (genero_libro)
+
+
         recomendacion_libro = bu.recomendaciones(genero_libro, nombre_usuario)
         if recomendacion_libro is None:
             print("¡Te leiste todos los libros de esta categoria!")
@@ -62,10 +80,7 @@ def menu_cliente():
 
     # Ver propio historial
     elif numero == "4":
-        if numero_inicio == 2:
-            print("Todavia no tienes libros en tu historial")
-        else:
-            mi_historial = us.ver_propio_historial(usuario=nombre_usuario)
+            mi_historial = us.ver_propio_historial(nombre_usuario)
             if not mi_historial:
                 print("No tenes historial todavia!.")
             else:

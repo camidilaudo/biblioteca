@@ -21,7 +21,6 @@ def busqueda_libros(clave, valor):
 
     return libros
 
-
 def cargar_libros(
         titulo,
         autor,
@@ -110,7 +109,7 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
     :param nombre_usuario: Str, nombre del usuario que realiza el pedido.
     :return: List, estado del libro y ejemplares disponibles."""
 
-    libro = obtener_libro(ISBN=isbn)
+    libro = obtener_libro(ISBN=isbn) 
     status_libro = libro["disponibilidad"]
     ejemplares_disponibles = libro["ejemplares_disponibles"]
 
