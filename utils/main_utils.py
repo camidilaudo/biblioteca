@@ -1,8 +1,9 @@
 import utils.print_utils as pu
 import utils.book_utils as bu
+import utils.users_utils as us
+import constantes as c
 
-
-def menu_cliente():
+def menu_cliente(nombre_usuario):
     pu.imprimir_menu_cliente()
     numero = input("Ingresá un número : ")
     print("---------------------------------------------------------------")
@@ -21,15 +22,23 @@ def menu_cliente():
 
     # Buscar libro
     if numero == "1":
-        clave = str(
-            input("Ingrese el campo por el cual va a realizar la búsqueda: ")
-        )
+
+        clave =input("Ingrese el campo por el cual va a realizar la búsqueda: ")
+        es_valido = c.validar_constantes (clave)
+        while es_valido is False:
+            print ("Ese campo no existe en nuestra biblioteca, prueba con otro")
+            clave= str(input("Ingrese el campo por el cual va a realizar la búsqueda: "))
+            es_valido = c.validar_constantes (clave)
+
         valor = str(input("Ingrese el valor del campo: "))
         libros_encontrados = bu.busqueda_libros(clave, valor)
-        print(f"Se encontraron {len(libros_encontrados)}")
-        pu.imprimir_res_busqueda(libros_encontrados)
-        print("---------------------------------------------------------------")
-        input("Para continuar presione ENTER: ")
+        if libros_encontrados == []:
+            print ("No contamos con ese libro en nuestra biblioteca")
+            print(f"Se encontraron {len(libros_encontrados)}")
+        else:
+            pu.imprimir_res_busqueda(libros_encontrados)
+            print("---------------------------------------------------------------")
+            input("Para continuar presione ENTER: ")
 
     # Info especifica del libro
     elif numero == "2":
@@ -49,6 +58,13 @@ def menu_cliente():
     # Recomendaciones
     elif numero == "3":
         genero_libro = input("Ingrese un género: ")
+        genero_valido = c.validar_constantes (genero_libro)
+        while genero_valido is False:
+            print ("El género ingresado es incorrecto, por favor volver a ingresar")
+            genero_libro = input("Ingrese un género: ")
+            genero_valido= c.validar_constantes (genero_libro)
+
+
         recomendacion_libro = bu.recomendaciones(genero_libro, nombre_usuario)
         if recomendacion_libro is None:
             print("¡Te leiste todos los libros de esta categoria!")
@@ -62,10 +78,7 @@ def menu_cliente():
 
     # Ver propio historial
     elif numero == "4":
-        if numero_inicio == 2:
-            print("Todavia no tienes libros en tu historial")
-        else:
-            mi_historial = us.ver_propio_historial(usuario=nombre_usuario)
+            mi_historial = us.ver_propio_historial(nombre_usuario)
             if not mi_historial:
                 print("No tenes historial todavia!.")
             else:
@@ -168,47 +181,50 @@ def menu_bibliotecario():
     elif numero == "3":
         titulo = input("Ingrese el nombre del libro que quiere alquilar: ")
         libros = bu.busqueda_libros("titulo", valor=titulo)
-        print(f"Estos son los libros que coinciden con tu búsqueda: ")
-        pu.imprimir_res_busqueda(libros)
-        continuar = int(
-            input(
-                "Presione 1 para continuar, 2 si desea realizar otra búsqueda o -1 para salir: "
-            )
-        )
+        while not libros:
+            print ("No contamos con ese libro en la biblioteca")
+            titulo = input("Ingrese el nombre de otro libro o -1 para salir: ")
+            libros = bu.busqueda_libros("titulo", valor=titulo)
 
-        bandera = True
 
-        while bandera:
-            while continuar == 2:
-                titulo = input(
-                    "Ingrese el nombre del libro que quiere alquilar: "
-                )
-                libros_encontrados = bu.busqueda_libros("titulo", titulo)
-                print(f"Se encontraron {len(libros_encontrados)}")
-                pu.imprimir_res_busqueda(libros_encontrados)
-                continuar = int(
-                    input(
-                        "Presione 1 para continuar, 2 si desea realizar otra búsqueda o -1 para salir: "
+        if libros:
+            print(f"Estos son los libros que coinciden con tu búsqueda: ")
+            pu.imprimir_res_busqueda(libros)
+            continuar = int(input("Presione 1 para continuar, 2 si desea realizar otra búsqueda o -1 para salir: "))
+
+            bandera = True
+
+            while bandera:
+                while continuar == 2:
+                    titulo = input(
+                        "Ingrese el nombre del libro que quiere alquilar: "
                     )
-                )
+                    libros_encontrados = bu.busqueda_libros("titulo", titulo)
+                    print(f"Se encontraron {len(libros_encontrados)}")
+                    pu.imprimir_res_busqueda(libros_encontrados)
+                    continuar = int(
+                        input(
+                            "Presione 1 para continuar, 2 si desea realizar otra búsqueda o -1 para salir: "
+                        )
+                    )
 
-            if continuar == 1:
-                isbn = int(
-                    input("Ingrese el ISBN del libro que quiere alquilar: ")
-                )
-                cantidad_pedidos = int(
-                    input("Ingrese la cantidad de pedidos: ")
-                )
-                usuario = input(
-                    "Ingrese el nombre de usuario que va a alquilarlos: "
-                )
-                libro_alquilado = bu.alquilar_libro(
-                    isbn, cantidad_pedidos, usuario
-                )
-                print(
-                    f"El libro se alquilo con exito, quedan {libro_alquilado[1]} unidades disponibles."
-                )
-                bandera = False
+                if continuar == 1:
+                    isbn = int(
+                        input("Ingrese el ISBN del libro que quiere alquilar: ")
+                    )
+                    cantidad_pedidos = int(
+                        input("Ingrese la cantidad de pedidos: ")
+                    )
+                    usuario = input(
+                        "Ingrese el nombre de usuario que va a alquilarlos: "
+                    )
+                    libro_alquilado = bu.alquilar_libro(
+                        isbn, cantidad_pedidos, usuario
+                    )
+                    print(
+                        f"El libro se alquilo con exito, quedan {libro_alquilado[1]} unidades disponibles."
+                    )
+                    bandera = False
 
     elif numero == "4":
         libro_borrado = int(

@@ -18,6 +18,19 @@ generos = [
     "ficcion",
 ]
 
+valor_bd = [
+    "autor",
+    "titulo",
+    "genero",
+    "editorial",
+    "anio publicacion",
+    "serie",
+    "nro_paginas",
+    "cant_ejemplares",
+    "disponibilidad",
+    "ejemplares_disponibles",
+]
+
 # Diccionario de claves para la base de datos
 
 claves_bd = {
@@ -33,3 +46,14 @@ claves_bd = {
     8: "disponibilidad",
     9: "ejemplares_disponibles",
 }
+
+#Función para validar constantes 
+
+def validar_constantes (clave):
+
+    validacion = True
+
+    if (clave not in valor_bd) and (clave not in generos):
+        validacion = False 
+ 
+    return validacion
