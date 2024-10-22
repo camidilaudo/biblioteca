@@ -47,13 +47,3 @@ claves_bd = {
     9: "ejemplares_disponibles",
 }
 
-#Función para validar constantes 
-
-def validar_constantes (clave):
-
-    validacion = True
-
-    if (clave not in valor_bd) and (clave not in generos):
-        validacion = False 
- 
-    return validacion
