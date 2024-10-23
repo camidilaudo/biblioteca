@@ -180,6 +180,11 @@ def borrar_libro(ISBN):
 
 def penalizaciones (fsalida , fregreso):
 
+    """Compara los dias que un libro ha estado fuera de la biblioteca con el tiempo máximo que se puede prestar dicho libro
+    :param fsalida: datetime, nfecha en la cual el libro se alquilo.
+    :param fregreso: datetime, fecha en la cual se devolvio
+    :return True en caso de que no se excedieran los dias. False en caso de que se superen los dias
+    """
     dias_totales = fregreso - fsalida
     dias_maximos =  7
 
