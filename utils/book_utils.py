@@ -8,6 +8,8 @@ import constantes as c
 
 import random
 
+import datetime  
+
 stock = lambda ISBN: True if [libro for libro in bd.libros if libro["isbn"] == ISBN] else False
 
 def busqueda_libros(clave, valor):
@@ -174,3 +176,14 @@ def borrar_libro(ISBN):
             bandera = True
 
     return bandera
+
+
+def penalizaciones (fsalida , fregreso):
+
+    dias_totales = fregreso - fsalida
+    dias_maximos =  7
+
+    if dias_totales <= dias_maximos:
+        return True
+    else:
+        return False
