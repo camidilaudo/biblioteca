@@ -8,6 +8,20 @@ usuarios = [
     {"tipo_usuario": 1, "nombre": "meli", "contrasenia": "123"},
 ]
 
+#DICCIONARIOS DE LIBROS PENALIZADOS: Nombre del usuario y ISBN
+
+penalizados = [
+    ["cami", [9780307474278]],
+]
+
+#DICCIONARIO DE LIBROS ALQUILADOS: Nombre y cantidad de libros  
+
+alquilados = [
+    [9780307474278, 1],
+    [9780007136834, 1],
+    [9780553293357, 4],
+    [9780553573404, 3]
+]
 
 # MATRIZ DE HISTORIAL
 
