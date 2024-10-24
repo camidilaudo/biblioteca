@@ -2,9 +2,11 @@ import utils.print_utils as pu
 import utils.book_utils as bu
 import utils.users_utils as us
 import constantes as c
+import datetime  
 
 
 def menu_cliente(nombre_usuario):
+    fecha_actual = datetime.today().strftime('%Y-%m-%d') 
     numero = "0"
     while numero != "-1":
         pu.imprimir_menu_cliente()
@@ -93,6 +95,7 @@ def menu_cliente(nombre_usuario):
 
 
 def menu_bibliotecario():
+    fecha_actual = datetime.today().strftime('%Y-%m-%d') 
     numero = "0"
     while numero != "-1":
         pu.imprimir_menu_bibliotecario()

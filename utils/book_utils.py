@@ -8,6 +8,8 @@ import constantes as c
 
 import random
 
+import datetime  
+
 stock = lambda ISBN: True if [libro for libro in bd.libros if libro["isbn"] == ISBN] else False
 
 def busqueda_libros(clave, valor):
@@ -174,3 +176,19 @@ def borrar_libro(ISBN):
             bandera = True
 
     return bandera
+
+
+def penalizaciones (fsalida , fregreso):
+
+    """Compara los dias que un libro ha estado fuera de la biblioteca con el tiempo máximo que se puede prestar dicho libro
+    :param fsalida: datetime, nfecha en la cual el libro se alquilo.
+    :param fregreso: datetime, fecha en la cual se devolvio
+    :return True en caso de que no se excedieran los dias. False en caso de que se superen los dias
+    """
+    dias_totales = fregreso - fsalida
+    dias_maximos =  7
+
+    if dias_totales <= dias_maximos:
+        return True
+    else:
+        return False
