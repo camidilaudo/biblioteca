@@ -3,6 +3,7 @@ import utils.main_utils as mu
 import data_store.users_data as ud
 import data_store.books_data as bd
 import utils.print_utils as pu
+import utils.system_utils as su
 import constantes as c
 
 
@@ -22,7 +23,7 @@ def main():
     input("Para continuar presione ENTER: ")
     print("")
 
-    pu.limpiar_terminal()
+    su.limpiar_terminal()
     print("Ingrese una opción: ")
     print("1- Iniciar sesión.")
     print("2- Registrarse.")
@@ -37,7 +38,7 @@ def main():
         contrasenia = input("Ingrese la contraseña del usuario: ")
 
         iniciar_sesion = us.login_usuario(nombre_usuario, contrasenia)
-        pu.limpiar_terminal()
+        su.limpiar_terminal()
     # Ingresar al sistema creando un nuevo usuario
     else:
         print("1- Bibliotecario.")
@@ -61,6 +62,7 @@ def main():
                 else:
                     print("Tu contraseña es debil.")
                 contrasenia = input("Ingrese la contraseña del usuario: ")
+
                 verificar_contrasenia = input("Volvé a ingresar la contraseña : ")
                 cumple_requisito = us.validar_contrasenia(contrasenia)
             registrar = us.registrar_usuario(usuario, nombre_usuario, contrasenia)

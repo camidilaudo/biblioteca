@@ -2,6 +2,7 @@ import utils.print_utils as pu
 import utils.book_utils as bu
 import utils.users_utils as us
 import constantes as c
+import utils.system_utils as su
 
 
 def menu_cliente(nombre_usuario):
@@ -89,7 +90,7 @@ def menu_cliente(nombre_usuario):
         else:
             print("¡Muchas gracias por visitar nuestra biblioteca!")
 
-        pu.limpiar_terminal()
+        su.limpiar_terminal()
 
 
 def menu_bibliotecario():
@@ -104,6 +105,7 @@ def menu_bibliotecario():
                 and numero != "3"
                 and numero != "-1"
                 and numero != "4"
+                and numero != "5"
         ):
             print("ERROR. Opción incorrecta.")
             print("")
@@ -183,20 +185,23 @@ def menu_bibliotecario():
         elif numero == "3":
             titulo = input("Ingrese el nombre del libro que quiere alquilar: ")
             libros = bu.busqueda_libros("titulo", valor=titulo)
-            while not libros:
-                print("No contamos con ese libro en la biblioteca")
-                titulo = input("Ingrese el nombre de otro libro o -1 para salir: ")
-                libros = bu.busqueda_libros("titulo", valor=titulo)
-
-            if libros:
-                print(f"Estos son los libros que coinciden con tu búsqueda: ")
-                pu.imprimir_res_busqueda(libros)
+            bandera = False
+            while not bandera:
+                if not libros:
+                    print("No contamos con ese libro en la biblioteca")
+                    titulo = input("Ingrese el nombre de otro libro o -1 para salir: ")
+                    if titulo == "-1":
+                        libros = []
+                        bandera = True
+                    else:
+                        libros = bu.busqueda_libros("titulo", valor=titulo)
+                else:
+                    print(f"Estos son los libros que coinciden con tu búsqueda: ")
+                    pu.imprimir_res_busqueda(libros)
+                    bandera = True
                 continuar = int(input("Presione 1 para continuar, 2 si desea realizar otra búsqueda o -1 para salir: "))
-
-                bandera = True
-
-                while bandera:
-                    while continuar == 2:
+                while continuar != -1:
+                    if continuar == 2:
                         titulo = input(
                             "Ingrese el nombre del libro que quiere alquilar: "
                         )
@@ -209,7 +214,7 @@ def menu_bibliotecario():
                             )
                         )
 
-                    if continuar == 1:
+                    elif continuar == 1:
                         isbn = int(
                             input("Ingrese el ISBN del libro que quiere alquilar: ")
                         )
@@ -222,10 +227,23 @@ def menu_bibliotecario():
                         libro_alquilado = bu.alquilar_libro(
                             isbn, cantidad_pedidos, usuario
                         )
-                        print(
-                            f"El libro se alquilo con exito, quedan {libro_alquilado[1]} unidades disponibles."
-                        )
-                        bandera = False
+                        if libro_alquilado[0]:
+                            print(
+                                f"El libro se alquilo con exito, quedan {libro_alquilado[1]} unidades disponibles."
+                            )
+                        else:
+                            if libro_alquilado[0]:
+                                print(
+                                    f"No se pudo realizar el alquiler. Asegúrese de que el ISBN sea correcto."
+                                )
+                            else:
+                                print(
+                                    f"No se pudo realizar el alquiler. Puede que no haya suficientes ejemplares disponibles."
+                                )
+                    continuar = int(
+                        input(
+                            "Presione 1 para continuar, 2 si desea realizar otra búsqueda o -1 para salir: "))
+
 
         elif numero == "4":
             libro_borrado = int(
@@ -238,6 +256,29 @@ def menu_bibliotecario():
                 print("Libro no encontrado, por favor volve a intentar!")
 
             input("Para continuar presione ENTER: ")
-            pu.limpiar_terminal()
+            su.limpiar_terminal()
+
+        # devolver libro
+        elif numero == "5":
+            isbn = 0
+            while isbn != -1:
+                isbn = int(input("Ingrese un ISBN correcto o -1 para salir: "))
+
+                if isbn != -1:
+                    usuario = input("Ingrese el nombre del usuario que va a devolver el libro: ")
+                    devolver = bu.devolver_libro(isbn, usuario)
+
+                    if devolver:
+                        libro = bu.obtener_libro(isbn)
+                        print(f"El libro {libro['titulo']} fue devuelto por {usuario} !")
+
+                    else:
+                        print("ISBN no encontrado. Intente nuevamente.")
+
+                    continuar = input("Ingrese 1 para continuar o 0 para salir: ")
+
+                    if continuar == 0:
+                        isbn = -1
+
         else:
             print("¡Muchas gracias por visitar nuestra biblioteca!")

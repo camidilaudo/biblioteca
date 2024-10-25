@@ -1,3 +1,7 @@
+import os
+from datetime import datetime
+
+
 # Función para validar constantes
 
 def validar_constantes(clave):
@@ -12,3 +16,14 @@ def validar_constantes(clave):
         validacion = False
 
     return validacion
+
+
+def limpiar_terminal():
+    """Función encargada de limpiar la terminal."""
+    if os.name == "nt":
+        os.system("cls")
+    else:
+        os.system("clear")
+
+
+fecha_actual = lambda: datetime.now().strftime("%Y-%m-%d %H:%M:%S")
