@@ -262,7 +262,11 @@ def menu_bibliotecario():
         elif numero == "5":
             isbn = 0
             while isbn != -1:
-                isbn = int(input("Ingrese un ISBN correcto o -1 para salir: "))
+                try:
+                    isbn = int(input("Ingrese un ISBN correcto o -1 para salir: "))
+                except ValueError:
+                    print("Por favor, ingrese un número válido.")
+                    isbn = 0
 
                 if isbn != -1:
                     usuario = input("Ingrese el nombre del usuario que va a devolver el libro: ")
@@ -270,12 +274,15 @@ def menu_bibliotecario():
 
                     if devolver:
                         libro = bu.obtener_libro(isbn)
-                        print(f"El libro {libro['titulo']} fue devuelto por {usuario} !")
-
+                        print(f"El libro {libro['titulo']} fue devuelto por {usuario}!")
                     else:
                         print("ISBN no encontrado. Intente nuevamente.")
 
-                    continuar = input("Ingrese 1 para continuar o 0 para salir: ")
+                    try:
+                        continuar = int(input("Ingrese 1 para continuar o 0 para salir: "))
+                    except ValueError:
+                        print("Por favor, ingrese 1 o 0.")
+                        continuar = 1
 
                     if continuar == 0:
                         isbn = -1
