@@ -14,19 +14,20 @@ penalizados = [
     ["cami", [9780307474278]],
 ]
 
-#DICCIONARIO DE LIBROS ALQUILADOS: Nombre y cantidad de libros  
+#DICCIONARIO DE LIBROS ALQUILADOS: ISBN, cantidad, Nombre de usuario
 
-alquilados = [
-    [9780307474278, 1],
-    [9780007136834, 1],
-    [9780553293357, 4],
-    [9780553573404, 3]
-]
+alquilados = {
+    9780747532743: 1,
+    9780007136834: 4,
+    9780307474278: 2,
+    9780553573404: 1
+}
+
 
 # MATRIZ DE HISTORIAL
 
 # filas de la matriz = [nombre de usuario,[ISBN1, ISBN2]]
 historiales = [
-    ["cami", [9780747532743, 9780553573404]],
-    ["dani", [9780007136834, 9780307474728]],
+    ["cami", [(9780747532743, "2024-10-23 12:45:32"), (9780553573404, "2024-10-23 12:50:00")]],
+    ["dani", [(9780007136834, "2024-10-23 13:05:12"), (9780307474278, "2024-10-23 13:10:45")]]
 ]
