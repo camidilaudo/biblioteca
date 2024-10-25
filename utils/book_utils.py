@@ -29,11 +29,6 @@ def busqueda_libros(clave, valor):
         for libro in biblioteca:
             if str(biblioteca[libro][clave].lower()) == valor.lower():
                 libros.append(biblioteca[libro])
-    pdb.set_trace()
-
-    # libros = [
-    #     libro for libro in biblioteca if str(libro[clave]).lower() == valor.lower()
-    # ]
 
     return libros
 
