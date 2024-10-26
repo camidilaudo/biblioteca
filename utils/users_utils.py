@@ -98,3 +98,11 @@ def validar_contrasenia(contrasenia):
     patron = r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.]).{8,15}$"
     match = bool(re.match(patron, contrasenia))
     return match
+
+
+def validar_usuario(nombre_usuario):
+    validar = False
+    for usuario in ud.usuarios:
+        if usuario['nombre'] == nombre_usuario and usuario['tipo_usuario'] == 2:
+            validar = True
+    return validar
