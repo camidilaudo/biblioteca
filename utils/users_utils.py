@@ -63,8 +63,35 @@ def agregar_libro_historial(nombre_usuario, isbn, fecha):
         ud.historiales[indice_historial][1].append((isbn, fecha))
     else:
         ud.historiales.append([nombre_usuario, [(isbn, fecha)]])
-
     return ud.historiales
+
+def agregar_alquilados (isbn, cant_pedidos):
+
+    """Agrega el ISBN de un libro a la lista de libros alquilados
+    :param isbn: Int, código ISBN del libro que retiro.
+    :param cant_pedidos, int,  cuantos libros quiere alquilar.
+    :return alquilados: diccionario, historial de todos los libros alquilados."""
+
+    libros_totales = bd.libros
+    libros_alquilados = ud.alquilados
+    existe_libro = False
+
+    for existente in libros_totales:
+        if existente ["isbn"]== isbn:
+            existe_libro = True
+        else:
+            return existe_libro
+
+
+    if existe_libro: 
+        for libro in libros_alquilados:
+            if libro == isbn:
+                libros_alquilados [libro] = libros_alquilados [libro] + cant_pedidos
+            else:
+                libros_alquilados [isbn] = cant_pedidos
+        return libros_alquilados
+
+
 
 
 def ver_propio_historial(usuario):
