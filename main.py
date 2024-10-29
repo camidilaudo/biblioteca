@@ -10,15 +10,20 @@ import constantes as c
 # PROGRAMA PRINCIPAL :
 def main():
     print(
-        r" ____  _                           _     _                     _         _     _ _     _ _       _                 ")
+        r" ____  _                           _     _                     _         _     _ _     _ _       _                 "
+    )
     print(
-        r"| __ )(_) ___ _ ____   _____ _ __ (_) __| | ___  ___    __ _  | | __ _  | |__ (_) |__ | (_) ___ | |_ ___  ___ __ _ ")
+        r"| __ )(_) ___ _ ____   _____ _ __ (_) __| | ___  ___    __ _  | | __ _  | |__ (_) |__ | (_) ___ | |_ ___  ___ __ _ "
+    )
     print(
-        r"|  _ \| |/ _ \ '_ \ \ / / _ \ '_ \| |/ _` |/ _ \/ __|  / _` | | |/ _` | | '_ \| | '_ \| | |/ _ \| __/ _ \/ __/ _` |")
+        r"|  _ \| |/ _ \ '_ \ \ / / _ \ '_ \| |/ _` |/ _ \/ __|  / _` | | |/ _` | | '_ \| | '_ \| | |/ _ \| __/ _ \/ __/ _` |"
+    )
     print(
-        r"| |_) | |  __/ | | \ V /  __/ | | | | (_| | (_) \__ \ | (_| | | | (_| | | |_) | | |_) | | | (_) | ||  __/ (_| (_| |")
+        r"| |_) | |  __/ | | \ V /  __/ | | | | (_| | (_) \__ \ | (_| | | | (_| | | |_) | | |_) | | | (_) | ||  __/ (_| (_| |"
+    )
     print(
-        r"|____/|_|\___|_| |_|\_/ \___|_| |_|_|\__,_|\___/|___/  \__,_| |_|\__,_| |_.__/|_|_.__/|_|_|\___/ \__\___|\___\__,_|")
+        r"|____/|_|\___|_| |_|\_/ \___|_| |_|_|\__,_|\___/|___/  \__,_| |_|\__,_| |_.__/|_|_.__/|_|_|\___/ \__\___|\___\__,_|"
+    )
 
     input("Para continuar presione ENTER: ")
     print("")
@@ -29,9 +34,16 @@ def main():
     print("2- Registrarse.")
 
     # Ingresar al sistema como usuario pre - existente
-    numero_inicio = int(input("Ingrese un número : "))
-    while numero_inicio not in [1, 2]:
-        numero_inicio = int(input("ERROR. Ingrese un número correcto : "))
+    bandera_inicio_o_registro = True
+    while bandera_inicio_o_registro:
+        try:
+            numero_inicio = int(input("Ingrese un número: "))
+            if numero_inicio in [1, 2]:
+                bandera_inicio_o_registro= False
+            else:
+                print("ERROR. Ingrese un número correcto")
+        except ValueError:
+            print("ERROR. Ingrese un valor numérico.")
     if numero_inicio == 1:
 
         nombre_usuario = input("Ingrese nombre de usuario:  ")
@@ -43,7 +55,17 @@ def main():
     else:
         print("1- Bibliotecario.")
         print("2- Cliente.")
-        usuario = int(input("Ingrese un número para el tipo de usuario:  "))
+        badera_biblio_o_cliente = True
+        while badera_biblio_o_cliente:
+            try:
+                usuario = int(input("Ingrese un número para el tipo de usuario: "))
+                if usuario in [1,2]:
+                    badera_biblio_o_cliente = False 
+                else:
+                    print ("ERROR. Ingrese un número correcto")
+            except ValueError:
+                print("ERROR. Ingrese un valor numérico.")
+
         if usuario == c.bibliotecario:
             contrasenia_general = input("Ingrese el código de acceso: ")
             while contrasenia_general != c.contrasenia_general:
@@ -61,6 +83,7 @@ def main():
                     print("Error. Las contraseñas no coinciden")
                 else:
                     print("Tu contraseña es debil.")
+                    print("Tu contraseña debe contener al menos un número, una letra minuscula, una letra mayuscula y un simbolo")
                 contrasenia = input("Ingrese la contraseña del usuario: ")
 
                 verificar_contrasenia = input("Volvé a ingresar la contraseña : ")
