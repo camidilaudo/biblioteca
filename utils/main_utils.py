@@ -144,7 +144,7 @@ def menu_bibliotecario():
 
         elif numero == "2":
             ISBN_editar = int(input("Ingrese el ISBN que quiere editar: "))
-            libro = bu.obtener_libro(ISBN=ISBN_editar)
+            libro = bu.obtener_libro(isbn=ISBN_editar)
             while libro is None:
                 print(
                     "El ISBN es incorrecto o no se encuentra el libro registrado. Por favor pruebe otra vez: "

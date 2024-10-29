@@ -11,9 +11,15 @@ import constantes as c
 import random
 import json
 
-stock = lambda isbn: (
-    True if [libro for libro in json.load(open("libros.json")) if libro["isbn"] == isbn] else False
-)
+import json
+
+
+def stock(isbn):
+    """"""
+    with open("./data_store/books_data.json", "r") as archivo:
+        libros = json.load(archivo)  # Debe ser una lista de diccionarios
+
+    return next((libros[libro]["isbn"] for libro in libros if libros[libro]["isbn"] == isbn), None)
 
 
 def busqueda_libros(clave, valor):
@@ -57,14 +63,15 @@ def cargar_libros(
     :return libros_cargados: List, lista de libros cargados a la biblioteca."""
 
     # chequear si el libro ya existe en la biblioteca
-    libro_en_stock = stock(isbn=isbn)
+    clave_libro = stock(isbn=isbn)
 
-    with open('./data_store/books_data.json', 'r+', encoding='utf-8') as file:
+    with open('./data_store/books_data.json', 'r', encoding='utf-8') as file:
         biblioteca = dict(json.load(file))
-        if libro_en_stock:
-            libro = obtener_libro(isbn)
-            libro["cant_ejemplares"] += cant_ejemplares
-            libro["ejemplares_disponibles"] += cant_ejemplares
+
+    with open('./data_store/books_data.json', 'w', encoding='utf-8') as file:
+        if clave_libro is not None:
+            biblioteca[clave_libro]["cant_ejemplares"] += cant_ejemplares
+            biblioteca[clave_libro]["ejemplares_disponibles"] += cant_ejemplares
         else:
 
             nuevo_libro = {
@@ -80,20 +87,25 @@ def cargar_libros(
                 "disponibilidad": True,
                 "ejemplares_disponibles": cant_ejemplares,
             }
-            bd.libros.append(nuevo_libro)
+            indice = len(biblioteca) + 1
+            biblioteca.update({str(indice): nuevo_libro})
 
-    return bd.libros
+        json.dump(biblioteca, file, indent=4)
+
+    return biblioteca
 
 
-def obtener_libro(ISBN):
+def obtener_libro(isbn):
     """Obtener un libro y su detalle segun su id interno o ISBN.
-    :param ISBN: Int, International Standard Book Number del libro.
+    :param isbn: Int, International Standard Book Number del libro.
     :return libro: List, informacion detallada del libro buscado.
     """
     libro_encontrado = None
-    for libro in bd.libros:
-        if libro["isbn"] == ISBN:
-            libro_encontrado = libro
+    with open('./data_store/books_data.json', 'r+', encoding='utf-8') as file:
+        biblioteca = dict(json.load(file))
+        for libro in biblioteca:
+            if biblioteca[libro]["isbn"] == isbn:
+                libro_encontrado = libro
 
     return libro_encontrado
 
@@ -110,10 +122,15 @@ def editar_libros(ISBN, indice, valor):
     claves_bd = c.claves_bd
     libro_editado = None
 
-    for libro in bd.libros:
-        if libro["isbn"] == ISBN:
-            libro[claves_bd[indice]] = valor
-            libro_editado = libro
+    with open('./data_store/books_data.json', 'r', encoding='utf-8') as file:
+        biblioteca = dict(json.load(file))
+
+    with open('./data_store/books_data.json', 'w', encoding='utf-8') as file:
+        for libro in biblioteca:
+            if biblioteca[libro]["isbn"] == ISBN:
+                biblioteca[libro][claves_bd[indice]] = valor
+                libro_editado = biblioteca[libro]
+        json.dump(biblioteca, file, indent=4)
     return libro_editado
 
 
@@ -124,7 +141,7 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
     :param nombre_usuario: Str, nombre del usuario que realiza el pedido.
     :return: List, estado del libro y ejemplares disponibles."""
 
-    libro = obtener_libro(ISBN=isbn)
+    libro = obtener_libro(isbn=isbn)
     status_libro = libro["disponibilidad"]
     ejemplares_disponibles = libro["ejemplares_disponibles"]
 

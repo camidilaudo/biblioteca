@@ -219,5 +219,18 @@
         "cant_ejemplares": 2,
         "disponibilidad": true,
         "ejemplares_disponibles": 2
+    },
+    "18": {
+        "autor": "lala",
+        "titulo": "lala",
+        "genero": "lala",
+        "isbn": 123,
+        "editorial": "lala",
+        "anio_publicacion": 1234,
+        "serie": "lala",
+        "nro_paginas": 2,
+        "cant_ejemplares": 4,
+        "disponibilidad": true,
+        "ejemplares_disponibles": 4
     }
 }
