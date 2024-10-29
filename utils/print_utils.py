@@ -40,11 +40,13 @@ def imprimir_menu_cliente():
     print("4- Ver mi historial")
     print("O presione -1 para finalizar.")
 
+
 def imprimir_menu_bibliotecario():
     print("Elegí una opción para continuar: ")
     print("1- Cargar libros.")
     print("2- Editar libro.")
     print("3- Alquilar libro.")
-    print("4- Borrar libro.")
-    print("5- Devolver libro")
+    print("4- Devolver libro.")
+    print("5- Borrar libro")
+
     print("O presione -1 para finalizar.")

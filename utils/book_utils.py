@@ -1,3 +1,5 @@
+import pdb
+
 from data_store import users_data as ud
 
 from data_store import books_data as bd
@@ -9,6 +11,12 @@ from utils import system_utils as su
 import constantes as c
 
 import random
+import json
+
+stock = lambda isbn: (
+    True if [libro for libro in json.load(open("libros.json")) if libro["isbn"] == isbn] else False
+)
+
 
 import datetime
 
@@ -21,8 +29,13 @@ def busqueda_libros(clave, valor):
     :param valor: Str, valor del campo por el cual se quiere realizar la búsqueda.
     :return libros: List, lista de titulos de libros que coinciden con la clave-valor enviados anteriormente y su status.
     """
+    libros = []
+    with open('./data_store/books_data.json', 'r', encoding='utf-8') as file:
+        biblioteca = dict(json.load(file))
 
-    libros = [libro for libro in bd.libros if str(libro[clave]).lower() == valor.lower()]
+        for libro in biblioteca:
+            if str(biblioteca[libro][clave].lower()) == valor.lower():
+                libros.append(biblioteca[libro])
 
     return libros
 
@@ -31,7 +44,7 @@ def cargar_libros(
         titulo,
         autor,
         genero,
-        ISBN,
+        isbn,
         editorial,
         anio_publicacion,
         serie_libros,
@@ -42,7 +55,7 @@ def cargar_libros(
     :param titulo: Str, título del libro.
     :param autor: List, nombre del autor/es del libro.
     :param genero: List, género/s del libro.
-    :param ISBN: Int, International Standard Book Number del libro.
+    :param isbn: Int, International Standard Book Number del libro.
     :param editorial: Str, editorial del libro.
     :param anio_publicacion: Int, año de publicacion del libro.
     :param serie_libros: Str opcional, si el libro pertenece a una serie, escribirla. Caso contrario escribir None.
@@ -51,27 +64,30 @@ def cargar_libros(
     :return libros_cargados: List, lista de libros cargados a la biblioteca."""
 
     # chequear si el libro ya existe en la biblioteca
-    libro_en_stock = stock(ISBN=ISBN)
-    if libro_en_stock:
-        libro = obtener_libro(ISBN)
-        libro["cant_ejemplares"] += cant_ejemplares
-        libro["ejemplares_disponibles"] += cant_ejemplares
-    else:
+    libro_en_stock = stock(isbn=isbn)
 
-        nuevo_libro = {
-            "autor": autor,
-            "titulo": titulo,
-            "genero": genero,
-            "isbn": ISBN,
-            "editorial": editorial,
-            "anio_publicacion": anio_publicacion,
-            "serie": serie_libros,
-            "nro_paginas": nro_paginas,
-            "cant_ejemplares": cant_ejemplares,
-            "disponibilidad": True,
-            "ejemplares_disponibles": cant_ejemplares,
-        }
-        bd.libros.append(nuevo_libro)
+    with open('./data_store/books_data.json', 'r+', encoding='utf-8') as file:
+        biblioteca = dict(json.load(file))
+        if libro_en_stock:
+            libro = obtener_libro(isbn)
+            libro["cant_ejemplares"] += cant_ejemplares
+            libro["ejemplares_disponibles"] += cant_ejemplares
+        else:
+
+            nuevo_libro = {
+                "autor": autor,
+                "titulo": titulo,
+                "genero": genero,
+                "isbn": isbn,
+                "editorial": editorial,
+                "anio_publicacion": anio_publicacion,
+                "serie": serie_libros,
+                "nro_paginas": nro_paginas,
+                "cant_ejemplares": cant_ejemplares,
+                "disponibilidad": True,
+                "ejemplares_disponibles": cant_ejemplares,
+            }
+            bd.libros.append(nuevo_libro)
 
     return bd.libros
 
@@ -110,17 +126,20 @@ def editar_libros(ISBN, indice, valor):
 
 def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
 
+
     """Altera 2 historales
      1) El de libros alquilados. Se fija que esté en la lista. Si no lo encuentra agrega el ISBN y la cantidad. 
       Si lo encuentra, solo modifica la cantidad,
      2) El de usuario. En caso de que no lo haya leido antes, lo agrega a su historial
      Luego cambia el estado de un libro segun la cantidad de pedidos que tiene.
     :param isbn: Str, titulo del libro a pedir.
-    :param cant_pedidos: Int, cantidad de libros que se piden.
-    :param nombre_usuario: Str, nombre del usuario que realiza el pedido.
-    :return: List, estado del libro y ejemplares disponibles"""
+
 
     libro = obtener_libro(ISBN=isbn)
+
+    status_libro = libro["disponibilidad"]
+    ejemplares_disponibles = libro["ejemplares_disponibles"]
+
 
     if libro is None:
         ejemplares_disponibles = -1
@@ -130,8 +149,10 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
         status_libro = libro["disponibilidad"]
         ejemplares_disponibles = libro["ejemplares_disponibles"]
 
+    modificar_alquilar_libro
         if (status_libro) and (ejemplares_disponibles > cant_pedidos):
             ejemplares_disponibles = libro["ejemplares_disponibles"] - cant_pedidos
+
             fecha_hoy = su.fecha_actual
             uu.agregar_libro_historial(nombre_usuario, isbn, fecha_hoy)
         
@@ -156,7 +177,6 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
 
     return [status_libro, ejemplares_disponibles]
 
-
 def penalizaciones(fsalida, fregreso):
     """Compara los dias que un libro ha estado fuera de la biblioteca con el tiempo máximo que se puede prestar dicho libro
     :param fsalida: datetime, nfecha en la cual el libro se alquilo.
@@ -173,7 +193,12 @@ def penalizaciones(fsalida, fregreso):
 
 
 def devolver_libro(ISBN, nombre):
-
+    """Verifica si el libro fue alquilado anteriormente por el usuario.
+    :param ISBN: Int, codigo ISBN del libro que se quiere eliminar de la biblioteca.
+    :param nombre: Str, nombre del usuario que quiere devolver el libro
+    :return: Bool, False si el ISBN no se encuentra en el historial de libros alquilados,
+    True si se devuelve correctamente el libro.
+    """
     devolucion = False
 
     if ISBN in ud.alquilados:
