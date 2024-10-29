@@ -12,7 +12,7 @@ import random
 import json
 
 stock = lambda isbn: (
-    True if [libro for libro in bd.libros if libro["isbn"] == isbn] else False
+    True if [libro for libro in json.load(open("libros.json")) if libro["isbn"] == isbn] else False
 )
 
 
@@ -33,24 +33,22 @@ def busqueda_libros(clave, valor):
     return libros
 
 
-busqueda_libros("titulo", "los juegos del hambre")
-
 def cargar_libros(
-    titulo,
-    autor,
-    genero,
-    ISBN,
-    editorial,
-    anio_publicacion,
-    serie_libros,
-    nro_paginas,
-    cant_ejemplares,
+        titulo,
+        autor,
+        genero,
+        isbn,
+        editorial,
+        anio_publicacion,
+        serie_libros,
+        nro_paginas,
+        cant_ejemplares,
 ):
     """Cargar libro en stock de biblioteca. Se pueden cargar varios ejemplares del mismo.
     :param titulo: Str, título del libro.
     :param autor: List, nombre del autor/es del libro.
     :param genero: List, género/s del libro.
-    :param ISBN: Int, International Standard Book Number del libro.
+    :param isbn: Int, International Standard Book Number del libro.
     :param editorial: Str, editorial del libro.
     :param anio_publicacion: Int, año de publicacion del libro.
     :param serie_libros: Str opcional, si el libro pertenece a una serie, escribirla. Caso contrario escribir None.
@@ -59,27 +57,30 @@ def cargar_libros(
     :return libros_cargados: List, lista de libros cargados a la biblioteca."""
 
     # chequear si el libro ya existe en la biblioteca
-    libro_en_stock = stock(ISBN=ISBN)
-    if libro_en_stock:
-        libro = obtener_libro(ISBN)
-        libro["cant_ejemplares"] += cant_ejemplares
-        libro["ejemplares_disponibles"] += cant_ejemplares
-    else:
+    libro_en_stock = stock(isbn=isbn)
 
-        nuevo_libro = {
-            "autor": autor,
-            "titulo": titulo,
-            "genero": genero,
-            "isbn": ISBN,
-            "editorial": editorial,
-            "anio_publicacion": anio_publicacion,
-            "serie": serie_libros,
-            "nro_paginas": nro_paginas,
-            "cant_ejemplares": cant_ejemplares,
-            "disponibilidad": True,
-            "ejemplares_disponibles": cant_ejemplares,
-        }
-        bd.libros.append(nuevo_libro)
+    with open('./data_store/books_data.json', 'r+', encoding='utf-8') as file:
+        biblioteca = dict(json.load(file))
+        if libro_en_stock:
+            libro = obtener_libro(isbn)
+            libro["cant_ejemplares"] += cant_ejemplares
+            libro["ejemplares_disponibles"] += cant_ejemplares
+        else:
+
+            nuevo_libro = {
+                "autor": autor,
+                "titulo": titulo,
+                "genero": genero,
+                "isbn": isbn,
+                "editorial": editorial,
+                "anio_publicacion": anio_publicacion,
+                "serie": serie_libros,
+                "nro_paginas": nro_paginas,
+                "cant_ejemplares": cant_ejemplares,
+                "disponibilidad": True,
+                "ejemplares_disponibles": cant_ejemplares,
+            }
+            bd.libros.append(nuevo_libro)
 
     return bd.libros
 
@@ -163,7 +164,7 @@ def recomendaciones(genero, usuario):
 
     for libro in bd.libros:
         if (libro["genero"].lower() == genero) and (
-            libro["isbn"] not in historial_preexistente
+                libro["isbn"] not in historial_preexistente
         ):
             recomendaciones_por_genero.append(libro)
 
