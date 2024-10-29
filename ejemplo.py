@@ -1,3 +1,5 @@
+
+
 import utils.users_utils as us
 import utils.main_utils as mu
 import data_store.users_data as ud
@@ -9,24 +11,7 @@ import constantes as c
 
 # PROGRAMA PRINCIPAL :
 def main():
-    print(
-        r" ____  _                           _     _                     _         _     _ _     _ _       _                 ")
-    print(
-        r"| __ )(_) ___ _ ____   _____ _ __ (_) __| | ___  ___    __ _  | | __ _  | |__ (_) |__ | (_) ___ | |_ ___  ___ __ _ ")
-    print(
-        r"|  _ \| |/ _ \ '_ \ \ / / _ \ '_ \| |/ _` |/ _ \/ __|  / _` | | |/ _` | | '_ \| | '_ \| | |/ _ \| __/ _ \/ __/ _` |")
-    print(
-        r"| |_) | |  __/ | | \ V /  __/ | | | | (_| | (_) \__ \ | (_| | | | (_| | | |_) | | |_) | | | (_) | ||  __/ (_| (_| |")
-    print(
-        r"|____/|_|\___|_| |_|\_/ \___|_| |_|_|\__,_|\___/|___/  \__,_| |_|\__,_| |_.__/|_|_.__/|_|_|\___/ \__\___|\___\__,_|")
 
-    input("Para continuar presione ENTER: ")
-    print("")
-
-    su.limpiar_terminal()
-    print("Ingrese una opción: ")
-    print("1- Iniciar sesión.")
-    print("2- Registrarse.")
 
     # Ingresar al sistema como usuario pre - existente
     bandera = True
@@ -39,6 +24,7 @@ def main():
                 print("ERROR. Ingrese un número correcto")
         except ValueError:
             print("ERROR. Ingrese un valor numérico.")
+
     if numero_inicio == 1:
 
         nombre_usuario = input("Ingrese nombre de usuario:  ")
