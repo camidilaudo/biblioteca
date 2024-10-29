@@ -45,22 +45,24 @@ def login_usuario(nombre_usuario, contrasenia):
     return tipo_usuario
 
 
-def agregar_libro_historial(nombre_usuario, isbn):
+def agregar_libro_historial(nombre_usuario, isbn, fecha):
     """Agrega el ISBN de un libro al historial del cliente.
     :param nombre_usuario: Str, username del usuario que retiro el libro.
     :param isbn: Int, código ISBN del libro que retiro.
+    :param Str, fecha en que se alquiló el libro.
     :return historiales: Matrix, historial de todos los usuarios."""
     existe_usuario = False
     indice_historial = -1
+
     for i, historial in enumerate(ud.historiales):
         if historial[0] == nombre_usuario:
             existe_usuario = True
             indice_historial = i
 
     if existe_usuario is True:
-        ud.historiales[indice_historial][1].append(isbn)
+        ud.historiales[indice_historial][1].append((isbn, fecha))
     else:
-        ud.historiales.append([nombre_usuario, [isbn]])
+        ud.historiales.append([nombre_usuario, [(isbn, fecha)]])
 
     return ud.historiales
 

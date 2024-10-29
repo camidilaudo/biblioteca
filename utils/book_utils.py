@@ -6,6 +6,8 @@ from data_store import books_data as bd
 
 from utils import users_utils as uu
 
+from utils import system_utils as su
+
 import constantes as c
 
 import random
@@ -20,6 +22,11 @@ def stock(isbn):
         libros = json.load(archivo)  # Debe ser una lista de diccionarios
 
     return next((libros[libro]["isbn"] for libro in libros if libros[libro]["isbn"] == isbn), None)
+
+
+import datetime
+
+stock = lambda ISBN: True if [libro for libro in bd.libros if libro["isbn"] == ISBN] else False
 
 
 def busqueda_libros(clave, valor):
@@ -142,25 +149,93 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
     :return: List, estado del libro y ejemplares disponibles."""
 
     libro = obtener_libro(isbn=isbn)
+
     status_libro = libro["disponibilidad"]
     ejemplares_disponibles = libro["ejemplares_disponibles"]
 
-    if status_libro and ejemplares_disponibles > cant_pedidos:
-        ejemplares_disponibles = libro["ejemplares_disponibles"] - cant_pedidos
-        libro["ejemplares_disponibles"] -= cant_pedidos
-        uu.agregar_libro_historial(nombre_usuario, isbn)
 
-    elif status_libro is True and ejemplares_disponibles == cant_pedidos:
-        libro["ejemplares_disponibles"] = 0
-        libro["disponibilidad"] = False
-        ejemplares_disponibles = 0
-        status_libro = False
-        uu.agregar_libro_historial(nombre_usuario, isbn)
-    elif status_libro is True and ejemplares_disponibles > cant_pedidos:
+    if libro is None:
         ejemplares_disponibles = -1
         status_libro = False
 
+    else:
+        status_libro = libro["disponibilidad"]
+        ejemplares_disponibles = libro["ejemplares_disponibles"]
+
+        if status_libro and ejemplares_disponibles > cant_pedidos:
+            ejemplares_disponibles = libro["ejemplares_disponibles"] - cant_pedidos
+
+            fecha_hoy = su.fecha_actual
+            uu.agregar_libro_historial(nombre_usuario, isbn, fecha_hoy)
+
+            if isbn in ud.alquilados:
+                ud.alquilados[isbn] += cant_pedidos
+            else:
+                ud.alquilados[isbn] = cant_pedidos
+
+        elif status_libro and ejemplares_disponibles == cant_pedidos:
+            libro["ejemplares_disponibles"] = 0
+            libro["disponibilidad"] = False
+
+            fecha_hoy = su.fecha_actual
+            uu.agregar_libro_historial(nombre_usuario, isbn, fecha_hoy)
+
+            ud.alquilados[isbn] = cant_pedidos
+
+        elif status_libro and ejemplares_disponibles < cant_pedidos:
+            ejemplares_disponibles = ejemplares_disponibles
+            status_libro = False
+
     return [status_libro, ejemplares_disponibles]
+
+
+def penalizaciones(fsalida, fregreso):
+    """Compara los dias que un libro ha estado fuera de la biblioteca con el tiempo máximo que se puede prestar dicho libro
+    :param fsalida: datetime, nfecha en la cual el libro se alquilo.
+    :param fregreso: datetime, fecha en la cual se devolvio
+    :return True en caso de que no se excedieran los dias. False en caso de que se superen los dias
+    """
+    dias_totales = fregreso - fsalida
+    dias_maximos = 7
+
+    if dias_totales <= dias_maximos:
+        return True
+    else:
+        return False
+
+
+def devolver_libro(ISBN, nombre):
+
+    devolucion = False
+
+    if ISBN in ud.alquilados:
+        copias = ud.alquilados[ISBN]
+
+        libro = obtener_libro(ISBN)
+        if libro:
+            libro["disponibilidad"] = True
+            libro["ejemplares_disponibles"] += 1
+
+            copias -= 1
+            if copias == 0:
+                del ud.alquilados[ISBN]
+            else:
+                ud.alquilados[ISBN] = copias
+
+            fecha_hoy = su.fecha_actual()
+            usuario_encontrado = False
+
+            for historial in ud.historiales:
+                if historial[0] == nombre:
+                    historial[1].append((ISBN, fecha_hoy))
+                    usuario_encontrado = True
+
+            if not usuario_encontrado:
+                ud.historiales.append([nombre, [(ISBN, fecha_hoy)]])
+
+            devolucion = True
+
+    return devolucion
 
 
 def recomendaciones(genero, usuario):

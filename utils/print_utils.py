@@ -1,5 +1,3 @@
-import os
-
 # Funciones para imprimir por pantalla
 
 
@@ -34,14 +32,6 @@ def imprimir_historial(lista):
         print(f"Título: {titulo}")
 
 
-def limpiar_terminal():
-    """Función encargada de limpiar la terminal."""
-    if os.name == "nt":
-        os.system("cls")
-    else:
-        os.system("clear")
-
-
 def imprimir_menu_cliente():
     print("Elegí una opción para continuar: ")
     print("1- Buscar libros.")
@@ -57,4 +47,5 @@ def imprimir_menu_bibliotecario():
     print("2- Editar libro.")
     print("3- Alquilar libro.")
     print("4- Borrar libro.")
+
     print("O presione -1 para finalizar.")
