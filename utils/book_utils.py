@@ -153,7 +153,6 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
     status_libro = libro["disponibilidad"]
     ejemplares_disponibles = libro["ejemplares_disponibles"]
 
-
     if libro is None:
         ejemplares_disponibles = -1
         status_libro = False
@@ -205,7 +204,6 @@ def penalizaciones(fsalida, fregreso):
 
 
 def devolver_libro(ISBN, nombre):
-
     devolucion = False
 
     if ISBN in ud.alquilados:
