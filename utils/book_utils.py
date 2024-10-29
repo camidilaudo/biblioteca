@@ -125,8 +125,8 @@ def editar_libros(ISBN, indice, valor):
 
 
 def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
-    """Cambia el estado de un libro segun la cantidad de pedidos que tiene.
-    :param isbn: Str, titulo del libro a pedir.
+    """Cambia el estado de un libro según la cantidad de pedidos que tiene.
+    :param isbn: Int, código ISBN del libro que se quiere eliminar de la biblioteca.
     :param cant_pedidos: Int, cantidad de libros que se piden.
     :param nombre_usuario: Str, nombre del usuario que realiza el pedido.
     :return: List, estado del libro y ejemplares disponibles."""
@@ -146,7 +146,7 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
         ejemplares_disponibles = libro["ejemplares_disponibles"]
 
         if status_libro and ejemplares_disponibles > cant_pedidos:
-            ejemplares_disponibles = libro["ejemplares_disponibles"] - cant_pedidos
+            libro["ejemplares_disponibles"] -= cant_pedidos
 
             fecha_hoy = su.fecha_actual
             uu.agregar_libro_historial(nombre_usuario, isbn, fecha_hoy)
@@ -171,7 +171,6 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
 
     return [status_libro, ejemplares_disponibles]
 
-
 def penalizaciones(fsalida, fregreso):
     """Compara los dias que un libro ha estado fuera de la biblioteca con el tiempo máximo que se puede prestar dicho libro
     :param fsalida: datetime, nfecha en la cual el libro se alquilo.
@@ -188,7 +187,12 @@ def penalizaciones(fsalida, fregreso):
 
 
 def devolver_libro(ISBN, nombre):
-
+    """Verifica si el libro fue alquilado anteriormente por el usuario.
+    :param ISBN: Int, codigo ISBN del libro que se quiere eliminar de la biblioteca.
+    :param nombre: Str, nombre del usuario que quiere devolver el libro
+    :return: Bool, False si el ISBN no se encuentra en el historial de libros alquilados,
+    True si se devuelve correctamente el libro.
+    """
     devolucion = False
 
     if ISBN in ud.alquilados:

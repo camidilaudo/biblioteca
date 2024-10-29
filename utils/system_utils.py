@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 # Función para validar constantes
@@ -26,4 +26,7 @@ def limpiar_terminal():
         os.system("clear")
 
 
-fecha_actual = lambda: datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+fecha_actual = lambda: datetime.now()
+
+fecha_devolucion = lambda: datetime.now() + timedelta(days=7)
+
