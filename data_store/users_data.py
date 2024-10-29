@@ -9,12 +9,14 @@ usuarios = [
 ]
 
 #DICCIONARIOS DE LIBROS PENALIZADOS: Nombre del usuario y ISBN
+#Historial de libros que ya excedieron el plazo de préstamo y aún no han vuelto a la biblioteca
 
 penalizados = [
     ["cami", [9780307474278]],
 ]
 
 #DICCIONARIO DE LIBROS ALQUILADOS: ISBN, cantidad, Nombre de usuario
+#Historial de todos los libros que la biblioteca tiene alquilados junto a sus cantidades
 
 alquilados = {
     9780747532743: 1,
@@ -27,6 +29,7 @@ alquilados = {
 # MATRIZ DE HISTORIAL
 
 # filas de la matriz = [nombre de usuario,[ISBN1, ISBN2]]
+#Historial con los libros que ha leido cada usuario
 historiales = [
     ["cami", [(9780747532743, "2024-10-23 12:45:32"), (9780553573404, "2024-10-23 12:50:00")]],
     ["dani", [(9780007136834, "2024-10-23 13:05:12"), (9780307474278, "2024-10-23 13:10:45")]]

@@ -109,11 +109,16 @@ def editar_libros(ISBN, indice, valor):
 
 
 def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
-    """Cambia el estado de un libro segun la cantidad de pedidos que tiene.
+
+    """Altera 2 historales
+     1) El de libros alquilados. Se fija que esté en la lista. Si no lo encuentra agrega el ISBN y la cantidad. 
+      Si lo encuentra, solo modifica la cantidad,
+     2) El de usuario. En caso de que no lo haya leido antes, lo agrega a su historial
+     Luego cambia el estado de un libro segun la cantidad de pedidos que tiene.
     :param isbn: Str, titulo del libro a pedir.
     :param cant_pedidos: Int, cantidad de libros que se piden.
     :param nombre_usuario: Str, nombre del usuario que realiza el pedido.
-    :return: List, estado del libro y ejemplares disponibles."""
+    :return: List, estado del libro y ejemplares disponibles"""
 
     libro = obtener_libro(ISBN=isbn)
 
@@ -125,11 +130,11 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
         status_libro = libro["disponibilidad"]
         ejemplares_disponibles = libro["ejemplares_disponibles"]
 
-        if status_libro and ejemplares_disponibles > cant_pedidos:
+        if (status_libro) and (ejemplares_disponibles > cant_pedidos):
             ejemplares_disponibles = libro["ejemplares_disponibles"] - cant_pedidos
-
             fecha_hoy = su.fecha_actual
             uu.agregar_libro_historial(nombre_usuario, isbn, fecha_hoy)
+        
 
             if isbn in ud.alquilados:
                 ud.alquilados[isbn] += cant_pedidos
