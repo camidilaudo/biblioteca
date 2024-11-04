@@ -132,7 +132,7 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
       Si lo encuentra, solo modifica la cantidad,
      2) El de usuario. En caso de que no lo haya leido antes, lo agrega a su historial
      Luego cambia el estado de un libro segun la cantidad de pedidos que tiene.
-    :param isbn: Str, titulo del libro a pedir.
+    :param isbn: Str, titulo del libro a pedir."""
 
 
     libro = obtener_libro(ISBN=isbn)
@@ -149,20 +149,18 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
         status_libro = libro["disponibilidad"]
         ejemplares_disponibles = libro["ejemplares_disponibles"]
 
-    modificar_alquilar_libro
-        if (status_libro) and (ejemplares_disponibles > cant_pedidos):
-            ejemplares_disponibles = libro["ejemplares_disponibles"] - cant_pedidos
+    #modificar_alquilar_libro
+    if (status_libro) and (ejemplares_disponibles > cant_pedidos):
+        ejemplares_disponibles = libro["ejemplares_disponibles"] - cant_pedidos
 
-            fecha_hoy = su.fecha_actual
-            uu.agregar_libro_historial(nombre_usuario, isbn, fecha_hoy)
-        
+        fecha_hoy = su.fecha_actual
+        uu.agregar_libro_historial(nombre_usuario, isbn, fecha_hoy)
+        if isbn in ud.alquilados:
+            ud.alquilados[isbn] += cant_pedidos
+        else:
+            ud.alquilados[isbn] = cant_pedidos
 
-            if isbn in ud.alquilados:
-                ud.alquilados[isbn] += cant_pedidos
-            else:
-                ud.alquilados[isbn] = cant_pedidos
-
-        elif status_libro and ejemplares_disponibles == cant_pedidos:
+    elif status_libro and ejemplares_disponibles == cant_pedidos:
             libro["ejemplares_disponibles"] = 0
             libro["disponibilidad"] = False
 
@@ -171,7 +169,7 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
 
             ud.alquilados[isbn] = cant_pedidos
 
-        elif status_libro and ejemplares_disponibles < cant_pedidos:
+    elif status_libro and ejemplares_disponibles < cant_pedidos:
             ejemplares_disponibles = ejemplares_disponibles
             status_libro = False
 
