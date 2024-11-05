@@ -44,3 +44,13 @@ def validacion_numerica ():
             print("ERROR. Ingrese un valor numérico.")
     return es_valido
 
+def validacion_nenteros(entrada):
+    while True: 
+        try:
+            numero = int(entrada)  
+            return numero  
+        except ValueError:
+            print("Error: Debe ingresar un número entero.")
+            entrada = input("Ingrese un número entero nuevamente o -1 para salir: ")  
+
+#

@@ -120,12 +120,16 @@ def menu_bibliotecario():
             titulo = input("Ingrese el titulo : ")
             autor = input("Ingrese el autor : ")
             genero = input("Ingrese el genero : ")
-            ISBN = int(input("Ingrese el ISBN : "))
+            pedir_isbn = input ("Ingrese un ISBN")
+            ISBN = su.validacion_nenteros (pedir_isbn)
             editorial = input("Ingrese el editorial : ")
-            anio_publicacion = int(input("Ingrese el anio publicacion : "))
+            pedir_anio_publicacion = input("Ingrese el año publicacion : ")
+            anio_publicacion = su.validacion_nenteros (pedir_anio_publicacion)
             serie_libros = input("Ingrese el serie_libros : ")
-            nro_paginas = int(input("Ingrese el nro_paginas : "))
-            cant_ejemplares = int(input("Ingrese el la cantidad de ejemplares : "))
+            pedir_nro_paginas = input ("Ingrese el número de paginas: ")
+            nro_paginas = su.validacion_nenteros (pedir_nro_paginas)
+            pedir_cant_ejemplares = input("Ingrese el la cantidad de ejemplares : ")
+            cant_ejemplares = su.validacion_nenteros (pedir_cant_ejemplares)
             registrar_libros = bu.cargar_libros(
                 titulo,
                 autor,
@@ -204,7 +208,7 @@ def menu_bibliotecario():
 
                                 if not us.validar_usuario(usuario):
                                     print("Error. El usuario no existe.")
-                                    continue 
+                                    continue  
 
                                 libro_alquilado = bu.alquilar_libro(isbn, cantidad_pedidos, usuario)
                                 if libro_alquilado[0]:
