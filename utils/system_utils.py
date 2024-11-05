@@ -30,3 +30,17 @@ fecha_actual = lambda: datetime.now()
 
 fecha_devolucion = lambda: datetime.now() + timedelta(days=7)
 
+ 
+def validacion_numerica ():
+    bandera= True
+    while bandera:
+        try:
+            es_valido = int(input("Presione 1 para continuar, 2 si desea realizar otra búsqueda o -1 para salir: "))
+            if es_valido in [1, 2, -1]:
+                bandera= False
+            else:
+                print("ERROR. Ingrese un número correcto")
+        except ValueError:
+            print("ERROR. Ingrese un valor numérico.")
+    return es_valido
+

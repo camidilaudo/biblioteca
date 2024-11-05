@@ -34,16 +34,9 @@ def main():
     print("2- Registrarse.")
 
     # Ingresar al sistema como usuario pre - existente
-    bandera_inicio_o_registro = True
-    while bandera_inicio_o_registro:
-        try:
-            numero_inicio = int(input("Ingrese un número: "))
-            if numero_inicio in [1, 2]:
-                bandera_inicio_o_registro= False
-            else:
-                print("ERROR. Ingrese un número correcto")
-        except ValueError:
-            print("ERROR. Ingrese un valor numérico.")
+    
+    numero_inicio = su.validacion_numerica ()
+
     if numero_inicio == 1:
 
         nombre_usuario = input("Ingrese nombre de usuario:  ")
@@ -55,16 +48,8 @@ def main():
     else:
         print("1- Bibliotecario.")
         print("2- Cliente.")
-        badera_biblio_o_cliente = True
-        while badera_biblio_o_cliente:
-            try:
-                usuario = int(input("Ingrese un número para el tipo de usuario: "))
-                if usuario in [1,2]:
-                    badera_biblio_o_cliente = False 
-                else:
-                    print ("ERROR. Ingrese un número correcto")
-            except ValueError:
-                print("ERROR. Ingrese un valor numérico.")
+       
+        usuario = su.validacion_numerica ()
 
         if usuario == c.bibliotecario:
             contrasenia_general = input("Ingrese el código de acceso: ")

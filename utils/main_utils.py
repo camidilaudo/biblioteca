@@ -190,15 +190,8 @@ def menu_bibliotecario():
                     if libros:
                         print("Estos son los libros que coinciden con tu búsqueda:")
                         pu.imprimir_res_busqueda(libros)
-
-                        continuar = ''
-                        while continuar not in ['1', '2', '-1']:
-                            continuar = input(
-                                "Presione 1 para continuar, 2 para realizar otra búsqueda o -1 para salir: ")
-                            if continuar not in ['1', '2', '-1']:
-                                print("Error. Ingrese un número correcto.")
-
-                        if continuar == '1':
+                        continuar = su.validacion_numerica ()
+                        if continuar == 1:
                             alquilando = True
                             while alquilando and bandera:
                                 isbn = int(input("Ingrese el ISBN del libro que quiere alquilar: "))
@@ -217,6 +210,8 @@ def menu_bibliotecario():
                                             f"Quedan {libro_actualizado['ejemplares_disponibles']} unidades disponibles.")
                                         print(
                                             f"Debe devolverlo antes del: {su.fecha_devolucion().strftime('%Y-%m-%d %H:%M:%S')}")
+                                        
+                                        alquilando = False
 
                                     elif libro_alquilado[1] < cantidad_pedidos:
                                         print("Error. No quedan ejemplares disponibles actualmente.")
@@ -229,7 +224,7 @@ def menu_bibliotecario():
                                 alquilando = continuar_alquiler == '1'
                                 bandera = continuar_alquiler != '-1'
 
-                        elif continuar == '2':
+                        elif continuar == 2:
                             titulo = input("Ingrese el nombre del libro que quiere alquilar o -1 para salir: ")
                             if titulo == '-1':
                                 bandera = False
@@ -241,16 +236,7 @@ def menu_bibliotecario():
                     print(f"Estos son los libros que coinciden con tu búsqueda: ")
                     pu.imprimir_res_busqueda(libros)
                     bandera = True
-                bandera_alquilar_libro = True
-                while bandera_alquilar_libro:
-                    try:
-                        continuar = int(input("Presione 1 para continuar, 2 si desea realizar otra búsqueda o -1 para salir: "))
-                        if continuar in [1, 2, -1]:
-                            bandera_alquilar_libro= False
-                        else:
-                            print("ERROR. Ingrese un número correcto")
-                    except ValueError:
-                        print("ERROR. Ingrese un valor numérico.")
+                continuar = su.validacion_numerica ()
                 while continuar != -1:
                     if continuar == 2:
 
