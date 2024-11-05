@@ -241,7 +241,16 @@ def menu_bibliotecario():
                     print(f"Estos son los libros que coinciden con tu búsqueda: ")
                     pu.imprimir_res_busqueda(libros)
                     bandera = True
-                continuar = int(input("Presione 1 para continuar, 2 si desea realizar otra búsqueda o -1 para salir: "))
+                bandera_alquilar_libro = True
+                while bandera_alquilar_libro:
+                    try:
+                        continuar = int(input("Presione 1 para continuar, 2 si desea realizar otra búsqueda o -1 para salir: "))
+                        if continuar in [1, 2, -1]:
+                            bandera_alquilar_libro= False
+                        else:
+                            print("ERROR. Ingrese un número correcto")
+                    except ValueError:
+                        print("ERROR. Ingrese un valor numérico.")
                 while continuar != -1:
                     if continuar == 2:
 

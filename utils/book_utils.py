@@ -155,6 +155,7 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
 
         fecha_hoy = su.fecha_actual
         uu.agregar_libro_historial(nombre_usuario, isbn, fecha_hoy)
+        uu.agregar_alquilados (isbn, cant_pedidos)
         if isbn in ud.alquilados:
             ud.alquilados[isbn] += cant_pedidos
         else:
@@ -162,12 +163,11 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
 
     elif status_libro and ejemplares_disponibles == cant_pedidos:
             libro["ejemplares_disponibles"] = 0
-            libro["disponibilidad"] = False
+            libro["disponibilidad"] = True
 
             fecha_hoy = su.fecha_actual
             uu.agregar_libro_historial(nombre_usuario, isbn, fecha_hoy)
-
-            ud.alquilados[isbn] = cant_pedidos
+            uu.agregar_alquilados (isbn, cant_pedidos)
 
     elif status_libro and ejemplares_disponibles < cant_pedidos:
             ejemplares_disponibles = ejemplares_disponibles
