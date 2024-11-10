@@ -1,5 +1,7 @@
 import os
 from datetime import datetime, timedelta
+import unicodedata
+import constantes as c
 
 
 # Función para validar constantes
@@ -53,4 +55,18 @@ def validacion_nenteros(entrada):
             print("Error: Debe ingresar un número entero.")
             entrada = input("Ingrese un número entero nuevamente o -1 para salir: ")  
 
-#
+def validar_constantes(clave):
+    
+    validar= True
+    texto_normalizado = ''.join(
+        filter(lambda char: unicodedata.category(char) != 'Mn', unicodedata.normalize('NFD', clave.lower()))
+    )
+
+    if (texto_normalizado not in c.valor_bd) and (texto_normalizado not in c.generos):
+        validar=False
+    
+    return validar
+
+
+
+

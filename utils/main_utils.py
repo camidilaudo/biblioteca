@@ -27,13 +27,11 @@ def menu_cliente(nombre_usuario):
         if numero == "1":
 
             clave = input("Ingrese el campo por el cual va a realizar la búsqueda: ")
-            es_valido = c.validar_constantes(clave)
+            es_valido = su.validar_constantes(clave)
             while es_valido is False:
                 print("Ese campo no existe en nuestra biblioteca, prueba con otro")
-                clave = str(
-                    input("Ingrese el campo por el cual va a realizar la búsqueda: ")
-                )
-                es_valido = c.validar_constantes(clave)
+                clave = str(input("Ingrese el campo por el cual va a realizar la búsqueda: "))
+                es_valido = su.validar_constantes(clave)
 
             valor = str(input("Ingrese el valor del campo: "))
             libros_encontrados = bu.busqueda_libros(clave, valor)

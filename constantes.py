@@ -1,3 +1,4 @@
+
 # Declaracion de constantes utilizadas en el programa
 
 # TIPOS DE USUARIO
@@ -50,12 +51,3 @@ claves_bd = {
 #migracion_archivos
 # Función para validar constantes
 
-
-def validar_constantes(clave):
-
-    validacion = True
-
-    if (clave not in valor_bd) and (clave not in generos):
-        validacion = False
-
-    return validacion
