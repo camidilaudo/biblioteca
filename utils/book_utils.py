@@ -29,15 +29,18 @@ def busqueda_libros(clave, valor):
     :param valor: Str, valor del campo por el cual se quiere realizar la búsqueda.
     :return libros: List, lista de titulos de libros que coinciden con la clave-valor enviados anteriormente y su status.
     """
+
     libros = []
     with open('./data_store/books_data.json', 'r', encoding='utf-8') as file:
         biblioteca = dict(json.load(file))
 
         for libro in biblioteca:
-            if str(biblioteca[libro][clave].lower()) == valor.lower():
-                libros.append(biblioteca[libro])
+            if clave in biblioteca[libro]:
+                if str(biblioteca[libro][clave]).lower() == str(valor).lower():
+                    libros.append(biblioteca[libro])
 
     return libros
+
 
 
 def cargar_libros(

@@ -1,23 +1,9 @@
 import os
 from datetime import datetime, timedelta
-import unicodedata
 import constantes as c
 
 
 # Función para validar constantes
-
-def validar_constantes(clave):
-    """
-    Verifica si las claves a reemplazar por el usuario existen
-    :param clave: Str, dato a editar
-    :return: Bool, True si el dato es valido (existe), False si el dato no existe.
-    """
-    validacion = True
-
-    if (clave not in valor_bd) and (clave not in generos):
-        validacion = False
-
-    return validacion
 
 
 def limpiar_terminal():
@@ -57,15 +43,16 @@ def validacion_nenteros(entrada):
 
 def validar_constantes(clave):
     
-    validar= True
-    texto_normalizado = ''.join(
-        filter(lambda char: unicodedata.category(char) != 'Mn', unicodedata.normalize('NFD', clave.lower()))
-    )
+    validar= False
+    texto_normalizado = clave.lower()
 
-    if (texto_normalizado not in c.valor_bd) and (texto_normalizado not in c.generos):
-        validar=False
+    if (texto_normalizado in c.valor_bd):
+        validar=True
     
     return validar
+
+
+
 
 
 

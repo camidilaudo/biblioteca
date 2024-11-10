@@ -36,6 +36,7 @@ def menu_cliente(nombre_usuario):
             valor = str(input("Ingrese el valor del campo: "))
             libros_encontrados = bu.busqueda_libros(clave, valor)
             if not libros_encontrados:
+                #TODO cuando devuelve una variable vacia, no printea este mensaje, solo lo borra, no se por que
                 print("No contamos con ese libro en nuestra biblioteca")
                 print(f"Se encontraron {len(libros_encontrados)}")
             else:

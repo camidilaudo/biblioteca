@@ -29,7 +29,7 @@ valor_bd = [
     "nro_paginas",
     "cant_ejemplares",
     "disponibilidad",
-    "ejemplares_disponibles",
+    "ejemplares disponibles",
 ]
 
 # Diccionario de claves para la base de datos
