@@ -73,6 +73,7 @@ def agregar_penalizados(nombre_usuario, isbn):
     :return historiales: Matrix, historial de todos los usuarios."""
     existe_usuario = False
     indice_historial = -1
+    va = ""
 
     for i, historial in enumerate(ud.penalizados):
         if historial[0] == nombre_usuario:
