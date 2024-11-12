@@ -46,7 +46,7 @@ def validar_constantes(clave):
     validar= False
     texto_normalizado = clave.lower()
 
-    if (texto_normalizado in c.valor_bd):
+    if (texto_normalizado in c.valor_bd) or (texto_normalizado in c.generos):
         validar=True
     
     return validar

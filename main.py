@@ -64,11 +64,12 @@ def main():
             verificar_contrasenia = input("Volvé a ingresar la contraseña : ")
             cumple_requisito = us.validar_contrasenia(contrasenia)
             while (contrasenia != verificar_contrasenia) or not cumple_requisito:
+
                 if contrasenia != verificar_contrasenia:
                     print("Error. Las contraseñas no coinciden")
                 else:
                     print("Tu contraseña es debil.")
-                    print("Tu contraseña debe contener al menos un número, una letra minuscula, una letra mayuscula y un simbolo")
+                    print("Tu contraseña debe contar con entre 8 y 15 caracteres y contener al menos un número, una letra minuscula, una letra mayuscula y un simbolo")
                 contrasenia = input("Ingrese la contraseña del usuario: ")
 
                 verificar_contrasenia = input("Volvé a ingresar la contraseña : ")
@@ -76,7 +77,7 @@ def main():
             registrar = us.registrar_usuario(usuario, nombre_usuario, contrasenia)
             if registrar is False:
                 print("El usuario ingresado ya existe. Volver a intentar: ")
-        pu.limpiar_terminal()
+        su.limpiar_terminal()
         print("Usuario registrado correctamente !")
         iniciar_sesion = us.login_usuario(nombre_usuario, contrasenia)
 

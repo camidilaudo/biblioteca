@@ -46,11 +46,8 @@ def menu_cliente(nombre_usuario):
 
         # Info especifica del libro
         elif numero == "2":
-            ISBN = int(
-                input(
-                    "Ingrese el ISBN del libro que quiere obtener informacion detallada: "
-                )
-            )
+            pedir_isbn = input ("Ingrese un ISBN: ")
+            ISBN = su.validacion_nenteros (pedir_isbn)
             libro = bu.obtener_libro(ISBN)
             if libro is not None:
                 pu.imprimir_libro(libro)
@@ -62,11 +59,11 @@ def menu_cliente(nombre_usuario):
         # Recomendaciones
         elif numero == "3":
             genero_libro = input("Ingrese un género: ")
-            genero_valido = c.validar_constantes(genero_libro)
+            genero_valido = su.validar_constantes(genero_libro)
             while genero_valido is False:
                 print("El género ingresado es incorrecto, por favor volver a ingresar")
                 genero_libro = input("Ingrese un género: ")
-                genero_valido = c.validar_constantes(genero_libro)
+                genero_valido = su.validar_constantes(genero_libro)
 
             recomendacion_libro = bu.recomendaciones(genero_libro, nombre_usuario)
             if recomendacion_libro is None:
