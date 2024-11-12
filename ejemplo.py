@@ -4,49 +4,41 @@ import utils.users_utils as us
 import constantes as c
 import utils.system_utils as su
 
-bandera = True
+def devolver_libro(ISBN, nombre):
+    """Verifica si el libro fue alquilado anteriormente por el usuario.
+    :param ISBN: Int, codigo ISBN del libro que se quiere eliminar de la biblioteca.
+    :param nombre: Str, nombre del usuario que quiere devolver el libro
+    :return: Bool, False si el ISBN no se encuentra en el historial de libros alquilados,
+    True si se devuelve correctamente el libro.
+    """
+    with open('./data_store/books_data.json', 'r+', encoding='utf-8') as file:
+        devolucion = False
 
-while bandera:
-    titulo = input("Ingrese el nombre del libro que quiere alquilar o -1 para salir: ")
+        if ISBN in ud.alquilados:
+            copias = ud.alquilados[ISBN]
 
-    if titulo == "-1":
-        bandera = False
-    else: 
-        libros = bu.busqueda_libros("titulo", valor=titulo)
-        if libros:  
-            print("Estos son los libros que coinciden con tu búsqueda:")
-            pu.imprimir_res_busqueda(libros)
+            libro = obtener_libro(ISBN)
+            if libro:
+                libro["disponibilidad"] = True
+                libro["ejemplares_disponibles"] += 1
 
-            continuar = su.validacion_numerica()
-            if continuar == 1:  
-                alquilando = True
-                while alquilando:
-                    isbn = int(input("Ingrese el ISBN del libro que quiere alquilar: "))
-                    cantidad_pedidos = int(input("Ingrese la cantidad de pedidos: "))
-                    usuario = input("Ingrese el nombre de usuario que va a alquilarlos: ")
+                copias -= 1
+                if copias == 0:
+                    del ud.alquilados[ISBN]
+                else:
+                    ud.alquilados[ISBN] = copias
 
-                    if not us.validar_usuario(usuario):
-                        print("Error. El usuario no existe.")
-                        continue  # Volver a pedir el usuario
+                fecha_hoy = su.fecha_actual()
+                usuario_encontrado = False
 
-                    libro_alquilado = bu.alquilar_libro(isbn, cantidad_pedidos, usuario)
-                    if libro_alquilado[0]:
-                        libro_actualizado = bu.obtener_libro(isbn)
-                        print("***************************************************************")
-                        print("El libro se alquiló con éxito.")
-                        print(f"Quedan {libro_actualizado['ejemplares_disponibles']} unidades disponibles.")
-                        print(f"Debe devolverlo antes del: {su.fecha_devolucion().strftime('%Y-%m-%d %H:%M:%S')}")
-                        alquilando = False  
-                    elif libro_alquilado[1] < cantidad_pedidos:
-                        print("Error. No quedan suficientes ejemplares disponibles.")
-                    else:
-                        print("Error. El ISBN es incorrecto.")
-                
+                for historial in ud.historiales:
+                    if historial[0] == nombre:
+                        historial[1].append((ISBN, fecha_hoy))
+                        usuario_encontrado = True
 
-                continuar_alquiler = input("Presione 1 para alquilar otro libro o -1 para salir: ")
-                if continuar_alquiler != '1':
-                    bandera = False  
-            elif continuar == 2:
-                continue  
-        else:
-            print("No contamos con ese libro en la biblioteca.")
+                if not usuario_encontrado:
+                    ud.historiales.append([nombre, [(ISBN, fecha_hoy)]])
+
+                devolucion = True
+
+        return devolucion

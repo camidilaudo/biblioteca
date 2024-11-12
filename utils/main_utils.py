@@ -233,12 +233,10 @@ def menu_bibliotecario():
         elif numero == "4":
             isbn = 0
             while isbn != -1:
-                try:
-                    isbn = int(input("Ingrese un ISBN correcto o -1 para salir: "))
-                except ValueError:
-                    print("Por favor, ingrese un número válido.")
-                    isbn = 0
 
+                pedir_isbn = int(input("Ingrese un ISBN correcto o -1 para salir: "))
+                isbn = su.validacion_nenteros ()
+                
                 if isbn != -1:
                     usuario = input("Ingrese el nombre del usuario que va a devolver el libro: ")
                     devolver = bu.devolver_libro(isbn, usuario)
