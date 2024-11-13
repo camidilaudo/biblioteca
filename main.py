@@ -38,7 +38,7 @@ def main():
         validar_num = su.validacion_enteros(entrada)
 
         if validar_num not in [1, 2] and validar_num is not None and validar_num != -1:
-            print("Error. úmero inválido.")
+            print("Error. Número inválido.")
             bandera = False
 
         if bandera:

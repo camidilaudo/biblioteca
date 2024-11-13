@@ -116,16 +116,24 @@ def menu_bibliotecario():
             titulo = input("Ingrese el titulo : ")
             autor = input("Ingrese el autor : ")
             genero = input("Ingrese el genero : ")
-            pedir_isbn = input("Ingrese un ISBN")
-            ISBN = su.validacion_nenteros(pedir_isbn)
+            ISBN = None
+            while ISBN is None:
+                pedir_isbn = input("Ingrese un ISBN : ")
+                ISBN = su.validacion_enteros(pedir_isbn)
             editorial = input("Ingrese el editorial : ")
-            pedir_anio_publicacion = input("Ingrese el año publicacion : ")
-            anio_publicacion = su.validacion_nenteros(pedir_anio_publicacion)
+            anio_publicacion = None
+            while anio_publicacion is None:
+                pedir_anio_publicacion = input("Ingrese el año publicacion : ")
+                anio_publicacion = su.validacion_enteros(pedir_anio_publicacion)
             serie_libros = input("Ingrese el serie_libros : ")
-            pedir_nro_paginas = input("Ingrese el número de paginas: ")
-            nro_paginas = su.validacion_nenteros(pedir_nro_paginas)
-            pedir_cant_ejemplares = input("Ingrese el la cantidad de ejemplares : ")
-            cant_ejemplares = su.validacion_nenteros(pedir_cant_ejemplares)
+            nro_paginas = None
+            while nro_paginas is None:
+                pedir_nro_paginas = input("Ingrese el número de paginas: ")
+                nro_paginas = su.validacion_enteros(pedir_nro_paginas)
+            cant_ejemplares = None
+            while cant_ejemplares is None:
+                pedir_cant_ejemplares = input("Ingrese el la cantidad de ejemplares : ")
+                cant_ejemplares = su.validacion_enteros(pedir_cant_ejemplares)
             registrar_libros = bu.cargar_libros(
                 titulo,
                 autor,
