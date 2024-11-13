@@ -30,6 +30,7 @@ def main():
     while True:
         bandera = True
         su.limpiar_terminal()
+        print("=== MENÚ PRINCIPAL ===")
         print("1- Iniciar sesión.")
         print("2- Registrarse.")
         entrada = input("Ingrese una opción: ")
@@ -44,6 +45,7 @@ def main():
 
             # Inicio de sesion
             if validar_num == 1:
+                print("\n=== INICIO DE SESIÓN ===")
                 nombre_usuario = input("Ingrese nombre de usuario:  ")
                 contrasenia = input("Ingrese la contraseña del usuario: ")
 
@@ -56,6 +58,7 @@ def main():
                 salir = False
                 while validar_usuario not in [1, 2] and not salir:
                     su.limpiar_terminal()
+                    print("=== REGISTRO DE USUARIO ===")
                     print("1- Bibliotecario.")
                     print("2- Cliente.")
                     usuario = input("Ingrese una opción correcta o -1 para salir: ")
@@ -72,6 +75,7 @@ def main():
                 if bandera:
 
                     if validar_usuario == c.bibliotecario:
+                        print("\n=== VERIFICACIÓN DE ACCESO ===")
                         contrasenia_general = input("Ingrese el código de acceso: ")
 
                         salir = False
@@ -84,6 +88,7 @@ def main():
                     if bandera:
                         registrar = False
                         while registrar is False:
+                            print("\n=== CREACIÓN DE CUENTA ===")
                             nombre_usuario = input("Ingrese un nombre de usuario : ")
                             contrasenia = input("Ingrese la contraseña del usuario: ")
                             verificar_contrasenia = input("Volvé a ingresar la contraseña : ")
@@ -137,6 +142,5 @@ def main():
                     # SI EL USUARIO QUE INICIA SESIÓN ES EL BIBLIOTECARIO
                     elif iniciar_sesion == c.bibliotecario:
                         mu.menu_bibliotecario()
-
 
 main()
