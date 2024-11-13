@@ -34,7 +34,6 @@ def busqueda_libros(clave, valor):
     return libros
 
 
-
 def cargar_libros(
         titulo,
         autor,
@@ -124,22 +123,19 @@ def editar_libros(ISBN, indice, valor):
 
 
 def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
-
-
     """Altera 2 historales
      1) El de libros alquilados. Se fija que esté en la lista. Si no lo encuentra agrega el ISBN y la cantidad. 
       Si lo encuentra, solo modifica la cantidad,
      2) El de usuario. En caso de que no lo haya leido antes, lo agrega a su historial
      Luego cambia el estado de un libro segun la cantidad de pedidos que tiene.
     :param isbn: Str, titulo del libro a pedir."""
-    
+
     with open('./data_store/books_data.json', 'r+', encoding='utf-8') as file:
 
         libro = obtener_libro(ISBN=isbn)
 
         status_libro = libro["disponibilidad"]
         ejemplares_disponibles = libro["ejemplares_disponibles"]
-
 
         if libro is None:
             ejemplares_disponibles = -1
@@ -151,23 +147,23 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
 
             fecha_hoy = su.fecha_actual
             uu.agregar_libro_historial(nombre_usuario, isbn, fecha_hoy)
-            uu.agregar_alquilados (isbn, cant_pedidos)
+            uu.agregar_alquilados(isbn, cant_pedidos)
             if isbn in ud.alquilados:
                 ud.alquilados[isbn] += cant_pedidos
             else:
                 ud.alquilados[isbn] = cant_pedidos
 
         elif status_libro and ejemplares_disponibles == cant_pedidos:
-                libro["ejemplares_disponibles"] = 0
-                libro["disponibilidad"] = True
+            libro["ejemplares_disponibles"] = 0
+            libro["disponibilidad"] = True
 
-                fecha_hoy = su.fecha_actual
-                uu.agregar_libro_historial(nombre_usuario, isbn, fecha_hoy)
-                uu.agregar_alquilados (isbn, cant_pedidos)
+            fecha_hoy = su.fecha_actual
+            uu.agregar_libro_historial(nombre_usuario, isbn, fecha_hoy)
+            uu.agregar_alquilados(isbn, cant_pedidos)
 
         elif status_libro and ejemplares_disponibles < cant_pedidos:
-                ejemplares_disponibles = ejemplares_disponibles
-                status_libro = False
+            ejemplares_disponibles = ejemplares_disponibles
+            status_libro = False
 
         return [status_libro, ejemplares_disponibles]
 
@@ -202,12 +198,11 @@ def devolver_libro(ISBN, nombre):
                     if historial[0] == nombre:
                         historial[2].append((ISBN, fecha_hoy))
                         penalizaciones = lambda fsalida, fregreso: (historial[2] - historial[1]).days <= 7
-                        if not penalizaciones: 
-                            uu.agregar_penalizados (nombre, ISBN)               
+                        if not penalizaciones:
+                            uu.agregar_penalizados(nombre, ISBN)
                 devolucion = True
 
         return devolucion
-
 
     def recomendaciones(genero, usuario):
         """Devuelve una recomendación segun el genero que pida el usuario. Chequea que no
@@ -239,7 +234,6 @@ def devolver_libro(ISBN, nombre):
             aleatorio_libro = random.choice(recomendaciones_por_genero)
 
         return aleatorio_libro
-
 
     def borrar_libro(ISBN):
         """Eliminar libro de la biblioteca.
