@@ -1,63 +1,44 @@
-
-
-import utils.users_utils as us
-import utils.main_utils as mu
-import data_store.users_data as ud
-import data_store.books_data as bd
 import utils.print_utils as pu
-import utils.system_utils as su
+import utils.book_utils as bu
+import utils.users_utils as us
 import constantes as c
+import utils.system_utils as su
 
+def devolver_libro(ISBN, nombre):
+    """Verifica si el libro fue alquilado anteriormente por el usuario.
+    :param ISBN: Int, codigo ISBN del libro que se quiere eliminar de la biblioteca.
+    :param nombre: Str, nombre del usuario que quiere devolver el libro
+    :return: Bool, False si el ISBN no se encuentra en el historial de libros alquilados,
+    True si se devuelve correctamente el libro.
+    """
+    with open('./data_store/books_data.json', 'r+', encoding='utf-8') as file:
+        devolucion = False
 
-# PROGRAMA PRINCIPAL :
-def main():
-    print("1- Bibliotecario.")
-    print("2- Cliente.")
-    badera_biblio_o_cliente = True
-    while badera_biblio_o_cliente:
-        try:
-            usuario = int(input("Ingrese un número para el tipo de usuario: "))
-            if usuario in [1,2]:
-               badera_biblio_o_cliente = False 
-            else:
-                print ("ERROR. Ingrese un número correcto")
-        except ValueError:
-            print("ERROR. Ingrese un valor numérico.")
+        if ISBN in ud.alquilados:
+            copias = ud.alquilados[ISBN]
 
-    registrar = False
-    while registrar is False:
-        nombre_usuario = input("Ingrese un nombre de usuario: ")
-        contrasenia = input("Ingrese la contraseña del usuario: ")
-        verificar_contrasenia = input("Volvé a ingresar la contraseña: ")
-        cumple_requisito = us.validar_contrasenia(contrasenia)
-        while (contrasenia != verificar_contrasenia) or not cumple_requisito:
-            if contrasenia != verificar_contrasenia:
-                print("Error. Las contraseñas no coinciden")
-            else:
-                print("Tu contraseña es débil.")
-            contrasenia = input("Ingrese la contraseña del usuario: ")
-            verificar_contrasenia = input("Volvé a ingresar la contraseña: ")
-            cumple_requisito = us.validar_contrasenia(contrasenia)
-        registrar = us.registrar_usuario(usuario, nombre_usuario, contrasenia)
-        if registrar is False:
-            print("El usuario ingresado ya existe. Volver a intentar:")
+            libro = obtener_libro(ISBN)
+            if libro:
+                libro["disponibilidad"] = True
+                libro["ejemplares_disponibles"] += 1
 
-    pu.limpiar_terminal()
-    print("Usuario registrado correctamente!")
-    iniciar_sesion = us.login_usuario(nombre_usuario, contrasenia)
+                copias -= 1
+                if copias == 0:
+                    del ud.alquilados[ISBN]
+                else:
+                    ud.alquilados[ISBN] = copias
 
-    while iniciar_sesion not in c.tipos_usuario:
-        print("Su usuario o contraseña es incorrecta")
-        nombre_usuario = input("Ingrese nombre de usuario: ")
-        contrasenia = input("Ingrese la contraseña del usuario: ")
-        iniciar_sesion = us.login_usuario(nombre_usuario, contrasenia)
+                fecha_hoy = su.fecha_actual()
+                usuario_encontrado = False
 
-    # Si el usuario que inicia sesión es el cliente
-    if iniciar_sesion == c.cliente:
-        mu.menu_cliente(nombre_usuario)
-    # Si el usuario que inicia sesión es el bibliotecario
-    elif iniciar_sesion == c.bibliotecario:
-        mu.menu_bibliotecario()
+                for historial in ud.historiales:
+                    if historial[0] == nombre:
+                        historial[1].append((ISBN, fecha_hoy))
+                        usuario_encontrado = True
 
+                if not usuario_encontrado:
+                    ud.historiales.append([nombre, [(ISBN, fecha_hoy)]])
 
-main()
+                devolucion = True
+
+        return devolucion
