@@ -5,12 +5,12 @@
         "genero": "Fantasia",
         "isbn": 9780747532743,
         "editorial": "Bloomsbury",
-        "anio_publicacion": "a",
+        "anio_publicacion": 1997,
         "serie": "Harry Potter",
         "nro_paginas": 223,
         "cant_ejemplares": 5,
-        "disponibilidad": 1,
-        "ejemplares_disponibles": 1
+        "disponibilidad": true,
+        "ejemplares_disponibles": 2
     },
     "2": {
         "autor": "George R.R. Martin",
