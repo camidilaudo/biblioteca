@@ -87,38 +87,66 @@ def cargar_libros(
 
 
 def obtener_libro(ISBN):
-    """Obtener un libro y su detalle segun su id interno o ISBN.
-    :param ISBN: Int, International Standard Book Number del libro.
-    :return libro: List, informacion detallada del libro buscado.
-    """
-    with open('./data_store/books_data.json', 'r+', encoding='utf-8') as file:
+    """Obtener un libro y su detalle según su ISBN."""
+    with open('./data_store/books_data.json', 'r', encoding='utf-8') as file:
+        data = json.load(file)
 
-        libro_encontrado = None
-        for libro in bd.libros:
-            if libro["isbn"] == ISBN:
-                libro_encontrado = libro
+    try:
+        ISBN = int(ISBN)
+    except ValueError:
+        return None
 
-        return libro_encontrado
+    # Buscar el libro por ISBN
+    for libro_id, libro in data.items():
+        if libro["isbn"] == ISBN:
+            return libro
+
+    return None
 
 
 def editar_libros(ISBN, indice, valor):
-    """Editar los metadatos de un libro.
-    :param ISBN: Int, International Standard Book Number del libro.
-    :param indice: Int, indice del campo que se va a editar.
-    :param valor: Str, nuevo valor del campo que se va a editar.
-    :return libro: List, lista con lops metadatos del libro si el libro existe o None si el libro no existe.
-    """
-    # Busca el libro por ISBN
+    """Editar los metadatos de un libro según el campo y su nuevo valor."""
+    # Verificar si el índice está dentro del rango válido
+    if indice < 0 or indice >= len(c.valor_bd):
+        print("Índice fuera de rango.")
+        return None
 
+    # Asegurarse de que el valor sea del tipo correcto (si es necesario convertir a entero)
+    if c.valor_bd[indice] in ["cant_ejemplares", "disponibilidad", "ejemplares_disponibles"]:
+        try:
+            valor = int(valor)
+        except ValueError:
+            print(f"El valor para {c.valor_bd[indice]} debe ser un número entero.")
+            return None
+
+    # Abrir el archivo JSON para editar el libro
     with open('./data_store/books_data.json', 'r+', encoding='utf-8') as file:
+        data = json.load(file)
 
-        claves_bd = c.claves_bd
         libro_editado = None
+        # Itera sobre todos los libros, pero solo edita el primero que coincide con el ISBN
+        for libro_id, libro in data.items():
+            if libro["isbn"] == int(ISBN):  # Compara ISBN
+                # Depuración: Mostrar el valor actual del campo
+                print(f"Libro antes de la edición: {libro[c.valor_bd[indice]]}")
 
-        for libro in bd.libros:
-            if libro["isbn"] == ISBN:
-                libro[claves_bd[indice]] = valor
-                libro_editado = libro
+                # Edita el valor correspondiente
+                libro[c.valor_bd[indice]] = valor
+                libro_editado = libro  # Guardar el libro editado
+                # No hay necesidad de `break` porque solo habrá un libro con el mismo ISBN
+                # Sin embargo, puedes optar por continuar buscando si tienes varios libros con el mismo ISBN.
+
+        if libro_editado:
+            # Guardar los cambios en el archivo
+            file.seek(0)  # Mover al principio del archivo
+            json.dump(data, file, ensure_ascii=False, indent=4)
+            file.truncate()  # Truncar el archivo después de escribir
+
+            print(f"Libro después de la edición: {libro[c.valor_bd[indice]]}")  # Depuración
+            print("Libro editado con éxito.")
+        else:
+            print("No se encontró el libro para editar.")  # Depuración
+
         return libro_editado
 
 

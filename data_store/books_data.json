@@ -5,12 +5,12 @@
         "genero": "Fantasia",
         "isbn": 9780747532743,
         "editorial": "Bloomsbury",
-        "anio_publicacion": 1997,
+        "anio_publicacion": "a",
         "serie": "Harry Potter",
         "nro_paginas": 223,
         "cant_ejemplares": 5,
-        "disponibilidad": true,
-        "ejemplares_disponibles": 2
+        "disponibilidad": 1,
+        "ejemplares_disponibles": 1
     },
     "2": {
         "autor": "George R.R. Martin",
@@ -198,7 +198,7 @@
         "autor": "Mark Twain",
         "titulo": "Las Aventuras de Tom Sawyer",
         "genero": "Aventura",
-        "isbn": 9780486400778,
+        "isbn": "3",
         "editorial": "Dover Publications",
         "anio_publicacion": 1876,
         "serie": "Tom Sawyer",

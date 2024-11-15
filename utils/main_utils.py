@@ -152,44 +152,53 @@ def menu_bibliotecario():
             input("Para continuar presione ENTER: ")
 
         # Editar libro
-
         elif numero == "2":
-            ISBN_editar = int(input("Ingrese el ISBN que quiere editar: "))
-            libro = bu.obtener_libro(ISBN=ISBN_editar)
-            while libro is None:
-                print(
-                    "El ISBN es incorrecto o no se encuentra el libro registrado. Por favor pruebe otra vez: "
-                )
-                ISBN_editar = int(
-                    input("Ingrese el ISBN del libro que quiere editar: ")
-                )
-                libro = bu.obtener_libro(ISBN_editar)
+            validar = None
 
-            print("Libro encontrado: ")
+            while validar != -1:
+                ISBN_editar = input("Ingrese el ISBN que quiere editar o -1 para salir: ")
+                validar = su.validacion_enteros(ISBN_editar)  # Suponiendo que 'su' es el objeto para validación
 
-            pu.imprimir_libro(libro)
+                if validar is None:
+                    print("El ISBN ingresado no es válido. Por favor, intente nuevamente.")
+                    continue
 
-            numero = int(input("Ingresá un número para editar o -1 para salir: "))
-            while 9 < numero or numero < -1:
-                print("El numero ingresado es incorrecto.")
-                numero = int(input("Ingresá un número para editar : "))
-            if numero != -1:
-                nuevo_valor = input("Ingresá el nuevo valor:")
-                libro_editado = bu.editar_libros(
-                    ISBN=ISBN_editar, indice=numero, valor=nuevo_valor
-                )
-                if libro_editado is not None:
-                    print("Libro editado con éxito: ")
-                    pu.imprimir_libro(libro_editado)
+                libro = bu.obtener_libro(ISBN=ISBN_editar)  # Suponiendo que 'bu' es el objeto para obtener libros
+
+                if libro is None:
+                    print("No encontramos el libro. Intente con otro ISBN.")
+                    continue
+
+                print("Libro encontrado:")
+                pu.imprimir_libro(libro)  # Suponiendo que 'pu' es el objeto para imprimir libros
+
+                # Solicitar el número del campo que se desea editar
+                numero = int(input("Ingrese un número para editar o -1 para salir: "))
+
+                while numero < -1 or numero > 9:
+                    print("El número ingresado es incorrecto.")
+                    numero = int(input("Ingrese un número válido para editar: "))
+
+                if numero != -1:
+                    # Solicitar el nuevo valor para el campo seleccionado
+                    nuevo_valor = input("Ingrese el nuevo valor para el campo seleccionado: ")
+
+                    libro_editado = bu.editar_libros(ISBN=ISBN_editar, indice=numero, valor=nuevo_valor)
+
+                    if libro_editado is not None:
+                        print("Libro editado con éxito:")
+                        pu.imprimir_libro(libro_editado)
+                    else:
+                        print("Ocurrió un problema al editar el libro.")
                 else:
-                    print("Libro no encontrado")
-            input("Para continuar presione ENTER: ")
+                    # Salir si el índice es -1
+                    validar = -1
 
+                print("---------------------------------------------------------------")
+                input("Para continuar presione ENTER: ")
 
         # alquilar libro
-
         elif numero == "3":
-
             bandera = True
 
             while bandera:
