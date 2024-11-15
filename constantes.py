@@ -24,13 +24,14 @@ valor_bd = [
     "titulo",
     "genero",
     "editorial",
-    "anio publicacion",
+    "anio_publicacion",
     "serie",
     "nro_paginas",
     "cant_ejemplares",
     "disponibilidad",
-    "ejemplares disponibles",
+    "ejemplares_disponibles",
 ]
+
 
 # Diccionario de claves para la base de datos
 

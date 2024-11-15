@@ -87,38 +87,67 @@ def cargar_libros(
 
 
 def obtener_libro(ISBN):
-    """Obtener un libro y su detalle segun su id interno o ISBN.
-    :param ISBN: Int, International Standard Book Number del libro.
-    :return libro: List, informacion detallada del libro buscado.
+    """Obtener un libro y su detalle según su ISBN.
+    :param ISBN: Str. El número ISBN del libro que se desea obtener.
+    :return: El libro correspondiente al ISBN si se encuentra, o None si no se encuentra o si ocurre un error.
     """
-    with open('./data_store/books_data.json', 'r+', encoding='utf-8') as file:
+    with open('./data_store/books_data.json', 'r', encoding='utf-8') as file:
+        data = json.load(file)
 
-        libro_encontrado = None
-        for libro in bd.libros:
-            if libro["isbn"] == ISBN:
-                libro_encontrado = libro
+    try:
+        ISBN = int(ISBN)
+    except ValueError:
+        return None
 
-        return libro_encontrado
+    # Buscar el libro por ISBN
+    for libro_id, libro in data.items():
+        if libro["isbn"] == ISBN:
+            return libro
+
+    return None
 
 
 def editar_libros(ISBN, indice, valor):
-    """Editar los metadatos de un libro.
-    :param ISBN: Int, International Standard Book Number del libro.
-    :param indice: Int, indice del campo que se va a editar.
-    :param valor: Str, nuevo valor del campo que se va a editar.
-    :return libro: List, lista con lops metadatos del libro si el libro existe o None si el libro no existe.
+    """Edita los metadatos de un libro según el campo y su nuevo valor.
+    :param ISBN: Str. El número ISBN del libro que se quiere editar.
+    :param indice: Int. El índice en la lista 'c.valor_bd' que indica qué campo se desea modificar.
+    :param valor: Str. El nuevo valor que se asignará al campo especificado. Si el campo requiere un número,
+                  se intentará convertir a entero.
+    :return: El libro editado si se encuentra y se realiza la modificación, o None si no se encuentra o ocurre un error.
     """
-    # Busca el libro por ISBN
+    if indice < 0 or indice >= len(c.valor_bd):
+        print("Índice fuera de rango.")
+        return None
+
+    if c.valor_bd[indice] in ["cant_ejemplares", "disponibilidad", "ejemplares_disponibles"]:
+        try:
+            valor = int(valor)
+        except ValueError:
+            print(f"El valor para {c.valor_bd[indice]} debe ser un número entero.")
+            return None
 
     with open('./data_store/books_data.json', 'r+', encoding='utf-8') as file:
+        data = json.load(file)
 
-        claves_bd = c.claves_bd
         libro_editado = None
 
-        for libro in bd.libros:
-            if libro["isbn"] == ISBN:
-                libro[claves_bd[indice]] = valor
+        for libro_id, libro in data.items():
+            if libro["isbn"] == int(ISBN):
+                print(f"Libro antes de la edición: {libro[c.valor_bd[indice]]}")
+
+                libro[c.valor_bd[indice]] = valor
                 libro_editado = libro
+
+        if libro_editado:
+            file.seek(0)
+            json.dump(data, file, ensure_ascii=False, indent=4)
+            file.truncate()
+
+            print(f"Libro después de la edición: {libro[c.valor_bd[indice]]}")
+            print("Libro editado con éxito.")
+        else:
+            print("No se encontró el libro para editar.")
+
         return libro_editado
 
 
