@@ -113,27 +113,24 @@ def menu_bibliotecario():
 
         # CARGAR LIBRO
         if numero == "1":
-            titulo = input("Ingrese el titulo : ")
-            autor = input("Ingrese el autor : ")
-            genero = input("Ingrese el genero : ")
-            ISBN = None
-            while ISBN is None:
-                pedir_isbn = input("Ingrese un ISBN : ")
-                ISBN = su.validacion_enteros(pedir_isbn)
-            editorial = input("Ingrese el editorial : ")
-            anio_publicacion = None
-            while anio_publicacion is None:
-                pedir_anio_publicacion = input("Ingrese el año publicacion : ")
-                anio_publicacion = su.validacion_enteros(pedir_anio_publicacion)
-            serie_libros = input("Ingrese el serie_libros : ")
-            nro_paginas = None
-            while nro_paginas is None:
-                pedir_nro_paginas = input("Ingrese el número de paginas: ")
-                nro_paginas = su.validacion_enteros(pedir_nro_paginas)
-            cant_ejemplares = None
-            while cant_ejemplares is None:
-                pedir_cant_ejemplares = input("Ingrese el la cantidad de ejemplares : ")
-                cant_ejemplares = su.validacion_enteros(pedir_cant_ejemplares)
+            pedir_titulo = input("Ingrese el titulo : ")
+            titulo = su.ingreso_Valido (pedir_titulo)
+            pedir_autor = input("Ingrese el autor : ")
+            autor=su.ingreso_Valido(autor)
+            pedir_genero = input("Ingrese el genero : ")
+            genero= su.ingreso_Valido(genero)
+            pedir_isbn = input("Ingrese un ISBN : ")
+            ISBN = su.validacion_enteros(pedir_isbn)
+            pedir_editorial = input("Ingrese el editorial : ")
+            editorial= su.ingreso_Valido(editorial)
+            pedir_anio_publicacion = input("Ingrese el año publicacion : ")
+            anio_publicacion = su.validacion_enteros(pedir_anio_publicacion)
+            pedir_serie_libros = input("Ingrese el serie_libros : ")
+            serie_libros=su.ingreso_Valido(pedir_serie_libros)
+            pedir_nro_paginas = input("Ingrese el número de paginas: ")
+            nro_paginas = su.validacion_enteros(pedir_nro_paginas)
+            pedir_cant_ejemplares = input("Ingrese el la cantidad de ejemplares : ")
+            cant_ejemplares = su.validacion_enteros(pedir_cant_ejemplares)
             registrar_libros = bu.cargar_libros(
                 titulo,
                 autor,
@@ -157,7 +154,7 @@ def menu_bibliotecario():
 
             while validar != -1:
                 ISBN_editar = input("Ingrese el ISBN que quiere editar o -1 para salir: ")
-                validar = su.validacion_enteros(ISBN_editar)  # Suponiendo que 'su' es el objeto para validación
+                validar = su.validacion_enteros(ISBN_editar)  
 
                 if validar is None:
                     print("El ISBN ingresado no es válido. Por favor, intente nuevamente.")

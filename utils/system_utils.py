@@ -20,6 +20,9 @@ fecha_devolucion = lambda: datetime.now() + timedelta(days=7)
 
 
 def validacion_numerica():
+    """Verifica si el usuario le estan ingresando un numero 1 2 o -1
+    :return True cuando el usuario ingresa un número
+    """
     bandera = True
     while bandera:
         try:
@@ -34,6 +37,9 @@ def validacion_numerica():
 
 
 def validacion_enteros(valor):
+    """Verifica si el usuario le estan ingresando un valor numerico
+    :return True cuando el usuario ingresa un número
+    """
     numero = None
     try:
         numero = int(valor)
@@ -43,6 +49,9 @@ def validacion_enteros(valor):
 
 
 def validar_constantes(clave):
+    """Verifica si el usuario le estan ingresando un valor valido dentro de la lista de contactos
+    :returnTrue o False segun si se le ingreso una respuesta correcta o no
+    """
     validar = False
     texto_normalizado = clave.lower()
 
@@ -58,4 +67,21 @@ def volver_atras(entrada):
     if entrada == "-1":
         bandera = True
     return bandera
+
+
+def ingreso_Valido (ingreso):
+    bandera = True
+    while bandera:
+        verificar = ingreso.strip()  # Elimina espacios en blanco al principio y al final
+        if verificar:  # Esto evalúa si la cadena no está vacía
+            bandera = False
+        else:
+            print("No puede ingresar un campo vacío")
+            ingreso = input("Ingrese su respuesta: ")
+    return verificar  
+
+# Uso de la función
+titulo = ingreso_Valido(input("Ingrese el título: "))
+print(f"El título ingresado es: {titulo}")
+
 
