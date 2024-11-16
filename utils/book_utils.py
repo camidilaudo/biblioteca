@@ -91,7 +91,6 @@ def obtener_libro(ISBN):
         # Abrir el archivo en modo lectura
         with open('./data_store/books_data.json', 'r', encoding='utf-8') as file:
             data = json.load(file)
-
       
         if isinstance(data, list):
             # Buscar el libro por ISBN
