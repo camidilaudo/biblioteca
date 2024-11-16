@@ -65,6 +65,7 @@ def agregar_libro_historial(nombre_usuario, isbn, fecha):
         ud.historiales.append([nombre_usuario, [(isbn, fecha)]])
     return ud.historiales
 
+
 def agregar_penalizados(nombre_usuario, isbn):
     """Agrega el ISBN de un libro al historial del cliente penalizado.
     :param nombre_usuario: Str, username del usuario que retiro el libro.
@@ -86,8 +87,8 @@ def agregar_penalizados(nombre_usuario, isbn):
         ud.penalizados.append([nombre_usuario, [(isbn)]])
     return ud.penalizados
 
-def agregar_alquilados (isbn, cant_pedidos):
 
+def agregar_alquilados(isbn, cant_pedidos):
     """Agrega el ISBN de un libro a la lista de libros alquilados
     :param isbn: Int, código ISBN del libro que retiro.
     :param cant_pedidos, int,  cuantos libros quiere alquilar.
@@ -98,21 +99,18 @@ def agregar_alquilados (isbn, cant_pedidos):
     existe_libro = False
 
     for existente in libros_totales:
-        if existente ["isbn"]== isbn:
+        if existente["isbn"] == isbn:
             existe_libro = True
         else:
             return existe_libro
 
-
-    if existe_libro: 
+    if existe_libro:
         for libro in libros_alquilados:
             if libro == isbn:
-                libros_alquilados [libro] = libros_alquilados [libro] + cant_pedidos
+                libros_alquilados[libro] = libros_alquilados[libro] + cant_pedidos
             else:
-                libros_alquilados [isbn] = cant_pedidos
+                libros_alquilados[isbn] = cant_pedidos
         return libros_alquilados
-
-
 
 
 def ver_propio_historial(usuario):
@@ -151,6 +149,6 @@ def validar_contrasenia(contrasenia):
 def validar_usuario(nombre_usuario):
     validar = False
     for usuario in ud.usuarios:
-        if usuario['nombre'] == nombre_usuario and usuario['tipo_usuario'] == 2:
+        if usuario["nombre"] == nombre_usuario and usuario["tipo_usuario"] == 2:
             validar = True
     return validar

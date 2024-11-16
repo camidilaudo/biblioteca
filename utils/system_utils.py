@@ -26,7 +26,11 @@ def validacion_numerica():
     bandera = True
     while bandera:
         try:
-            es_valido = int(input("Presione 1 para continuar, 2 si desea realizar otra búsqueda o -1 para salir: "))
+            es_valido = int(
+                input(
+                    "Presione 1 para continuar, 2 si desea realizar otra búsqueda o -1 para salir: "
+                )
+            )
             if es_valido in [1, 2, -1]:
                 bandera = False
             else:
@@ -45,11 +49,11 @@ def validacion_enteros(valor):
     while bandera:
         try:
             numero = int(valor)
-            bandera = False 
+            bandera = False
         except ValueError:
             print("Error: Debes ingresar un número entero.")
-            valor = input ("ingresa un número: ")
-    
+            valor = input("ingresa un número: ")
+
     return numero
 
 
@@ -74,16 +78,15 @@ def volver_atras(entrada):
     return bandera
 
 
-def ingreso_Valido (ingreso):
+def ingreso_Valido(ingreso):
     bandera = True
     while bandera:
-        verificar = ingreso.strip()  # Elimina espacios en blanco al principio y al final
+        verificar = (
+            ingreso.strip()
+        )  # Elimina espacios en blanco al principio y al final
         if verificar:  # Esto evalúa si la cadena no está vacía
             bandera = False
         else:
             print("No puede ingresar un campo vacío")
             ingreso = input("Ingrese su respuesta: ")
-    return verificar  
-
-
-
+    return verificar

@@ -1,4 +1,3 @@
-
 # Declaracion de constantes utilizadas en el programa
 
 # TIPOS DE USUARIO
@@ -49,6 +48,5 @@ claves_bd = {
     9: "ejemplares_disponibles",
 }
 
-#migracion_archivos
+# migracion_archivos
 # Función para validar constantes
-
