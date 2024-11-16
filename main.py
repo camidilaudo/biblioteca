@@ -29,7 +29,6 @@ def main():
 
     while True:
         bandera = True
-        su.limpiar_terminal()
         print("=== MENÚ PRINCIPAL ===")
         print("1- Iniciar sesión.")
         print("2- Registrarse.")
