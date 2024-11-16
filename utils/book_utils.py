@@ -100,7 +100,6 @@ def obtener_libro(ISBN):
         with open("./data_store/books_data.json", "r", encoding="utf-8") as file:
             data = json.load(file)
 
-                # Buscar el libro por ISBN
             for libro in data:
                     if data[libro]["isbn"] == ISBN:
                         return libro
