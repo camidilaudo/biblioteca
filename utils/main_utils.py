@@ -116,13 +116,13 @@ def menu_bibliotecario():
             pedir_titulo = input("Ingrese el titulo : ")
             titulo = su.ingreso_Valido (pedir_titulo)
             pedir_autor = input("Ingrese el autor : ")
-            autor=su.ingreso_Valido(autor)
+            autor=su.ingreso_Valido(pedir_autor)
             pedir_genero = input("Ingrese el genero : ")
-            genero= su.ingreso_Valido(genero)
-            pedir_isbn = input("Ingrese un ISBN : ")
-            ISBN = su.validacion_enteros(pedir_isbn)
+            genero= su.ingreso_Valido(pedir_genero)
+            pedir_ISBN = input("Ingrese un ISBN : ")
+            ISBN = su.validacion_enteros (pedir_ISBN)
             pedir_editorial = input("Ingrese el editorial : ")
-            editorial= su.ingreso_Valido(editorial)
+            editorial= su.ingreso_Valido(pedir_editorial)
             pedir_anio_publicacion = input("Ingrese el año publicacion : ")
             anio_publicacion = su.validacion_enteros(pedir_anio_publicacion)
             pedir_serie_libros = input("Ingrese el serie_libros : ")
@@ -136,11 +136,13 @@ def menu_bibliotecario():
                 autor,
                 genero,
                 ISBN,
+                #TODO aca el ISBN aparece de otro color y no se por que 
                 editorial,
                 anio_publicacion,
                 serie_libros,
                 nro_paginas,
                 cant_ejemplares,
+                #TODO aca rompe la función, hay un problema con el lamda de books_utils pero no identifico cual
             )
             print("Estos son los libros que estan actualmente en la biblioteca: ")
             for libro in registrar_libros:
@@ -156,29 +158,21 @@ def menu_bibliotecario():
                 ISBN_editar = input("Ingrese el ISBN que quiere editar o -1 para salir: ")
                 validar = su.validacion_enteros(ISBN_editar)  
 
-                if validar is None:
-                    print("El ISBN ingresado no es válido. Por favor, intente nuevamente.")
-                    continue
-
-                libro = bu.obtener_libro(ISBN=ISBN_editar)  # Suponiendo que 'bu' es el objeto para obtener libros
+                libro = bu.obtener_libro(ISBN=validar) 
 
                 if libro is None:
                     print("No encontramos el libro. Intente con otro ISBN.")
                     continue
 
                 print("Libro encontrado:")
-                pu.imprimir_libro(libro)  # Suponiendo que 'pu' es el objeto para imprimir libros
+                pu.imprimir_libro(libro)  
 
-                # Solicitar el número del campo que se desea editar
-                numero = int(input("Ingrese un número para editar o -1 para salir: "))
-
-                while numero < -1 or numero > 9:
-                    print("El número ingresado es incorrecto.")
-                    numero = int(input("Ingrese un número válido para editar: "))
+                pedir_numero = int(input("Ingrese un número para editar o -1 para salir: "))
+                numero = su.validacion_enteros (pedir_numero)
 
                 if numero != -1:
-                    # Solicitar el nuevo valor para el campo seleccionado
-                    nuevo_valor = input("Ingrese el nuevo valor para el campo seleccionado: ")
+                    pedir_nuevo_valor = input("Ingrese el nuevo valor para el campo seleccionado: ")
+                    nuevo_valor= su.ingreso_Valido(pedir_nuevo_valor)
 
                     libro_editado = bu.editar_libros(ISBN=ISBN_editar, indice=numero, valor=nuevo_valor)
 

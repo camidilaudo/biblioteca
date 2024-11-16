@@ -8,12 +8,9 @@ import constantes as c
 import random
 import json
 
-stock = lambda isbn: (
-    True if [libro for libro in json.load(open("libros.json")) if libro["isbn"] == isbn] else False
-)
+stock_json = lambda isbn: True if [libro for libro in json.load(open("libros.json")) if libro["isbn"] == isbn] else False
 
-stock = lambda ISBN: True if [libro for libro in bd.libros if libro["isbn"] == ISBN] else False
-
+stock_bd = lambda isbn: True if [libro for libro in bd.libros if libro["isbn"] == isbn] else False
 
 def busqueda_libros(clave, valor):
     """Búsqueda de libros segun: título, autor, género, ISBN, editorial, año de publicación, serie.
@@ -32,7 +29,6 @@ def busqueda_libros(clave, valor):
                     libros.append(biblioteca[libro])
 
     return libros
-
 
 def cargar_libros(
         titulo,
@@ -58,7 +54,7 @@ def cargar_libros(
     :return libros_cargados: List, lista de libros cargados a la biblioteca."""
 
     # chequear si el libro ya existe en la biblioteca
-    libro_en_stock = stock(isbn=isbn)
+    libro_en_stock = stock_json(isbn=isbn)
 
     with open('./data_store/books_data.json', 'r+', encoding='utf-8') as file:
         biblioteca = dict(json.load(file))
@@ -91,20 +87,26 @@ def obtener_libro(ISBN):
     :param ISBN: Str. El número ISBN del libro que se desea obtener.
     :return: El libro correspondiente al ISBN si se encuentra, o None si no se encuentra o si ocurre un error.
     """
-    with open('./data_store/books_data.json', 'r', encoding='utf-8') as file:
-        data = json.load(file)
-
     try:
-        ISBN = int(ISBN)
-    except ValueError:
+        # Abrir el archivo en modo lectura
+        with open('./data_store/books_data.json', 'r', encoding='utf-8') as file:
+            data = json.load(file)
+
+      
+        if isinstance(data, list):
+            # Buscar el libro por ISBN
+            for libro in data:
+                if libro["isbn"] == ISBN:
+                    return libro
+
+    except FileNotFoundError:
+        print("El archivo 'books_data.json' no existe.")
         return None
 
-    # Buscar el libro por ISBN
-    for libro_id, libro in data.items():
-        if libro["isbn"] == ISBN:
-            return libro
+    except json.JSONDecodeError:
+        print("Error al leer el archivo JSON. Verifica el formato del archivo.")
+        return None
 
-    return None
 
 
 def editar_libros(ISBN, indice, valor):

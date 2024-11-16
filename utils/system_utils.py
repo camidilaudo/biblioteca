@@ -38,13 +38,18 @@ def validacion_numerica():
 
 def validacion_enteros(valor):
     """Verifica si el usuario le estan ingresando un valor numerico
-    :return True cuando el usuario ingresa un número
+    :return número validado
     """
+    bandera = True
     numero = None
-    try:
-        numero = int(valor)
-    except ValueError:
-        print("Error: Debes ingresar un número entero.")
+    while bandera:
+        try:
+            numero = int(valor)
+            bandera = False 
+        except ValueError:
+            print("Error: Debes ingresar un número entero.")
+            valor = input ("ingresa un número: ")
+    
     return numero
 
 
@@ -80,8 +85,5 @@ def ingreso_Valido (ingreso):
             ingreso = input("Ingrese su respuesta: ")
     return verificar  
 
-# Uso de la función
-titulo = ingreso_Valido(input("Ingrese el título: "))
-print(f"El título ingresado es: {titulo}")
 
 
