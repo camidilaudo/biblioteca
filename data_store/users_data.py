@@ -1,12 +1,6 @@
 # ADMIN tipo de usuario 1
 # CLIENTE tipo de usuario 2
 
-# DICCIONARIO USUARIOS
-usuarios = [
-    {"tipo_usuario": 2, "nombre": "dani", "contrasenia": "123"},
-    {"tipo_usuario": 2, "nombre": "cami", "contrasenia": "123"},
-    {"tipo_usuario": 1, "nombre": "meli", "contrasenia": "123"},
-]
 
 # DICCIONARIOS DE LIBROS PENALIZADOS: Nombre del usuario y ISBN
 # Historial de libros que ya excedieron el plazo de préstamo y aún no han vuelto a la biblioteca

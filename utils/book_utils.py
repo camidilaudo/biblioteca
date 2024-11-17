@@ -205,41 +205,42 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
         return [status_libro, ejemplares_disponibles]
 
 
-def devolver_libro(ISBN, nombre):
+def devolver_libro(isbn, nombre):
     """Verifica si el libro fue alquilado anteriormente por el usuario.
-    :param ISBN: Int, codigo ISBN del libro que se quiere eliminar de la biblioteca.
+    :param isbn: Int, codigo ISBN del libro que se quiere eliminar de la biblioteca.
     :param nombre: Str, nombre del usuario que quiere devolver el libro
     :return: Bool, False si el ISBN no se encuentra en el historial de libros alquilados,
     True si se devuelve correctamente el libro.
     """
     with open("./data_store/books_data.json", "r+", encoding="utf-8") as file:
+        biblioteca = dict(json.load(file))
         devolucion = False
 
-        if ISBN in ud.alquilados:
-            copias = ud.alquilados[ISBN]
+        if isbn in ud.alquilados:
+            copias = ud.alquilados[isbn]
 
-            libro = obtener_libro(ISBN)
+            libro = obtener_libro(isbn)
             if libro:
                 libro["disponibilidad"] = True
                 libro["ejemplares_disponibles"] += 1
-
                 copias -= 1
+
                 if copias == 0:
-                    del ud.alquilados[ISBN]
+                    del ud.alquilados[isbn]
                 else:
-                    ud.alquilados[ISBN] = copias
+                    ud.alquilados[isbn] = copias
 
                 fecha_hoy = su.fecha_actual()
 
                 for historial in ud.historiales:
                     if historial[0] == nombre:
-                        historial[2].append((ISBN, fecha_hoy))
+                        historial[2].append((isbn, fecha_hoy))
                         penalizaciones = (
                             lambda fsalida, fregreso: (historial[2] - historial[1]).days
                             <= 7
                         )
                         if not penalizaciones:
-                            uu.agregar_penalizados(nombre, ISBN)
+                            uu.agregar_penalizados(nombre, isbn)
                 devolucion = True
 
         return devolucion

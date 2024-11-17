@@ -2,26 +2,31 @@
     "1": {
         "tipo_usuario": 2,
         "nombre": "dani",
-        "contrasenia": "123"
+        "contrasenia": "123",
+        "unreturned_books": null
     },
     "2": {
         "tipo_usuario": 2,
         "nombre": "cami",
-        "contrasenia": "123"
+        "contrasenia": "123",
+        "unreturned_books": [9780307474278]
     },
     "3": {
         "tipo_usuario": 1,
         "nombre": "meli",
-        "contrasenia": "123"
+        "contrasenia": "123",
+        "unreturned_books": null
     },
     "4": {
         "tipo_usuario": 1,
         "nombre": "pepita",
-        "contrasenia": "Yomeamo2!"
+        "contrasenia": "Yomeamo2!",
+        "unreturned_books": null
     },
     "5": {
         "tipo_usuario": 2,
         "nombre": "marquito",
-        "contrasenia": "Yomeamo2!"
+        "contrasenia": "Yomeamo2!",
+        "unreturned_books": null
     }
 }

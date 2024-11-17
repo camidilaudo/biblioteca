@@ -33,7 +33,6 @@ def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
             indice = len(dic_usuarios) + 1
             dic_usuarios.update({str(indice): nuevo_usuario})
         json.dump(dic_usuarios, file, indent=4)
-        pdb.set_trace()
     return usuario_registrado
 
 
@@ -81,20 +80,21 @@ def agregar_penalizados(nombre_usuario, isbn):
     :param isbn: Int, código ISBN del libro que retiro.
     :param Str, fecha en que se alquiló el libro.
     :return historiales: Matrix, historial de todos los usuarios."""
-    existe_usuario = False
-    indice_historial = -1
-    va = ""
 
-    for i, historial in enumerate(ud.penalizados):
-        if historial[0] == nombre_usuario:
-            existe_usuario = True
-            indice_historial = i
+    with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
+        dic_usuarios = dict(json.load(file))
 
-    if existe_usuario is True:
-        ud.penalizados[indice_historial][1].append((isbn))
-    else:
-        ud.penalizados.append([nombre_usuario, [(isbn)]])
-    return ud.penalizados
+    with open('./data_store/users_data.json', 'w', encoding='utf-8') as file:
+        for user in dic_usuarios:
+            if dic_usuarios[user]["nombre"] == nombre_usuario:
+                user_id = user
+
+        if dic_usuarios[user_id]["unreturned_books"] is not None:
+            dic_usuarios[user_id]["unreturned_books"].append((isbn))
+        else:
+            dic_usuarios[user_id]["unreturned_books"] = [isbn]
+        json.dump(dic_usuarios, file, indent=4)
+    return dic_usuarios
 
 
 def agregar_alquilados(isbn, cant_pedidos):
