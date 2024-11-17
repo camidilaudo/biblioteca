@@ -26,7 +26,7 @@ def main():
     )
 
     print("")
-
+    us.despenalizar_usuarios()
     while True:
         bandera = True
         print("=== MENÚ PRINCIPAL ===")

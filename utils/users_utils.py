@@ -2,6 +2,8 @@ import json
 import pdb
 import re
 import csv
+from datetime import timedelta, datetime
+
 from utils import system_utils as su
 from data_store import users_data as ud
 from data_store import books_data as bd
@@ -100,7 +102,7 @@ def agregar_libro_historial(nombre_usuario, isbn, fecha):
 agregar_libro_historial("dani", 9780199232765, "2024-11-17 17:45:16")
 
 
-def agregar_penalizados(nombre_usuario, isbn):
+def agregar_penalizados(nombre_usuario):
     """Agrega el ISBN de un libro al historial del cliente penalizado.
     :param nombre_usuario: Str, username del usuario que retiro el libro.
     :param isbn: Int, código ISBN del libro que retiro.
@@ -115,6 +117,9 @@ def agregar_penalizados(nombre_usuario, isbn):
             if dic_usuarios[user]["nombre"] == nombre_usuario:
                 user_id = user
                 dic_usuarios[user_id]["esta_penalizado"] = True
+                dic_usuarios[user_id]["fecha_despenalizacion"] = (su.fecha_actual + timedelta(days=7)).strftime(
+                    "%Y-%m-%d %H:%M:%S")
+
         json.dump(dic_usuarios, file, indent=4)
     return dic_usuarios
 
@@ -157,9 +162,6 @@ def agregar_alquilados(isbn, cant_pedidos):
     libros_alquilados = {row[0]: int(row[1]) for row in rows}
 
     return libros_alquilados
-
-
-agregar_alquilados(9780486400778, 2)
 
 
 def ver_propio_historial(usuario):
@@ -211,3 +213,20 @@ def usuario_penalizado(nombre_usuario):
                 estado = dict_usuarios[usuario]["esta_penalizado"]
 
     return estado
+
+
+def despenalizar_usuarios():
+    with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
+        dict_usuarios = dict(json.load(file))
+        for usuario in dict_usuarios:
+            if dict_usuarios[usuario]["esta_penalizado"] is True:
+                fecha_despenalizacion = datetime.strptime(dict_usuarios[usuario]["fecha_despenalizacion"],
+                                                         "%Y-%m-%d %H:%M:%S")
+                fecha_hoy = datetime.now()
+                if (fecha_despenalizacion - fecha_hoy).days <= 0:
+                    dict_usuarios[usuario]["esta_penalizado"] = False
+
+    with open("./data_store/users_data.json", "w", encoding="utf-8") as file:
+        json.dump(dict_usuarios, file, indent=4)
+
+despenalizar_usuarios()
