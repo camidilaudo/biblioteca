@@ -3,10 +3,7 @@ import pdb
 import re
 import csv
 from datetime import timedelta, datetime
-
 from utils import system_utils as su
-from data_store import users_data as ud
-from data_store import books_data as bd
 from utils.book_utils import editar_libros, obtener_libro
 
 
@@ -90,16 +87,13 @@ def agregar_libro_historial(nombre_usuario, isbn, fecha):
         }
 
         dict_historial.update(nuevo_historial)
-        pdb.set_trace()
     with open(
             "./data_store/withdrawn_books_per_user.json", "w", encoding="utf-8"
     ) as file:
         json.dump(dict_historial, file, indent=4)
 
-    return ud.historiales
+    return dict_historial
 
-
-agregar_libro_historial("dani", 9780199232765, "2024-11-17 17:45:16")
 
 
 def agregar_penalizados(nombre_usuario):
@@ -168,7 +162,12 @@ def ver_propio_historial(usuario):
     """Funcion encargada de mostrar el historial de retiros del usuario.
     :param usuario: Str, nombre del usuario.
     :return historial_nombres: titulos del historial de retiros del usuario."""
-    historial_general = ud.historiales
+    with open(
+            "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
+    ) as file:
+        historial_general = dict(json.load(file))
+    with open("./data_store/books_data.json", "r", encoding="utf-8") as file_biblio:
+        biblioteca = dict(json.load(file_biblio))
     historial_nombres = []
     i = 0
 
@@ -177,9 +176,9 @@ def ver_propio_historial(usuario):
 
     if i < len(historial_general):
         for isbn in historial_general[i][1]:
-            for libro in bd.libros:
-                if isbn == libro["isbn"]:
-                    historial_nombres.append(libro["titulo"])
+            for libro in biblioteca:
+                if isbn == biblioteca[libro]["isbn"]:
+                    historial_nombres.append(biblioteca[libro]["titulo"])
         return historial_nombres
 
 
@@ -198,8 +197,10 @@ def validar_contrasenia(contrasenia):
 
 
 def validar_usuario(nombre_usuario):
+    with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
+        dict_usuarios = dict(json.load(file))
     validar = False
-    for usuario in ud.usuarios:
+    for usuario in dict_usuarios.values():
         if usuario["nombre"] == nombre_usuario and usuario["tipo_usuario"] == 2:
             validar = True
     return validar
