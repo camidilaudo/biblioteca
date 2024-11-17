@@ -129,9 +129,7 @@ def agregar_alquilados(isbn, cant_pedidos):
 
     # Actualizo el historial de alquilaos
     with open("./data_store/withdrawn_books.csv", "r", encoding="utf-8") as file:
-        historial_alquilados = list(csv.reader(file))  # Crea un objeto lector
-        pdb.set_trace()
-        # Recorrer el contenido
+        historial_alquilados = list(csv.reader(file))
         for i in range(len(historial_alquilados)):
             if historial_alquilados[i][0] == isbn:
                 existe_libro = True
@@ -203,3 +201,13 @@ def validar_usuario(nombre_usuario):
         if usuario["nombre"] == nombre_usuario and usuario["tipo_usuario"] == 2:
             validar = True
     return validar
+
+
+def usuario_penalizado(nombre_usuario):
+    with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
+        dict_usuarios = dict(json.load(file))
+        for usuario in dict_usuarios:
+            if usuario == nombre_usuario:
+                estado = dict_usuarios[usuario]["esta_penalizado"]
+
+    return estado

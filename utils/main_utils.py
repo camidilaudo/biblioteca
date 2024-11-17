@@ -198,7 +198,6 @@ def menu_bibliotecario():
         # alquilar libro
         elif numero == "3":
             bandera = True
-
             while bandera:
                 titulo = input(
                     "Ingrese el nombre del libro que quiere alquilar o -1 para salir: "
@@ -254,8 +253,12 @@ def menu_bibliotecario():
                                             encontrar_usuario = us.validar_usuario(
                                                 usuario
                                             )
+                                            estado_usuario = us.usuario_penalizado(usuario)
                                             if not encontrar_usuario:
                                                 print("Error. El usuario no existe.")
+                                            if estado_usuario is False:
+                                                print("Usuario penalizado. No puede alquilar.")
+                                                bandera = False
 
                                 if bandera:
                                     libro_alquilado = bu.alquilar_libro(

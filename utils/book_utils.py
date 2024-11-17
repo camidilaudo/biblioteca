@@ -167,7 +167,7 @@ def editar_libros(isbn, indice, valor):
 
 
 def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
-    """Altera 2 historales
+    """Altera 2 historiales
      1) El de libros alquilados. Se fija que esté en la lista. Si no lo encuentra agrega el ISBN y la cantidad.
       Si lo encuentra, solo modifica la cantidad,
      2) El de usuario. En caso de que no lo haya leido antes, lo agrega a su historial
