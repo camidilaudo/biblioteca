@@ -88,11 +88,7 @@ def agregar_penalizados(nombre_usuario, isbn):
         for user in dic_usuarios:
             if dic_usuarios[user]["nombre"] == nombre_usuario:
                 user_id = user
-
-        if dic_usuarios[user_id]["unreturned_books"] is not None:
-            dic_usuarios[user_id]["unreturned_books"].append((isbn))
-        else:
-            dic_usuarios[user_id]["unreturned_books"] = [isbn]
+                dic_usuarios[user_id]["esta_penalizado"] = True
         json.dump(dic_usuarios, file, indent=4)
     return dic_usuarios
 
