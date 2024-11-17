@@ -1,3 +1,5 @@
+import pdb
+
 from data_store import users_data as ud
 from data_store import books_data as bd
 from utils import users_utils as uu
@@ -37,15 +39,15 @@ def busqueda_libros(clave, valor):
 
 
 def cargar_libros(
-    titulo,
-    autor,
-    genero,
-    isbn,
-    editorial,
-    anio_publicacion,
-    serie_libros,
-    nro_paginas,
-    cant_ejemplares,
+        titulo,
+        autor,
+        genero,
+        isbn,
+        editorial,
+        anio_publicacion,
+        serie_libros,
+        nro_paginas,
+        cant_ejemplares,
 ):
     """Cargar libro en stock de biblioteca. Se pueden cargar varios ejemplares del mismo.
     :param titulo: Str, título del libro.
@@ -212,38 +214,39 @@ def devolver_libro(isbn, nombre):
     :return: Bool, False si el ISBN no se encuentra en el historial de libros alquilados,
     True si se devuelve correctamente el libro.
     """
-    with open("./data_store/books_data.json", "r+", encoding="utf-8") as file:
-        biblioteca = dict(json.load(file))
+    with open("./data_store/books_data.json", "r", encoding="utf-8") as file_biblio, open(
+            "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8") as file_historiales:
+        biblioteca = dict(json.load(file_biblio))
+        historiales = dict(json.load(file_historiales))
         devolucion = False
 
-        if isbn in ud.alquilados:
-            copias = ud.alquilados[isbn]
+        book_id = obtener_libro(isbn)
+        if book_id:
+            biblioteca[book_id]["disponibilidad"] = True
+            biblioteca[book_id]["ejemplares_disponibles"] += 1
+            biblioteca[book_id]["ejemplares_alquilados"] -= 1
 
-            libro = obtener_libro(isbn)
-            if libro:
-                libro["disponibilidad"] = True
-                libro["ejemplares_disponibles"] += 1
-                copias -= 1
-
-                if copias == 0:
-                    del ud.alquilados[isbn]
-                else:
-                    ud.alquilados[isbn] = copias
-
-                fecha_hoy = su.fecha_actual()
-
-                for historial in ud.historiales:
-                    if historial[0] == nombre:
-                        historial[2].append((isbn, fecha_hoy))
+            fecha_hoy = su.fecha_actual()
+        for usuario in historiales:
+            if usuario == nombre:
+                for i in range(len(historiales[usuario])):
+                    if historiales[usuario][i]["isbn"] == isbn:
+                        historiales[usuario][i]["fecha_devolucion"] = fecha_hoy.strftime("%Y-%m-%d %H:%M:%S")
                         penalizaciones = (
-                            lambda fsalida, fregreso: (historial[2] - historial[1]).days
-                            <= 7
+                            lambda fsalida, fregreso: (historiales[usuario][i]["fecha_devolucion"] -
+                                                       historiales[usuario][i]["fecha_prestamo"]).days
+                                                      <= 7
                         )
                         if not penalizaciones:
                             uu.agregar_penalizados(nombre, isbn)
-                devolucion = True
+                            devolucion = True
 
+        with open("./data_store/books_data.json", "w", encoding="utf-8") as file_biblio, open(
+                "./data_store/withdrawn_books_per_user.json", "w", encoding="utf-8") as file_historiales:
+            json.dump(biblioteca, file_biblio, indent=4)
+            json.dump(historiales, file_historiales, indent=4)
         return devolucion
+
 
 
 def recomendaciones(genero, usuario):
@@ -264,7 +267,7 @@ def recomendaciones(genero, usuario):
 
     for libro in bd.libros:
         if (libro["genero"].lower() == genero) and (
-            libro["isbn"] not in historial_preexistente
+                libro["isbn"] not in historial_preexistente
         ):
             recomendaciones_por_genero.append(libro)
 
