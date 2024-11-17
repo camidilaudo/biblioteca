@@ -18,7 +18,7 @@ def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
     with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
         dic_usuarios = dict(json.load(file))
 
-    with open('./data_store/books_data.json', 'w', encoding='utf-8') as file:
+    with open('./data_store/users_data.json', 'w', encoding='utf-8') as file:
         for usuario in dic_usuarios:
             if nombre == dic_usuarios[usuario]["nombre"]:
                 usuario_registrado = False
@@ -32,7 +32,8 @@ def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
             }
             indice = len(dic_usuarios) + 1
             dic_usuarios.update({str(indice): nuevo_usuario})
-            json.dump(dic_usuarios, file, indent=4)
+        json.dump(dic_usuarios, file, indent=4)
+        pdb.set_trace()
     return usuario_registrado
 
 
