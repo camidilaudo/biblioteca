@@ -1,9 +1,11 @@
 import json
 import pdb
 import re
+import csv
 from utils import system_utils as su
 from data_store import users_data as ud
 from data_store import books_data as bd
+from utils.book_utils import editar_libros, obtener_libro
 
 
 def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
@@ -63,7 +65,7 @@ def agregar_libro_historial(nombre_usuario, isbn, fecha):
     existe_usuario = False
 
     with open(
-        "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
+            "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
     ) as file:
         dict_historial = dict(json.load(file))
     for usuario in dict_historial:
@@ -88,7 +90,7 @@ def agregar_libro_historial(nombre_usuario, isbn, fecha):
         dict_historial.update(nuevo_historial)
         pdb.set_trace()
     with open(
-        "./data_store/withdrawn_books_per_user.json", "w", encoding="utf-8"
+            "./data_store/withdrawn_books_per_user.json", "w", encoding="utf-8"
     ) as file:
         json.dump(dict_historial, file, indent=4)
 
@@ -123,23 +125,43 @@ def agregar_alquilados(isbn, cant_pedidos):
     :param cant_pedidos, int,  cuantos libros quiere alquilar.
     :return alquilados: diccionario, historial de todos los libros alquilados."""
 
-    libros_totales = bd.libros
-    libros_alquilados = ud.alquilados
     existe_libro = False
 
-    for existente in libros_totales:
-        if existente["isbn"] == isbn:
-            existe_libro = True
-        else:
-            return existe_libro
+    # Actualizo el historial de alquilaos
+    with open("./data_store/withdrawn_books.csv", "r", encoding="utf-8") as file:
+        historial_alquilados = list(csv.reader(file))  # Crea un objeto lector
+        pdb.set_trace()
+        # Recorrer el contenido
+        for i in range(len(historial_alquilados)):
+            if historial_alquilados[i][0] == isbn:
+                existe_libro = True
 
-    if existe_libro:
-        for libro in libros_alquilados:
-            if libro == isbn:
-                libros_alquilados[libro] = libros_alquilados[libro] + cant_pedidos
-            else:
-                libros_alquilados[isbn] = cant_pedidos
-        return libros_alquilados
+        if existe_libro:
+            historial_alquilados[i][1] += cant_pedidos
+        else:
+            historial_alquilados.append([isbn, cant_pedidos])
+
+    with open("./data_store/withdrawn_books.csv", "w", encoding="utf-8", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerows(historial_alquilados)
+
+        _, libro = obtener_libro(isbn=isbn)
+        # Actualizo la biblioteca
+        ejemplares_disponibles = libro["ejemplares_disponibles"] - cant_pedidos
+        ejemplares_alquilados = libro["ejemplares_alquilados"] + cant_pedidos
+        editar_libros(isbn=isbn, indice=9, valor=ejemplares_disponibles)
+        editar_libros(isbn=isbn, indice=10, valor=ejemplares_alquilados)
+        if ejemplares_disponibles == 0:
+            editar_libros(isbn=isbn, indice=8, valor=False)
+
+    # Creo el diccionario de libros alquilados y los devuelvo
+    rows = historial_alquilados[1:]
+    libros_alquilados = {row[0]: int(row[1]) for row in rows}
+
+    return libros_alquilados
+
+
+agregar_alquilados(9780486400778, 2)
 
 
 def ver_propio_historial(usuario):

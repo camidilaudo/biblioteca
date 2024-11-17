@@ -180,7 +180,7 @@ def menu_bibliotecario():
                     nuevo_valor = su.ingreso_Valido(pedir_nuevo_valor)
 
                     libro_editado = bu.editar_libros(
-                        ISBN=ISBN_editar, indice=numero, valor=nuevo_valor
+                        isbn=ISBN_editar, indice=numero, valor=nuevo_valor
                     )
 
                     if libro_editado is not None:

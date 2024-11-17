@@ -107,7 +107,7 @@ def obtener_libro(isbn):
 
             for libro in data:
                 if data[libro]["isbn"] == isbn:
-                    return libro
+                    return libro, data[libro]
 
     except FileNotFoundError:
         print("El archivo 'books_data.json' no existe.")
@@ -118,9 +118,9 @@ def obtener_libro(isbn):
         return None
 
 
-def editar_libros(ISBN, indice, valor):
+def editar_libros(isbn, indice, valor):
     """Edita los metadatos de un libro según el campo y su nuevo valor.
-    :param ISBN: Str. El número ISBN del libro que se quiere editar.
+    :param isbn: Str. El número ISBN del libro que se quiere editar.
     :param indice: Int. El índice en la lista 'c.valor_bd' que indica qué campo se desea modificar.
     :param valor: Str. El nuevo valor que se asignará al campo especificado. Si el campo requiere un número,
                   se intentará convertir a entero.
@@ -147,7 +147,7 @@ def editar_libros(ISBN, indice, valor):
         libro_editado = None
 
         for libro_id, libro in data.items():
-            if libro["isbn"] == int(ISBN):
+            if libro["isbn"] == int(isbn):
                 print(f"Libro antes de la edición: {libro[c.valor_bd[indice]]}")
 
                 libro[c.valor_bd[indice]] = valor
