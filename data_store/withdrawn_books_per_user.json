@@ -21,6 +21,11 @@
             "isbn": 9780307474278,
             "fecha_prestamo": "2024-10-23 13:10:45",
             "fecha_devolucion": "2024-10-24 12:45:32"
+        },
+        {
+            "isbn": 9780199232765,
+            "fecha_prestamo": "2024-11-17 17:45:16",
+            "fecha_devolucion": null
         }
     ]
 }

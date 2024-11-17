@@ -1,6 +1,7 @@
 import json
 import pdb
 import re
+from utils import system_utils as su
 from data_store import users_data as ud
 from data_store import books_data as bd
 
@@ -18,7 +19,7 @@ def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
     with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
         dic_usuarios = dict(json.load(file))
 
-    with open('./data_store/users_data.json', 'w', encoding='utf-8') as file:
+    with open("./data_store/users_data.json", "w", encoding="utf-8") as file:
         for usuario in dic_usuarios:
             if nombre == dic_usuarios[usuario]["nombre"]:
                 usuario_registrado = False
@@ -60,18 +61,41 @@ def agregar_libro_historial(nombre_usuario, isbn, fecha):
     :param Str, fecha en que se alquiló el libro.
     :return historiales: Matrix, historial de todos los usuarios."""
     existe_usuario = False
-    indice_historial = -1
 
-    for i, historial in enumerate(ud.historiales):
-        if historial[0] == nombre_usuario:
+    with open(
+        "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
+    ) as file:
+        dict_historial = dict(json.load(file))
+    for usuario in dict_historial:
+        if usuario == nombre_usuario:
             existe_usuario = True
-            indice_historial = i
-
     if existe_usuario is True:
-        ud.historiales[indice_historial][1].append((isbn, fecha))
+        nuevo_libro = {
+            "isbn": isbn,
+            "fecha_prestamo": fecha,
+            "fecha_devolucion": None,
+        }
+        dict_historial[usuario].append(nuevo_libro)
     else:
-        ud.historiales.append([nombre_usuario, [(isbn, fecha)]])
+        nuevo_historial = {
+            f"{nombre_usuario}": [{
+                "isbn": isbn,
+                "fecha_prestamo": fecha,
+                "fecha_devolucion": None,
+            }]
+        }
+
+        dict_historial.update(nuevo_historial)
+        pdb.set_trace()
+    with open(
+        "./data_store/withdrawn_books_per_user.json", "w", encoding="utf-8"
+    ) as file:
+        json.dump(dict_historial, file, indent=4)
+
     return ud.historiales
+
+
+agregar_libro_historial("dani", 9780199232765, "2024-11-17 17:45:16")
 
 
 def agregar_penalizados(nombre_usuario, isbn):
@@ -84,7 +108,7 @@ def agregar_penalizados(nombre_usuario, isbn):
     with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
         dic_usuarios = dict(json.load(file))
 
-    with open('./data_store/users_data.json', 'w', encoding='utf-8') as file:
+    with open("./data_store/users_data.json", "w", encoding="utf-8") as file:
         for user in dic_usuarios:
             if dic_usuarios[user]["nombre"] == nombre_usuario:
                 user_id = user

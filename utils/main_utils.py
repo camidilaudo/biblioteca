@@ -159,7 +159,7 @@ def menu_bibliotecario():
                 )
                 validar = su.validacion_enteros(ISBN_editar)
 
-                libro = bu.obtener_libro(ISBN=validar)
+                libro = bu.obtener_libro(isbn=validar)
 
                 if libro is None:
                     print("No encontramos el libro. Intente con otro ISBN.")
