@@ -1,3 +1,5 @@
+import json
+import pdb
 import re
 from data_store import users_data as ud
 from data_store import books_data as bd
@@ -13,19 +15,24 @@ def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
     usuario_registrado = True
 
     # Verifica si el nombre de usuario ya existe
+    with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
+        dic_usuarios = dict(json.load(file))
 
-    for usuario in ud.usuarios:
-        if nombre == usuario["nombre"]:
-            usuario_registrado = False
-    # Agrega el tipo de usuario, nombre y contraseña a la matriz con los usuarios
+    with open('./data_store/books_data.json', 'w', encoding='utf-8') as file:
+        for usuario in dic_usuarios:
+            if nombre == dic_usuarios[usuario]["nombre"]:
+                usuario_registrado = False
+        # Agrega el tipo de usuario, nombre y contraseña a la matriz con los usuarios
 
-    if usuario_registrado:
-        nuevo_usuario = {
-            "tipo_usuario": int(tipo_usuario),
-            "nombre": nombre,
-            "contrasenia": contrasenia_usuario,
-        }
-        ud.usuarios.append(nuevo_usuario)
+        if usuario_registrado:
+            nuevo_usuario = {
+                "tipo_usuario": int(tipo_usuario),
+                "nombre": nombre,
+                "contrasenia": contrasenia_usuario,
+            }
+            indice = len(dic_usuarios) + 1
+            dic_usuarios.update({str(indice): nuevo_usuario})
+            json.dump(dic_usuarios, file, indent=4)
     return usuario_registrado
 
 
@@ -36,12 +43,13 @@ def login_usuario(nombre_usuario, contrasenia):
     :param usuario: Str, nombre de usuario del cliente.
     :return:Str, contraseña del usuario.
     """
-    dic_usuarios = ud.usuarios
-    tipo_usuario = -1
-    for usuario in dic_usuarios:
-        if nombre_usuario == usuario["nombre"]:
-            if contrasenia == usuario["contrasenia"]:
-                tipo_usuario = usuario["tipo_usuario"]
+    with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
+        dic_usuarios = dict(json.load(file))
+        tipo_usuario = -1
+        for usuario in dic_usuarios:
+            if nombre_usuario == dic_usuarios[usuario]["nombre"]:
+                if contrasenia == dic_usuarios[usuario]["contrasenia"]:
+                    tipo_usuario = dic_usuarios[usuario]["tipo_usuario"]
     return tipo_usuario
 
 
@@ -141,7 +149,7 @@ def validar_contrasenia(contrasenia):
     - Que el largo de la cadena sea entre 8 o 15 caracteres.
     :param contrasenia: str, contraseña creada por el usuario.
     :return match: bool, si la contraseña cumple con el patron o no."""
-    patron = r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.]).{8,15}$"
+    patron = r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.!]).{8,15}$"
     match = bool(re.match(patron, contrasenia))
     return match
 

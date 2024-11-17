@@ -1,9 +1,7 @@
-import pdb
 from data_store import users_data as ud
 from data_store import books_data as bd
 from utils import users_utils as uu
 from utils import system_utils as su
-import utils.book_utils as bu
 import constantes as c
 import random
 import json
@@ -101,8 +99,8 @@ def obtener_libro(ISBN):
             data = json.load(file)
 
             for libro in data:
-                    if data[libro]["isbn"] == ISBN:
-                        return libro
+                if data[libro]["isbn"] == ISBN:
+                    return libro
 
     except FileNotFoundError:
         print("El archivo 'books_data.json' no existe.")
@@ -246,45 +244,47 @@ def devolver_libro(ISBN, nombre):
 
         return devolucion
 
-    def recomendaciones(genero, usuario):
-        """Devuelve una recomendación segun el genero que pida el usuario. Chequea que no
-        sea un libro que haya leido anteriormente.
-        :param genero: Str, genero del cual el usuario quiere una recomendacion.
-        :param usuario: Str, usuario que pide la recomendacion.
-        :return libro: List, libro recomendado.
-        """
 
-        recomendaciones_por_genero = []
-        historial_preexistente = []
-        aleatorio_libro = None
+def recomendaciones(genero, usuario):
+    """Devuelve una recomendación segun el genero que pida el usuario. Chequea que no
+    sea un libro que haya leido anteriormente.
+    :param genero: Str, genero del cual el usuario quiere una recomendacion.
+    :param usuario: Str, usuario que pide la recomendacion.
+    :return libro: List, libro recomendado.
+    """
 
-        for historial_usuario in ud.historiales:
-            if usuario == historial_usuario[0]:
-                historial_preexistente = historial_usuario[1]
+    recomendaciones_por_genero = []
+    historial_preexistente = []
+    aleatorio_libro = None
 
-        for libro in bd.libros:
-            if (libro["genero"].lower() == genero) and (
-                libro["isbn"] not in historial_preexistente
-            ):
-                recomendaciones_por_genero.append(libro)
+    for historial_usuario in ud.historiales:
+        if usuario == historial_usuario[0]:
+            historial_preexistente = historial_usuario[1]
 
-        # comparar la lista de recomendaciones_por_genero con el historial recorriendolo con un for.
-        # si alguno de recomendaciones NO esta en el historial lo añado a una nueva lista
-        # el random lo aplico sobre esa lista nueva creada
+    for libro in bd.libros:
+        if (libro["genero"].lower() == genero) and (
+            libro["isbn"] not in historial_preexistente
+        ):
+            recomendaciones_por_genero.append(libro)
 
-        if len(recomendaciones_por_genero) > 0:
-            aleatorio_libro = random.choice(recomendaciones_por_genero)
+    # comparar la lista de recomendaciones_por_genero con el historial recorriendolo con un for.
+    # si alguno de recomendaciones NO esta en el historial lo añado a una nueva lista
+    # el random lo aplico sobre esa lista nueva creada
 
-        return aleatorio_libro
+    if len(recomendaciones_por_genero) > 0:
+        aleatorio_libro = random.choice(recomendaciones_por_genero)
 
-    def borrar_libro(ISBN):
-        """Eliminar libro de la biblioteca.
-        :param ISBN: Int, codigo ISBN del libro que se quiere eliminar de la biblioteca.
-        :return bd.libros: Matrix, biblioteca actualizada."""
-        bandera = False
-        for i, libro in enumerate(bd.libros):
-            if ISBN == libro["isbn"]:
-                del bd.libros[i]
-                bandera = True
+    return aleatorio_libro
 
-        return bandera
+
+def borrar_libro(ISBN):
+    """Eliminar libro de la biblioteca.
+    :param ISBN: Int, codigo ISBN del libro que se quiere eliminar de la biblioteca.
+    :return bd.libros: Matrix, biblioteca actualizada."""
+    bandera = False
+    for i, libro in enumerate(bd.libros):
+        if ISBN == libro["isbn"]:
+            del bd.libros[i]
+            bandera = True
+
+    return bandera

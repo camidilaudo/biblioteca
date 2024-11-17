@@ -1,7 +1,6 @@
 import utils.print_utils as pu
 import utils.book_utils as bu
 import utils.users_utils as us
-import constantes as c
 import utils.system_utils as su
 
 
