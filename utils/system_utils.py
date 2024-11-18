@@ -51,8 +51,8 @@ def validacion_enteros(valor):
             numero = int(valor)
             bandera = False
         except ValueError:
-            print("Error: Debes ingresar un número entero.")
-            valor = input("ingresa un número: ")
+            print("Error: Debes ingresar un número entero")
+            valor = input("Ingresa un número: ")
 
     return numero
 

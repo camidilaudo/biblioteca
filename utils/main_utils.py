@@ -10,7 +10,7 @@ def menu_cliente(nombre_usuario):
     numero = "0"
     while numero != "-1":
         pu.imprimir_menu_cliente()
-        numero = input("Ingresá un número : ")
+        numero = input("Ingresá un número: ")
         print("---------------------------------------------------------------")
         while (
             numero != "1"
@@ -22,7 +22,7 @@ def menu_cliente(nombre_usuario):
             print("ERROR. Opción incorrecta.")
             print("")
             pu.imprimir_menu_cliente()
-            numero = input("Ingresá un número correcto : ")
+            numero = input("Ingresá un número correcto: ")
             print("---------------------------------------------------------------")
         # Buscar libro
         if numero == "1":
@@ -100,7 +100,7 @@ def menu_bibliotecario():
     numero = "0"
     while numero != "-1":
         pu.imprimir_menu_bibliotecario()
-        numero = input("Ingresá un número : ")
+        numero = input("Ingresá un número: ")
         print("---------------------------------------------------------------")
         while (
             numero != "1"
@@ -112,27 +112,27 @@ def menu_bibliotecario():
             print("ERROR. Opción incorrecta.")
             print("")
             pu.imprimir_menu_bibliotecario()
-            numero = input("ERROR. Ingresá un número : ")
+            numero = input("ERROR. Ingresá un número: ")
 
         # CARGAR LIBRO
         if numero == "1":
-            pedir_titulo = input("Ingrese el titulo : ")
+            pedir_titulo = input("Ingrese el titulo: ")
             titulo = su.ingreso_Valido(pedir_titulo)
-            pedir_autor = input("Ingrese el autor : ")
+            pedir_autor = input("Ingrese el autor: ")
             autor = su.ingreso_Valido(pedir_autor)
-            pedir_genero = input("Ingrese el genero : ")
+            pedir_genero = input("Ingrese el genero: ")
             genero = su.ingreso_Valido(pedir_genero)
-            pedir_ISBN = input("Ingrese un ISBN : ")
+            pedir_ISBN = input("Ingrese un ISBN: ")
             isbn = su.validacion_enteros(pedir_ISBN)
-            pedir_editorial = input("Ingrese el editorial : ")
+            pedir_editorial = input("Ingrese el editorial: ")
             editorial = su.ingreso_Valido(pedir_editorial)
-            pedir_anio_publicacion = input("Ingrese el año publicacion : ")
+            pedir_anio_publicacion = input("Ingrese el año publicacion: ")
             anio_publicacion = su.validacion_enteros(pedir_anio_publicacion)
-            pedir_serie_libros = input("Ingrese el serie_libros : ")
+            pedir_serie_libros = input("Ingrese la serie del libro: ")
             serie_libros = su.ingreso_Valido(pedir_serie_libros)
             pedir_nro_paginas = input("Ingrese el número de paginas: ")
             nro_paginas = su.validacion_enteros(pedir_nro_paginas)
-            pedir_cant_ejemplares = input("Ingrese el la cantidad de ejemplares : ")
+            pedir_cant_ejemplares = input("Ingrese la cantidad de ejemplares: ")
             cant_ejemplares = su.validacion_enteros(pedir_cant_ejemplares)
             registrar_libros = bu.cargar_libros(
                 titulo,
@@ -369,9 +369,9 @@ def iniciar_sesion():
 
 def registro_usuario(tipo_usuario):
     print("\n=== CREACIÓN DE CUENTA ===")
-    nombre_usuario = input("Ingrese un nombre de usuario : ")
+    nombre_usuario = input("Ingrese un nombre de usuario: ")
     contrasenia = input("Ingrese la contraseña del usuario: ")
-    verificar_contrasenia = input("Volvé a ingresar la contraseña : ")
+    verificar_contrasenia = input("Volvé a ingresar la contraseña: ")
     cumple_requisito = us.validar_contrasenia(contrasenia)
 
     while contrasenia != verificar_contrasenia or not cumple_requisito:
@@ -387,7 +387,7 @@ def registro_usuario(tipo_usuario):
         if su.volver_atras(contrasenia):
             return False
 
-        verificar_contrasenia = input("Volvé a ingresar la contraseña : ")
+        verificar_contrasenia = input("Volvé a ingresar la contraseña: ")
         cumple_requisito = us.validar_contrasenia(contrasenia)
 
     if us.registrar_usuario(tipo_usuario, nombre_usuario, contrasenia):
