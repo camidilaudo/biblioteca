@@ -240,5 +240,3 @@ def despenalizar_usuarios():
     with open("./data_store/users_data.json", "w", encoding="utf-8") as file:
         json.dump(dict_usuarios, file, indent=4)
 
-
-despenalizar_usuarios()
