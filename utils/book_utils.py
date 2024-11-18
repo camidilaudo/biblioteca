@@ -131,7 +131,6 @@ def editar_libros(isbn, indice, valor):
             "nro_paginas",
             "anio_publicacion",
             "cant_ejemplares",
-            "disponibilidad",
             "ejemplares_disponibles",
         ]:
            valor= su.validacion_enteros(valor)
