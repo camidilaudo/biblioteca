@@ -51,7 +51,7 @@ def validacion_enteros(valor):
             numero = int(valor)
             if numero < 0:
                 print("\033[31mNo puede ingresar un número negativo\033[0m")
-                valor = ("Ingrese un número positivo: ")
+                valor = input(("Ingrese un número positivo: "))
             else:
                 bandera = False
         except ValueError:
