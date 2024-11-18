@@ -32,8 +32,7 @@ def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
                 "nombre": nombre,
                 "contrasenia": contrasenia_usuario,
                 "esta_penalizado": False,
-                "fecha_despenalizacion": None
-
+                "fecha_despenalizacion": None,
             }
             indice = len(dic_usuarios) + 1
             dic_usuarios.update({str(indice): nuevo_usuario})

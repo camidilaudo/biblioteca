@@ -144,7 +144,6 @@ def menu_bibliotecario():
                 serie_libros,
                 nro_paginas,
                 cant_ejemplares,
-
             )
             print("Estos son los libros que estan actualmente en la biblioteca: ")
             for libro in registrar_libros:
@@ -272,9 +271,7 @@ def menu_bibliotecario():
                                         entrada, nro_pedidos, usuario
                                     )
                                     if libro_alquilado[0]:
-                                        _,libro_actualizado = bu.obtener_libro(
-                                            entrada
-                                        )
+                                        _, libro_actualizado = bu.obtener_libro(entrada)
                                         print(
                                             "***************************************************************"
                                         )

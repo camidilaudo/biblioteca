@@ -8,7 +8,11 @@ import json
 
 stock_json = lambda isbn: (
     True
-    if [libro for libro in dict(json.load(open("./data_store/books_data.json"))).values() if libro["isbn"] == isbn]
+    if [
+        libro
+        for libro in dict(json.load(open("./data_store/books_data.json"))).values()
+        if libro["isbn"] == isbn
+    ]
     else False
 )
 
@@ -33,15 +37,15 @@ def busqueda_libros(clave, valor):
 
 
 def cargar_libros(
-        titulo,
-        autor,
-        genero,
-        isbn,
-        editorial,
-        anio_publicacion,
-        serie_libros,
-        nro_paginas,
-        cant_ejemplares,
+    titulo,
+    autor,
+    genero,
+    isbn,
+    editorial,
+    anio_publicacion,
+    serie_libros,
+    nro_paginas,
+    cant_ejemplares,
 ):
     """Cargar libro en stock de biblioteca. Se pueden cargar varios ejemplares del mismo.
     :param titulo: Str, título del libro.
@@ -198,7 +202,7 @@ def devolver_libro(isbn, nombre):
     True si se devuelve correctamente el libro.
     """
     with open(
-            "./data_store/books_data.json", "r", encoding="utf-8"
+        "./data_store/books_data.json", "r", encoding="utf-8"
     ) as file_biblio, open(
         "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
     ) as file_historiales:
@@ -221,17 +225,17 @@ def devolver_libro(isbn, nombre):
                         )
                         penalizaciones = (
                             lambda fsalida, fregreso: (
-                                                              historiales[usuario][i]["fecha_devolucion"]
-                                                              - historiales[usuario][i]["fecha_prestamo"]
-                                                      ).days
-                                                      <= 7
+                                historiales[usuario][i]["fecha_devolucion"]
+                                - historiales[usuario][i]["fecha_prestamo"]
+                            ).days
+                            <= 7
                         )
                         if not penalizaciones:
                             uu.agregar_penalizados(nombre)
                             devolucion = True
 
         with open(
-                "./data_store/books_data.json", "w", encoding="utf-8"
+            "./data_store/books_data.json", "w", encoding="utf-8"
         ) as file_biblio, open(
             "./data_store/withdrawn_books_per_user.json", "w", encoding="utf-8"
         ) as file_historiales:
@@ -252,7 +256,7 @@ def recomendaciones(genero, usuario):
         biblioteca = dict(json.load(file_biblio))
 
     with open(
-            "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
+        "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
     ) as file_historiales:
         historiales = dict(json.load(file_historiales))
     recomendaciones_por_genero = []
@@ -265,7 +269,7 @@ def recomendaciones(genero, usuario):
 
     for id_libro in biblioteca:
         if (biblioteca[id_libro]["genero"].lower() == genero) and (
-                biblioteca[id_libro]["isbn"] not in historial_preexistente
+            biblioteca[id_libro]["isbn"] not in historial_preexistente
         ):
             recomendaciones_por_genero.append(biblioteca[id_libro]["titulo"])
 
