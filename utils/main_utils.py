@@ -1,5 +1,3 @@
-import pdb
-
 import utils.print_utils as pu
 import utils.book_utils as bu
 import utils.users_utils as us
@@ -7,6 +5,7 @@ import utils.system_utils as su
 
 
 def menu_cliente(nombre_usuario):
+    """Ejecución del menu del cliente."""
     numero = "0"
     while numero != "-1":
         pu.imprimir_menu_cliente()
@@ -97,6 +96,7 @@ def menu_cliente(nombre_usuario):
 
 
 def menu_bibliotecario():
+    """Ejecución del menu del bibliotecario."""
     numero = "0"
     while numero != "-1":
         pu.imprimir_menu_bibliotecario()
@@ -338,6 +338,7 @@ def menu_bibliotecario():
 
 
 def mostrar_logo():
+    "Funcion que imprime el logo de la biblioteca."
     logo = [
         r" ____  _                           _     _                     _         _     _ _     _ _       _                 ",
         r"| __ )(_) ___ _ ____   _____ _ __ (_) __| | ___  ___    __ _  | | __ _  | |__ (_) |__ | (_) ___ | |_ ___  ___ __ _ ",
@@ -349,18 +350,21 @@ def mostrar_logo():
 
 
 def mostrar_menu_principal():
+    "Funcion que imprime las opciones del menu principal."
     print("=== MENÚ PRINCIPAL ===")
     print("1- Iniciar sesión.")
     print("2- Registrarse.")
 
 
 def mostrar_menu_registro():
+    "Funcion que imprime las opciones del menu de registro."
     print("=== REGISTRO DE USUARIO ===")
     print("1- Bibliotecario.")
     print("2- Cliente.")
 
 
 def iniciar_sesion():
+    "Función que loguea al usuario."
     print("\n=== INICIO DE SESIÓN ===")
     nombre_usuario = input("Ingrese nombre de usuario:  ")
     contrasenia = input("Ingrese la contraseña del usuario: ")
@@ -368,6 +372,7 @@ def iniciar_sesion():
 
 
 def registro_usuario(tipo_usuario):
+    "Funcion que registra al usuario."
     print("\n=== CREACIÓN DE CUENTA ===")
     nombre_usuario = input("Ingrese un nombre de usuario : ")
     contrasenia = input("Ingrese la contraseña del usuario: ")
