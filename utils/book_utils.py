@@ -105,7 +105,7 @@ def obtener_libro(isbn):
 
             for id_libro, detalles in data.items():
                 if str(detalles["isbn"]) == str(isbn):
-                    return  detalles
+                    return  id_libro, detalles
 
     except FileNotFoundError:
         print("El archivo 'books_data.json' no existe.")
