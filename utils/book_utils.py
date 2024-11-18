@@ -101,9 +101,7 @@ def obtener_libro(isbn):
         with open("./data_store/books_data.json", "r", encoding="utf-8") as file:
             data = json.load(file)
 
-            # Iterar por las claves del diccionario
             for id_libro, detalles in data.items():
-                # Comparar el ISBN, asegurando que ambos son del mismo tipo (str o int)
                 if str(detalles["isbn"]) == str(isbn):
                     return id_libro, detalles
 
@@ -112,7 +110,6 @@ def obtener_libro(isbn):
     except json.JSONDecodeError:
         print("\033[31mError al leer el archivo JSON. Verifica el formato del archivo.\033[0m")
 
-        # Retornar None si no se encontró el libro o si ocurrió un error
     return None
 
 
