@@ -109,7 +109,7 @@ def obtener_libro(isbn):
         return None
 
     except json.JSONDecodeError:
-        print("Error al leer el archivo JSON. Verifica el formato del archivo.")
+        print("\033[31mError al leer el archivo JSON. Verifica el formato del archivo.\033[0m")
         return None
 
 
