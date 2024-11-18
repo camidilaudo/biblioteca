@@ -305,7 +305,7 @@ def menu_bibliotecario():
                     devolver = bu.devolver_libro(isbn, usuario)
 
                     if devolver:
-                        libro = bu.obtener_libro(isbn)
+                        _,libro = bu.obtener_libro(isbn)
                         print(f"El libro {libro['titulo']} fue devuelto por {usuario}!")
                     else:
                         print("ISBN no encontrado. Intente nuevamente.")

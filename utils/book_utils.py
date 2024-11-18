@@ -1,3 +1,5 @@
+import pdb
+
 from utils import users_utils as uu
 from utils import system_utils as su
 import constantes as c
@@ -208,6 +210,7 @@ def devolver_libro(isbn, nombre):
         historiales = dict(json.load(file_historiales))
         devolucion = False
         book_id, _ = obtener_libro(isbn)
+        pdb.set_trace()
         if book_id:
             biblioteca[book_id]["disponibilidad"] = True
             biblioteca[book_id]["ejemplares_disponibles"] += 1
@@ -230,7 +233,7 @@ def devolver_libro(isbn, nombre):
                         )
                         if not penalizaciones:
                             uu.agregar_penalizados(nombre)
-                            devolucion = True
+                        devolucion = True
 
         with open(
             "./data_store/books_data.json", "w", encoding="utf-8"
