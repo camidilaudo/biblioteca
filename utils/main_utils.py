@@ -37,7 +37,6 @@ def menu_cliente(nombre_usuario):
 
             valor = str(input("Ingrese el valor del campo: "))
             libros_encontrados = bu.busqueda_libros(clave, valor)
-            pdb.set_trace()
             if not libros_encontrados:
                 print("No contamos con ese libro en nuestra biblioteca")
                 print(f"Se encontraron {len(libros_encontrados)}")
