@@ -209,39 +209,40 @@ def devolver_libro(isbn, nombre):
         biblioteca = dict(json.load(file_biblio))
         historiales = dict(json.load(file_historiales))
         devolucion = False
-        book_id, _ = obtener_libro(isbn)
-        pdb.set_trace()
-        if book_id:
-            biblioteca[book_id]["disponibilidad"] = True
-            biblioteca[book_id]["ejemplares_disponibles"] += 1
-            biblioteca[book_id]["ejemplares_alquilados"] -= 1
+        data_libro = obtener_libro(isbn)
+        if data_libro is not None:
+            book_id, _ = obtener_libro(isbn)
+            if book_id:
+                biblioteca[book_id]["disponibilidad"] = True
+                biblioteca[book_id]["ejemplares_disponibles"] += 1
+                biblioteca[book_id]["ejemplares_alquilados"] -= 1
 
-            fecha_hoy = su.fecha_actual()
-        for usuario in historiales:
-            if usuario == nombre:
-                for i in range(len(historiales[usuario])):
-                    if historiales[usuario][i]["isbn"] == isbn and historiales[usuario][i]["fecha_devolucion"] is None:
-                        historiales[usuario][i]["fecha_devolucion"] = (
-                            fecha_hoy.strftime("%Y-%m-%d %H:%M:%S")
-                        )
-                        penalizaciones = (
-                            lambda fsalida, fregreso: (
-                                historiales[usuario][i]["fecha_devolucion"]
-                                - historiales[usuario][i]["fecha_prestamo"]
-                            ).days
-                            <= 7
-                        )
-                        if not penalizaciones:
-                            uu.agregar_penalizados(nombre)
-                        devolucion = True
+                fecha_hoy = su.fecha_actual()
+            for usuario in historiales:
+                if usuario == nombre:
+                    for i in range(len(historiales[usuario])):
+                        if historiales[usuario][i]["isbn"] == isbn and historiales[usuario][i]["fecha_devolucion"] is None:
+                            historiales[usuario][i]["fecha_devolucion"] = (
+                                fecha_hoy.strftime("%Y-%m-%d %H:%M:%S")
+                            )
+                            penalizaciones = (
+                                lambda fsalida, fregreso: (
+                                    historiales[usuario][i]["fecha_devolucion"]
+                                    - historiales[usuario][i]["fecha_prestamo"]
+                                ).days
+                                <= 7
+                            )
+                            if not penalizaciones:
+                                uu.agregar_penalizados(nombre)
+                            devolucion = True
 
-        with open(
-            "./data_store/books_data.json", "w", encoding="utf-8"
-        ) as file_biblio, open(
-            "./data_store/withdrawn_books_per_user.json", "w", encoding="utf-8"
-        ) as file_historiales:
-            json.dump(biblioteca, file_biblio, indent=4)
-            json.dump(historiales, file_historiales, indent=4)
+            with open(
+                "./data_store/books_data.json", "w", encoding="utf-8"
+            ) as file_biblio, open(
+                "./data_store/withdrawn_books_per_user.json", "w", encoding="utf-8"
+            ) as file_historiales:
+                json.dump(biblioteca, file_biblio, indent=4)
+                json.dump(historiales, file_historiales, indent=4)
         return devolucion
 
 

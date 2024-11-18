@@ -312,7 +312,7 @@ def menu_bibliotecario():
                         _,libro = bu.obtener_libro(isbn)
                         print(f"El libro {libro['titulo']} fue devuelto por {usuario}!")
                     else:
-                        print("ISBN no encontrado. Intente nuevamente.")
+                        print("ISBN no encontrado o usuario incorrecto. Intente nuevamente.")
 
                     try:
                         continuar = int(

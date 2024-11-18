@@ -37,9 +37,9 @@
         "serie": "Hercule Poirot",
         "nro_paginas": 264,
         "cant_ejemplares": 7,
-        "disponibilidad": false,
-        "ejemplares_disponibles": 0,
-        "ejemplares_alquilados": 7
+        "disponibilidad": true,
+        "ejemplares_disponibles": 1,
+        "ejemplares_alquilados": 6
     },
     "4": {
         "autor": "Gabriel Garcia Marquez",
