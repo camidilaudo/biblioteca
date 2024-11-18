@@ -358,7 +358,6 @@ def mostrar_menu_registro():
     print("=== REGISTRO DE USUARIO ===")
     print("1- Bibliotecario.")
     print("2- Cliente.")
-    return input("Ingrese una opción correcta o -1 para salir: ")
 
 
 def iniciar_sesion():

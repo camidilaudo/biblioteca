@@ -57,7 +57,7 @@ def cargar_libros(
     :param serie_libros: Str opcional, si el libro pertenece a una serie, escribirla. Caso contrario escribir None.
     :param nro_paginas: Int, número de páginas del libro.
     :param cant_ejemplares: Int, cantidad de ejemplares del mismo libro que se está cargando.
-    :return libros_cargados: List, lista de libros cargados a la biblioteca."""
+    :return biblioteca: Dict, lista de libros cargados a la biblioteca."""
 
     # chequear si el libro ya existe en la biblioteca
     libro_en_stock = stock_json(isbn=isbn)

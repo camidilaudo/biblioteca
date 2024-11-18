@@ -38,7 +38,8 @@ def main():
         elif validar_num == 2:
             registro_valido = False
             while not registro_valido:
-                opcion_registro = mu.mostrar_menu_registro()
+                mu.mostrar_menu_registro()
+                opcion_registro = input("Ingrese una opción: ")
                 tipo_usuario = su.validacion_enteros(opcion_registro)
 
                 if su.volver_atras(opcion_registro):
