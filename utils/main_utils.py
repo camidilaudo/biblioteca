@@ -19,7 +19,7 @@ def menu_cliente(nombre_usuario):
             and numero != "4"
             and numero != "-1"
         ):
-            print("ERROR. Opción incorrecta.")
+            print("\033[31mError: Opción incorrecta.\033[0m")
             print("")
             pu.imprimir_menu_cliente()
             numero = input("Ingresá un número correcto: ")
@@ -109,10 +109,10 @@ def menu_bibliotecario():
             and numero != "-1"
             and numero != "4"
         ):
-            print("ERROR. Opción incorrecta.")
+            print("\033[31mError: Opción incorrecta.\033[0m")
             print("")
             pu.imprimir_menu_bibliotecario()
-            numero = input("ERROR. Ingresá un número: ")
+            numero = input("\033[31mError: Ingresá un número: \033[0m")
 
         # CARGAR LIBRO
         if numero == "1":
@@ -234,7 +234,7 @@ def menu_bibliotecario():
                                 buscar_isbn = bu.obtener_libro(entrada)
                                 if buscar_isbn is None:
                                     print(
-                                        "Error: El ISBN es incorrecto o no existe en la biblioteca"
+                                        "\033[31mError: El ISBN es incorrecto o no existe en la biblioteca.\033[0m"
                                     )
                                     continue
                                 else:
@@ -259,7 +259,7 @@ def menu_bibliotecario():
                                                 usuario
                                             )
                                             if not encontrar_usuario:
-                                                print("Error. El usuario no existe.")
+                                                print("\033[31mError. El usuario no existe.\033[0m")
                                             if estado_usuario is True:
                                                 print(
                                                     "Usuario penalizado. No puede alquilar."
@@ -284,7 +284,7 @@ def menu_bibliotecario():
                                         )
                                     elif libro_alquilado[1] < nro_pedidos:
                                         print(
-                                            "Error. No quedan suficientes ejemplares disponibles."
+                                            "\033[31mError. No quedan suficientes ejemplares disponibles.\033[0m"
                                         )
 
                         elif continuar_ejecucion == -1:
@@ -376,7 +376,7 @@ def registro_usuario(tipo_usuario):
 
     while contrasenia != verificar_contrasenia or not cumple_requisito:
         if contrasenia != verificar_contrasenia:
-            print("Error. Las contraseñas no coinciden")
+            print("\033[31mError. Las contraseñas no coinciden.\033[0m")
         else:
             print("Tu contraseña es débil.")
             print(

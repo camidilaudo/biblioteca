@@ -34,9 +34,9 @@ def validacion_numerica():
             if es_valido in [1, 2, -1]:
                 bandera = False
             else:
-                print("ERROR. Ingrese un número correcto")
+                print("\033[31mError: Ingrese un número correcto.\033[0m")
         except ValueError:
-            print("ERROR. Ingrese un valor numérico.")
+            print("\033[31mError: Ingrese un valor numérico.\033[0m")
     return es_valido
 
 
@@ -51,7 +51,7 @@ def validacion_enteros(valor):
             numero = int(valor)
             bandera = False
         except ValueError:
-            print("Error: Debes ingresar un número entero")
+            print("\033[31mError: Debes ingresar un número entero.\033[0m")
             valor = input("Ingresa un número: ")
 
     return numero

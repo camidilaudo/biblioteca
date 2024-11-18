@@ -52,7 +52,7 @@ def main():
 
                         while not acceso_valido:
                             contrasenia_general = input(
-                                "Error: Ingrese el código correcto o -1 para salir: "
+                                "\033[31mError: Ingrese el código correcto o -1 para salir:\033[0m "
                             )
                             if su.volver_atras(contrasenia_general):
                                 acceso_valido = True
@@ -75,9 +75,9 @@ def main():
                             mu.menu_cliente(nombre_usuario)
 
                     else:
-                        print("Error. Número inválido.")
+                        print("\033[31mError. Número inválido.\033[0m")
         else:
-            print("Error. Número inválido.")
+            print("\033[31mError. Número inválido.\033[0m")
 
 
 main()
