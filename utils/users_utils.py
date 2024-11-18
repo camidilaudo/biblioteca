@@ -1,4 +1,5 @@
 import json
+import pdb
 import re
 import csv
 from datetime import timedelta, datetime
@@ -30,6 +31,9 @@ def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
                 "tipo_usuario": int(tipo_usuario),
                 "nombre": nombre,
                 "contrasenia": contrasenia_usuario,
+                "esta_penalizado": False,
+                "fecha_despenalizacion": None
+
             }
             indice = len(dic_usuarios) + 1
             dic_usuarios.update({str(indice): nuevo_usuario})
@@ -131,11 +135,14 @@ def agregar_alquilados(isbn, cant_pedidos):
     with open("./data_store/withdrawn_books.csv", "r", encoding="utf-8") as file:
         historial_alquilados = list(csv.reader(file))
         for i in range(len(historial_alquilados)):
-            if historial_alquilados[i][0] == isbn:
+            if historial_alquilados[i][0] == str(isbn):
                 existe_libro = True
-
+                indice = i
         if existe_libro:
-            historial_alquilados[i][1] += cant_pedidos
+            historial_cant_libro = int(historial_alquilados[indice][1])
+            historial_cant_libro += cant_pedidos
+            pdb.set_trace()
+            historial_alquilados[indice][1] = historial_cant_libro
         else:
             historial_alquilados.append([isbn, cant_pedidos])
 

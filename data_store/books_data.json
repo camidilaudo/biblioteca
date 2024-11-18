@@ -24,7 +24,7 @@
         "nro_paginas": 694,
         "cant_ejemplares": 3,
         "disponibilidad": true,
-        "ejemplares_disponibles": 3,
+        "ejemplares_disponibles": 1,
         "ejemplares_alquilados": 0
     },
     "3": {
@@ -94,8 +94,8 @@
         "nro_paginas": 374,
         "cant_ejemplares": 8,
         "disponibilidad": true,
-        "ejemplares_disponibles": 4,
-        "ejemplares_alquilados": 1
+        "ejemplares_disponibles": 5,
+        "ejemplares_alquilados": 0
     },
     "8": {
         "autor": "Stephen King",
@@ -122,8 +122,8 @@
         "nro_paginas": 255,
         "cant_ejemplares": 4,
         "disponibilidad": true,
-        "ejemplares_disponibles": 4,
-        "ejemplares_alquilados": 0
+        "ejemplares_disponibles": 5,
+        "ejemplares_alquilados": -1
     },
     "10": {
         "autor": "Haruki Murakami",

@@ -1,3 +1,5 @@
+import pdb
+
 import utils.print_utils as pu
 import utils.book_utils as bu
 import utils.users_utils as us
@@ -36,10 +38,12 @@ def menu_cliente(nombre_usuario):
 
             valor = str(input("Ingrese el valor del campo: "))
             libros_encontrados = bu.busqueda_libros(clave, valor)
+            pdb.set_trace()
             if not libros_encontrados:
-                # TODO cuando devuelve una variable vacia, no printea este mensaje, solo lo borra, no se por que
                 print("No contamos con ese libro en nuestra biblioteca")
                 print(f"Se encontraron {len(libros_encontrados)}")
+                print("---------------------------------------------------------------")
+                input("Para continuar presione ENTER: ")
             else:
                 pu.imprimir_res_busqueda(libros_encontrados)
                 print("---------------------------------------------------------------")
@@ -119,7 +123,7 @@ def menu_bibliotecario():
             pedir_genero = input("Ingrese el genero : ")
             genero = su.ingreso_Valido(pedir_genero)
             pedir_ISBN = input("Ingrese un ISBN : ")
-            ISBN = su.validacion_enteros(pedir_ISBN)
+            isbn = su.validacion_enteros(pedir_ISBN)
             pedir_editorial = input("Ingrese el editorial : ")
             editorial = su.ingreso_Valido(pedir_editorial)
             pedir_anio_publicacion = input("Ingrese el año publicacion : ")
@@ -134,19 +138,18 @@ def menu_bibliotecario():
                 titulo,
                 autor,
                 genero,
-                ISBN,
-                # TODO aca el ISBN aparece de otro color y no se por que
+                isbn,
                 editorial,
                 anio_publicacion,
                 serie_libros,
                 nro_paginas,
                 cant_ejemplares,
-                # TODO aca rompe la función, hay un problema con el lamda de books_utils pero no identifico cual
+
             )
             print("Estos son los libros que estan actualmente en la biblioteca: ")
             for libro in registrar_libros:
                 print("***************************************************************")
-                pu.imprimir_libro(libro)
+                pu.imprimir_libro(registrar_libros[libro])
             input("Para continuar presione ENTER: ")
 
         # Editar libro

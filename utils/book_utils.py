@@ -1,3 +1,4 @@
+import pdb
 
 from utils import users_utils as uu
 from utils import system_utils as su
@@ -7,7 +8,7 @@ import json
 
 stock_json = lambda isbn: (
     True
-    if [libro for libro in json.load(open("libros.json")) if libro["isbn"] == isbn]
+    if [libro for libro in dict(json.load(open("./data_store/books_data.json"))).values() if libro["isbn"] == isbn]
     else False
 )
 
@@ -56,13 +57,12 @@ def cargar_libros(
 
     # chequear si el libro ya existe en la biblioteca
     libro_en_stock = stock_json(isbn=isbn)
-    clave_libro = obtener_libro(isbn=isbn)
 
     with open("./data_store/books_data.json", "r", encoding="utf-8") as file:
         biblioteca = dict(json.load(file))
 
-    with open("./data_store/books_data.json", "w", encoding="utf-8") as file:
-        if libro_en_stock is not None:
+        if libro_en_stock is True:
+            clave_libro, _ = obtener_libro(isbn=isbn)
             biblioteca[clave_libro]["cant_ejemplares"] += cant_ejemplares
             biblioteca[clave_libro]["ejemplares_disponibles"] += cant_ejemplares
         else:
@@ -83,6 +83,7 @@ def cargar_libros(
             indice = len(biblioteca) + 1
             biblioteca.update({str(indice): nuevo_libro})
 
+    with open("./data_store/books_data.json", "w", encoding="utf-8") as file:
         json.dump(biblioteca, file, indent=4)
 
     return biblioteca
@@ -204,8 +205,7 @@ def devolver_libro(isbn, nombre):
         biblioteca = dict(json.load(file_biblio))
         historiales = dict(json.load(file_historiales))
         devolucion = False
-
-        book_id = obtener_libro(isbn)
+        book_id, _ = obtener_libro(isbn)
         if book_id:
             biblioteca[book_id]["disponibilidad"] = True
             biblioteca[book_id]["ejemplares_disponibles"] += 1
