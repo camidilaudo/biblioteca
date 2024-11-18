@@ -177,16 +177,17 @@ def ver_propio_historial(usuario):
         biblioteca = dict(json.load(file_biblio))
     historial_nombres = []
     i = 0
-
-    while (i < len(historial_general)) and usuario != historial_general[i][0]:
+    claves = list(historial_general.keys())
+    while (i < len(historial_general)) and usuario != claves[i]:
         i = i + 1
 
     if i < len(historial_general):
-        for isbn in historial_general[i][1]:
+        for libro_leido in historial_general[usuario]:
             for libro in biblioteca:
-                if isbn == biblioteca[libro]["isbn"]:
+                if libro_leido["isbn"] == biblioteca[libro]["isbn"]:
                     historial_nombres.append(biblioteca[libro]["titulo"])
-        return historial_nombres
+
+    return historial_nombres
 
 
 def validar_contrasenia(contrasenia):

@@ -17,12 +17,12 @@ def main():
         su.limpiar_terminal()
 
         if validar_num == 1:  # Iniciar sesión
-            iniciar_sesion_usuario = mu.iniciar_sesion()
+            iniciar_sesion_usuario, nombre_usuario = mu.iniciar_sesion()
             sesion_valida = iniciar_sesion_usuario in c.tipos_usuario
 
             while not sesion_valida:
                 print("Usuario o contraseña incorrecta.")
-                iniciar_sesion_usuario = mu.iniciar_sesion()
+                iniciar_sesion_usuario, nombre_usuario = mu.iniciar_sesion()
 
                 if su.volver_atras(iniciar_sesion_usuario):
                     sesion_valida = True
@@ -31,7 +31,7 @@ def main():
                     sesion_valida = iniciar_sesion_usuario in c.tipos_usuario
 
             if iniciar_sesion_usuario == c.cliente:
-                mu.menu_cliente(iniciar_sesion_usuario)
+                mu.menu_cliente(nombre_usuario)
             elif iniciar_sesion_usuario == c.bibliotecario:
                 mu.menu_bibliotecario()
 

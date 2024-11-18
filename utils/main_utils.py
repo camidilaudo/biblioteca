@@ -367,7 +367,7 @@ def iniciar_sesion():
     print("\n=== INICIO DE SESIÓN ===")
     nombre_usuario = input("Ingrese nombre de usuario:  ")
     contrasenia = input("Ingrese la contraseña del usuario: ")
-    return us.login_usuario(nombre_usuario, contrasenia)
+    return us.login_usuario(nombre_usuario, contrasenia), nombre_usuario
 
 
 def registro_usuario(tipo_usuario):
