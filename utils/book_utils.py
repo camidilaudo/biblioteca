@@ -128,15 +128,19 @@ def editar_libros(isbn, indice, valor):
         return None
 
     if c.valor_bd[indice] in [
-        "cant_ejemplares",
-        "disponibilidad",
-        "ejemplares_disponibles",
-    ]:
-        try:
-            valor = int(valor)
-        except ValueError:
-            print(f"El valor para {c.valor_bd[indice]} debe ser un número entero.")
-            return None
+            "anio_publicacion",
+            "cant_ejemplares",
+            "disponibilidad",
+            "ejemplares_disponibles",
+        ]:
+            bandera = True
+            while bandera:
+                try:
+                    valor = int(valor)
+                    bandera = False
+                except ValueError:
+                    print(f"El valor para {c.valor_bd[indice]} debe ser un número entero.")
+                    valor = input ("Ingrese un valor númerico: ")
 
     with open("./data_store/books_data.json", "r+", encoding="utf-8") as file:
         data = json.load(file)
