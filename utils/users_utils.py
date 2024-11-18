@@ -1,5 +1,4 @@
 import json
-import pdb
 import re
 import csv
 from datetime import timedelta, datetime
@@ -140,7 +139,6 @@ def agregar_alquilados(isbn, cant_pedidos):
         if existe_libro:
             historial_cant_libro = int(historial_alquilados[indice][1])
             historial_cant_libro += cant_pedidos
-            pdb.set_trace()
             historial_alquilados[indice][1] = historial_cant_libro
         else:
             historial_alquilados.append([isbn, cant_pedidos])
