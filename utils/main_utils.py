@@ -1,5 +1,3 @@
-import pdb
-
 import utils.print_utils as pu
 import utils.book_utils as bu
 import utils.users_utils as us
@@ -162,7 +160,6 @@ def menu_bibliotecario():
                     "Ingrese el ISBN que quiere editar o -1 para salir: "
                 )
                 bandera = su.volver_atras(ISBN_editar)
-                # pdb.set_trace()
                 if not bandera:
                     validar = su.validacion_enteros(ISBN_editar)
 
