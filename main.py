@@ -6,172 +6,77 @@ import constantes as c
 
 # PROGRAMA PRINCIPAL :
 def main():
-    print(
-        r" ____  _                           _     _                     _         _     _ _     _ _       _                 "
-    )
-    print(
-        r"| __ )(_) ___ _ ____   _____ _ __ (_) __| | ___  ___    __ _  | | __ _  | |__ (_) |__ | (_) ___ | |_ ___  ___ __ _ "
-    )
-    print(
-        r"|  _ \| |/ _ \ '_ \ \ / / _ \ '_ \| |/ _` |/ _ \/ __|  / _` | | |/ _` | | '_ \| | '_ \| | |/ _ \| __/ _ \/ __/ _` |"
-    )
-    print(
-        r"| |_) | |  __/ | | \ V /  __/ | | | | (_| | (_) \__ \ | (_| | | | (_| | | |_) | | |_) | | | (_) | ||  __/ (_| (_| |"
-    )
-    print(
-        r"|____/|_|\___|_| |_|\_/ \___|_| |_|_|\__,_|\___/|___/  \__,_| |_|\__,_| |_.__/|_|_.__/|_|_|\___/ \__\___|\___\__,_|"
-    )
-
-    print("")
+    mu.mostrar_logo()
     us.despenalizar_usuarios()
-    while True:
-        bandera = True
-        print("=== MENÚ PRINCIPAL ===")
-        print("1- Iniciar sesión.")
-        print("2- Registrarse.")
-        entrada = input("Ingrese una opción: ")
-        print("---------------------------------------------------------------")
-        validar_num = su.validacion_enteros(entrada)
 
-        if validar_num not in [1, 2] and validar_num is not None and validar_num != -1:
-            print("Error. Número inválido.")
-            bandera = False
+    continuar = True
+    while continuar:
+        mu.mostrar_menu_principal()
+        opcion_principal = input("Ingrese una opción: ")
+        validar_num = su.validacion_enteros(opcion_principal)
+        su.limpiar_terminal()
 
-        if bandera:
+        if validar_num == 1:  # Iniciar sesión
+            iniciar_sesion_usuario = mu.iniciar_sesion()
+            sesion_valida = iniciar_sesion_usuario in c.tipos_usuario
 
-            # Inicio de sesion
-            if validar_num == 1:
-                print("\n=== INICIO DE SESIÓN ===")
-                nombre_usuario = input("Ingrese nombre de usuario:  ")
-                contrasenia = input("Ingrese la contraseña del usuario: ")
+            while not sesion_valida:
+                print("Usuario o contraseña incorrecta.")
+                iniciar_sesion_usuario = mu.iniciar_sesion()
 
-                iniciar_sesion = us.login_usuario(nombre_usuario, contrasenia)
-                su.limpiar_terminal()
+                if su.volver_atras(iniciar_sesion_usuario):
+                    sesion_valida = True
+                    iniciar_sesion_usuario = None
+                else:
+                    sesion_valida = iniciar_sesion_usuario in c.tipos_usuario
 
-            # Ingresar al sistema creando un nuevo usuario
-            elif validar_num == 2:
-                validar_usuario = None
-                salir = False
-                while validar_usuario not in [1, 2] and not salir:
-                    su.limpiar_terminal()
-                    print("=== REGISTRO DE USUARIO ===")
-                    print("1- Bibliotecario.")
-                    print("2- Cliente.")
-                    usuario = input("Ingrese una opción correcta o -1 para salir: ")
-                    print(
-                        "---------------------------------------------------------------"
-                    )
-                    if su.volver_atras(usuario):
-                        bandera = False
-                        salir = True
-                    validar_usuario = su.validacion_enteros(usuario)
+            if iniciar_sesion_usuario == c.cliente:
+                mu.menu_cliente(iniciar_sesion_usuario)
+            elif iniciar_sesion_usuario == c.bibliotecario:
+                mu.menu_bibliotecario()
 
-                    if (
-                        validar_usuario not in [1, 2]
-                        and validar_usuario is not None
-                        and validar_usuario != -1
-                        and bandera
-                    ):
-                        print("Error. Número inválido.")
-                        bandera = False
+        elif validar_num == 2:
+            registro_valido = False
+            while not registro_valido:
+                opcion_registro = mu.mostrar_menu_registro()
+                tipo_usuario = su.validacion_enteros(opcion_registro)
 
-                if bandera:
-
-                    if validar_usuario == c.bibliotecario:
+                if su.volver_atras(opcion_registro):
+                    registro_valido = True
+                else:
+                    if tipo_usuario == c.bibliotecario:
                         print("\n=== VERIFICACIÓN DE ACCESO ===")
                         contrasenia_general = input("Ingrese el código de acceso: ")
+                        acceso_valido = contrasenia_general == c.contrasenia_general
 
-                        salir = False
-                        while (
-                            contrasenia_general != c.contrasenia_general and not salir
-                        ):
+                        while not acceso_valido:
                             contrasenia_general = input(
-                                "Error: Ingresa el código de acceso correcto o -1 para salir: "
+                                "Error: Ingrese el código correcto o -1 para salir: "
                             )
                             if su.volver_atras(contrasenia_general):
-                                salir = True
-                                bandera = False
-
-                    if bandera:
-                        registrar = False
-                        while registrar is False:
-                            print("\n=== CREACIÓN DE CUENTA ===")
-                            nombre_usuario = input("Ingrese un nombre de usuario : ")
-                            contrasenia = input("Ingrese la contraseña del usuario: ")
-                            verificar_contrasenia = input(
-                                "Volvé a ingresar la contraseña : "
-                            )
-
-                            cumple_requisito = us.validar_contrasenia(contrasenia)
-                            salir = False
-                            while (
-                                (
-                                    (contrasenia != verificar_contrasenia)
-                                    or not cumple_requisito
+                                acceso_valido = True
+                                tipo_usuario = None
+                            else:
+                                acceso_valido = (
+                                    contrasenia_general == c.contrasenia_general
                                 )
-                                and not salir
-                                and bandera
-                            ):
 
-                                if contrasenia != verificar_contrasenia:
-                                    print("Error. Las contraseñas no coinciden")
-                                else:
-                                    print("Tu contraseña es debil.")
-                                    print(
-                                        "Tu contraseña debe contar con entre 8 y 15 caracteres y contener al menos un número, una letra minuscula, una letra mayuscula y un simbolo"
-                                    )
-                                contrasenia = input(
-                                    "Ingrese la contraseña del usuario o -1 para salir: "
-                                )
-                                if su.volver_atras(contrasenia):
-                                    bandera = False
-                                    salir = True
-                                    registrar = True
+                        if acceso_valido and tipo_usuario is not None:
+                            nombre_usuario = mu.registro_usuario(tipo_usuario)
+                            registro_valido = nombre_usuario is not None
+                            if registro_valido:
+                                mu.menu_bibliotecario()
 
-                                else:
-                                    verificar_contrasenia = input(
-                                        "Volvé a ingresar la contraseña : "
-                                    )
-                                    cumple_requisito = us.validar_contrasenia(
-                                        contrasenia
-                                    )
+                    elif tipo_usuario == c.cliente:
+                        nombre_usuario = mu.registro_usuario(tipo_usuario)
+                        registro_valido = nombre_usuario is not None
+                        if registro_valido:
+                            mu.menu_cliente(nombre_usuario)
 
-                            if bandera:
-                                registrar = us.registrar_usuario(
-                                    usuario, nombre_usuario, contrasenia
-                                )
-                                if registrar is False:
-                                    print(
-                                        "El usuario ingresado ya existe. Volver a intentar: "
-                                    )
-                    if bandera:
-                        su.limpiar_terminal()
-                        print("Usuario registrado correctamente !")
-                        iniciar_sesion = us.login_usuario(nombre_usuario, contrasenia)
-
-            else:
-                bandera = False
-
-            if bandera:
-                while iniciar_sesion not in c.tipos_usuario and bandera:
-                    print("Su usuario o contrasenia es incorrecta")
-                    nombre_usuario = input(
-                        "Ingrese nombre de usuario o -1 para salir: "
-                    )
-                    if su.volver_atras(nombre_usuario):
-                        bandera = False
-                        salir = True
                     else:
-                        contrasenia = input("Ingrese la contrasena del usuario: ")
-                        iniciar_sesion = us.login_usuario(nombre_usuario, contrasenia)
-
-                # SI EL USUARIO QUE INICIA SEsIÓN ES EL CLIENTE
-                if bandera:
-                    if iniciar_sesion == c.cliente:
-                        mu.menu_cliente(nombre_usuario)
-                    # SI EL USUARIO QUE INICIA SESIÓN ES EL BIBLIOTECARIO
-                    elif iniciar_sesion == c.bibliotecario:
-                        mu.menu_bibliotecario()
+                        print("Error. Número inválido.")
+        else:
+            print("Error. Número inválido.")
 
 
 main()

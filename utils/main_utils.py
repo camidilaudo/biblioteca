@@ -335,3 +335,66 @@ def menu_bibliotecario():
 
         else:
             print("¡Muchas gracias por visitar nuestra biblioteca!")
+
+
+def mostrar_logo():
+    logo = [
+        r" ____  _                           _     _                     _         _     _ _     _ _       _                 ",
+        r"| __ )(_) ___ _ ____   _____ _ __ (_) __| | ___  ___    __ _  | | __ _  | |__ (_) |__ | (_) ___ | |_ ___  ___ __ _ ",
+        r"|  _ \| |/ _ \ '_ \ \ / / _ \ '_ \| |/ _` |/ _ \/ __|  / _` | | |/ _` | | '_ \| | '_ \| | |/ _ \| __/ _ \/ __/ _` |",
+        r"| |_) | |  __/ | | \ V /  __/ | | | | (_| | (_) \__ \ | (_| | | | (_| | | |_) | | |_) | | | (_) | ||  __/ (_| (_| |",
+        r"|____/|_|\___|_| |_|\_/ \___|_| |_|_|\__,_|\___/|___/  \__,_| |_|\__,_| |_.__/|_|_.__/|_|_|\___/ \__\___|\___\__,_|",
+    ]
+    print("\n".join(logo))
+
+
+def mostrar_menu_principal():
+    print("=== MENÚ PRINCIPAL ===")
+    print("1- Iniciar sesión.")
+    print("2- Registrarse.")
+
+
+def mostrar_menu_registro():
+    print("=== REGISTRO DE USUARIO ===")
+    print("1- Bibliotecario.")
+    print("2- Cliente.")
+    return input("Ingrese una opción correcta o -1 para salir: ")
+
+
+def iniciar_sesion():
+    print("\n=== INICIO DE SESIÓN ===")
+    nombre_usuario = input("Ingrese nombre de usuario:  ")
+    contrasenia = input("Ingrese la contraseña del usuario: ")
+    return us.login_usuario(nombre_usuario, contrasenia)
+
+
+def registro_usuario(tipo_usuario):
+    print("\n=== CREACIÓN DE CUENTA ===")
+    nombre_usuario = input("Ingrese un nombre de usuario : ")
+    contrasenia = input("Ingrese la contraseña del usuario: ")
+    verificar_contrasenia = input("Volvé a ingresar la contraseña : ")
+    cumple_requisito = us.validar_contrasenia(contrasenia)
+
+    while contrasenia != verificar_contrasenia or not cumple_requisito:
+        if contrasenia != verificar_contrasenia:
+            print("Error. Las contraseñas no coinciden")
+        else:
+            print("Tu contraseña es débil.")
+            print(
+                "Debe tener entre 8 y 15 caracteres, y al menos un número, una letra minúscula, una letra mayúscula y un símbolo"
+            )
+
+        contrasenia = input("Ingrese la contraseña del usuario o -1 para salir: ")
+        if su.volver_atras(contrasenia):
+            return False
+
+        verificar_contrasenia = input("Volvé a ingresar la contraseña : ")
+        cumple_requisito = us.validar_contrasenia(contrasenia)
+
+    if us.registrar_usuario(tipo_usuario, nombre_usuario, contrasenia):
+        su.limpiar_terminal()
+        print("Usuario registrado correctamente !")
+        return nombre_usuario
+    else:
+        print("El usuario ingresado ya existe.")
+        return None
