@@ -1,6 +1,10 @@
+import json
+import pdb
 import re
-from data_store import users_data as ud
-from data_store import books_data as bd
+import csv
+from datetime import timedelta, datetime
+from utils import system_utils as su
+from utils.book_utils import editar_libros, obtener_libro
 
 
 def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
@@ -13,19 +17,26 @@ def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
     usuario_registrado = True
 
     # Verifica si el nombre de usuario ya existe
+    with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
+        dic_usuarios = dict(json.load(file))
 
-    for usuario in ud.usuarios:
-        if nombre == usuario["nombre"]:
-            usuario_registrado = False
-    # Agrega el tipo de usuario, nombre y contraseña a la matriz con los usuarios
+    with open("./data_store/users_data.json", "w", encoding="utf-8") as file:
+        for usuario in dic_usuarios:
+            if nombre == dic_usuarios[usuario]["nombre"]:
+                usuario_registrado = False
+        # Agrega el tipo de usuario, nombre y contraseña a la matriz con los usuarios
 
-    if usuario_registrado:
-        nuevo_usuario = {
-            "tipo_usuario": int(tipo_usuario),
-            "nombre": nombre,
-            "contrasenia": contrasenia_usuario,
-        }
-        ud.usuarios.append(nuevo_usuario)
+        if usuario_registrado:
+            nuevo_usuario = {
+                "tipo_usuario": int(tipo_usuario),
+                "nombre": nombre,
+                "contrasenia": contrasenia_usuario,
+                "esta_penalizado": False,
+                "fecha_despenalizacion": None,
+            }
+            indice = len(dic_usuarios) + 1
+            dic_usuarios.update({str(indice): nuevo_usuario})
+        json.dump(dic_usuarios, file, indent=4)
     return usuario_registrado
 
 
@@ -36,90 +47,136 @@ def login_usuario(nombre_usuario, contrasenia):
     :param usuario: Str, nombre de usuario del cliente.
     :return:Str, contraseña del usuario.
     """
-    dic_usuarios = ud.usuarios
-    tipo_usuario = -1
-    for usuario in dic_usuarios:
-        if nombre_usuario == usuario["nombre"]:
-            if contrasenia == usuario["contrasenia"]:
-                tipo_usuario = usuario["tipo_usuario"]
+    with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
+        dic_usuarios = dict(json.load(file))
+        tipo_usuario = -1
+        for usuario in dic_usuarios:
+            if nombre_usuario == dic_usuarios[usuario]["nombre"]:
+                if contrasenia == dic_usuarios[usuario]["contrasenia"]:
+                    tipo_usuario = dic_usuarios[usuario]["tipo_usuario"]
     return tipo_usuario
 
 
-def agregar_libro_historial(nombre_usuario, isbn, fecha):
+def agregar_libro_historial(nombre_usuario, isbn):
     """Agrega el ISBN de un libro al historial del cliente.
     :param nombre_usuario: Str, username del usuario que retiro el libro.
     :param isbn: Int, código ISBN del libro que retiro.
     :param Str, fecha en que se alquiló el libro.
     :return historiales: Matrix, historial de todos los usuarios."""
     existe_usuario = False
-    indice_historial = -1
 
-    for i, historial in enumerate(ud.historiales):
-        if historial[0] == nombre_usuario:
+    with open(
+        "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
+    ) as file:
+        dict_historial = dict(json.load(file))
+    for usuario in dict_historial:
+        if usuario == nombre_usuario:
             existe_usuario = True
-            indice_historial = i
-
     if existe_usuario is True:
-        ud.historiales[indice_historial][1].append((isbn, fecha))
+        nuevo_libro = {
+            "isbn": isbn,
+            "fecha_prestamo": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "fecha_devolucion": None,
+        }
+        dict_historial[nombre_usuario].append(nuevo_libro)
     else:
-        ud.historiales.append([nombre_usuario, [(isbn, fecha)]])
-    return ud.historiales
+        nuevo_historial = {
+            f"{nombre_usuario}": [
+                {
+                    "isbn": isbn,
+                    "fecha_prestamo": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    "fecha_devolucion": None,
+                }
+            ]
+        }
 
-def agregar_penalizados(nombre_usuario, isbn):
+        dict_historial.update(nuevo_historial)
+    with open(
+        "./data_store/withdrawn_books_per_user.json", "w", encoding="utf-8"
+    ) as file:
+        json.dump(dict_historial, file, indent=4)
+
+    return dict_historial
+
+
+def agregar_penalizados(nombre_usuario):
     """Agrega el ISBN de un libro al historial del cliente penalizado.
     :param nombre_usuario: Str, username del usuario que retiro el libro.
     :param isbn: Int, código ISBN del libro que retiro.
     :param Str, fecha en que se alquiló el libro.
     :return historiales: Matrix, historial de todos los usuarios."""
-    existe_usuario = False
-    indice_historial = -1
-    va = ""
 
-    for i, historial in enumerate(ud.penalizados):
-        if historial[0] == nombre_usuario:
-            existe_usuario = True
-            indice_historial = i
+    with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
+        dic_usuarios = dict(json.load(file))
 
-    if existe_usuario is True:
-        ud.penalizados[indice_historial][1].append((isbn))
-    else:
-        ud.penalizados.append([nombre_usuario, [(isbn)]])
-    return ud.penalizados
+    with open("./data_store/users_data.json", "w", encoding="utf-8") as file:
+        for user in dic_usuarios:
+            if dic_usuarios[user]["nombre"] == nombre_usuario:
+                user_id = user
+                dic_usuarios[user_id]["esta_penalizado"] = True
+                dic_usuarios[user_id]["fecha_despenalizacion"] = (
+                    su.fecha_actual + timedelta(days=7)
+                ).strftime("%Y-%m-%d %H:%M:%S")
 
-def agregar_alquilados (isbn, cant_pedidos):
+        json.dump(dic_usuarios, file, indent=4)
+    return dic_usuarios
 
+
+def agregar_alquilados(isbn, cant_pedidos):
     """Agrega el ISBN de un libro a la lista de libros alquilados
     :param isbn: Int, código ISBN del libro que retiro.
     :param cant_pedidos, int,  cuantos libros quiere alquilar.
     :return alquilados: diccionario, historial de todos los libros alquilados."""
 
-    libros_totales = bd.libros
-    libros_alquilados = ud.alquilados
     existe_libro = False
 
-    for existente in libros_totales:
-        if existente ["isbn"]== isbn:
-            existe_libro = True
+    # Actualizo el historial de alquilaos
+    with open("./data_store/withdrawn_books.csv", "r", encoding="utf-8") as file:
+        historial_alquilados = list(csv.reader(file))
+        for i in range(len(historial_alquilados)):
+            if historial_alquilados[i][0] == str(isbn):
+                existe_libro = True
+                indice = i
+        if existe_libro:
+            historial_cant_libro = int(historial_alquilados[indice][1])
+            historial_cant_libro += cant_pedidos
+            pdb.set_trace()
+            historial_alquilados[indice][1] = historial_cant_libro
         else:
-            return existe_libro
+            historial_alquilados.append([isbn, cant_pedidos])
 
+    with open(
+        "./data_store/withdrawn_books.csv", "w", encoding="utf-8", newline=""
+    ) as file:
+        writer = csv.writer(file)
+        writer.writerows(historial_alquilados)
 
-    if existe_libro: 
-        for libro in libros_alquilados:
-            if libro == isbn:
-                libros_alquilados [libro] = libros_alquilados [libro] + cant_pedidos
-            else:
-                libros_alquilados [isbn] = cant_pedidos
-        return libros_alquilados
+        _, libro = obtener_libro(isbn=isbn)
+        # Actualizo la biblioteca
+        ejemplares_disponibles = libro["ejemplares_disponibles"] - cant_pedidos
+        ejemplares_alquilados = libro["ejemplares_alquilados"] + cant_pedidos
+        editar_libros(isbn=isbn, indice=9, valor=ejemplares_disponibles)
+        editar_libros(isbn=isbn, indice=10, valor=ejemplares_alquilados)
+        if ejemplares_disponibles == 0:
+            editar_libros(isbn=isbn, indice=8, valor=False)
 
+    # Creo el diccionario de libros alquilados y los devuelvo
+    rows = historial_alquilados[1:]
+    libros_alquilados = {row[0]: int(row[1]) for row in rows}
 
+    return libros_alquilados
 
 
 def ver_propio_historial(usuario):
     """Funcion encargada de mostrar el historial de retiros del usuario.
     :param usuario: Str, nombre del usuario.
     :return historial_nombres: titulos del historial de retiros del usuario."""
-    historial_general = ud.historiales
+    with open(
+        "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
+    ) as file:
+        historial_general = dict(json.load(file))
+    with open("./data_store/books_data.json", "r", encoding="utf-8") as file_biblio:
+        biblioteca = dict(json.load(file_biblio))
     historial_nombres = []
     i = 0
 
@@ -128,9 +185,9 @@ def ver_propio_historial(usuario):
 
     if i < len(historial_general):
         for isbn in historial_general[i][1]:
-            for libro in bd.libros:
-                if isbn == libro["isbn"]:
-                    historial_nombres.append(libro["titulo"])
+            for libro in biblioteca:
+                if isbn == biblioteca[libro]["isbn"]:
+                    historial_nombres.append(biblioteca[libro]["titulo"])
         return historial_nombres
 
 
@@ -143,14 +200,43 @@ def validar_contrasenia(contrasenia):
     - Que el largo de la cadena sea entre 8 o 15 caracteres.
     :param contrasenia: str, contraseña creada por el usuario.
     :return match: bool, si la contraseña cumple con el patron o no."""
-    patron = r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.]).{8,15}$"
+    patron = r"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=.!]).{8,15}$"
     match = bool(re.match(patron, contrasenia))
     return match
 
 
 def validar_usuario(nombre_usuario):
+    with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
+        dict_usuarios = dict(json.load(file))
     validar = False
-    for usuario in ud.usuarios:
-        if usuario['nombre'] == nombre_usuario and usuario['tipo_usuario'] == 2:
+    for usuario in dict_usuarios.values():
+        if usuario["nombre"] == nombre_usuario and usuario["tipo_usuario"] == 2:
             validar = True
     return validar
+
+
+def usuario_penalizado(nombre_usuario):
+    with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
+        dict_usuarios = dict(json.load(file))
+        for usuario in dict_usuarios.values():
+            if usuario["nombre"] == nombre_usuario:
+                estado = usuario["esta_penalizado"]
+
+    return estado
+
+
+def despenalizar_usuarios():
+    with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
+        dict_usuarios = dict(json.load(file))
+        for usuario in dict_usuarios:
+            if dict_usuarios[usuario]["esta_penalizado"] is True:
+                fecha_despenalizacion = datetime.strptime(
+                    dict_usuarios[usuario]["fecha_despenalizacion"], "%Y-%m-%d %H:%M:%S"
+                )
+                fecha_hoy = datetime.now()
+                if (fecha_despenalizacion - fecha_hoy).days <= 0:
+                    dict_usuarios[usuario]["esta_penalizado"] = False
+
+    with open("./data_store/users_data.json", "w", encoding="utf-8") as file:
+        json.dump(dict_usuarios, file, indent=4)
+

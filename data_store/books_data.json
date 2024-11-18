@@ -10,7 +10,8 @@
         "nro_paginas": 223,
         "cant_ejemplares": 5,
         "disponibilidad": true,
-        "ejemplares_disponibles": 2
+        "ejemplares_disponibles": 5,
+        "ejemplares_alquilados": 0
     },
     "2": {
         "autor": "George R.R. Martin",
@@ -23,7 +24,8 @@
         "nro_paginas": 694,
         "cant_ejemplares": 3,
         "disponibilidad": true,
-        "ejemplares_disponibles": 3
+        "ejemplares_disponibles": 1,
+        "ejemplares_alquilados": 0
     },
     "3": {
         "autor": "Agatha Christie",
@@ -36,7 +38,8 @@
         "nro_paginas": 264,
         "cant_ejemplares": 7,
         "disponibilidad": false,
-        "ejemplares_disponibles": 0
+        "ejemplares_disponibles": 0,
+        "ejemplares_alquilados": 7
     },
     "4": {
         "autor": "Gabriel Garcia Marquez",
@@ -49,7 +52,8 @@
         "nro_paginas": 417,
         "cant_ejemplares": 4,
         "disponibilidad": false,
-        "ejemplares_disponibles": 0
+        "ejemplares_disponibles": 0,
+        "ejemplares_alquilados": 4
     },
     "5": {
         "autor": "Dan Brown",
@@ -62,7 +66,8 @@
         "nro_paginas": 489,
         "cant_ejemplares": 6,
         "disponibilidad": true,
-        "ejemplares_disponibles": 1
+        "ejemplares_disponibles": 1,
+        "ejemplares_alquilados": 5
     },
     "6": {
         "autor": "J.R.R. Tolkien",
@@ -75,7 +80,8 @@
         "nro_paginas": 423,
         "cant_ejemplares": 2,
         "disponibilidad": false,
-        "ejemplares_disponibles": 0
+        "ejemplares_disponibles": 0,
+        "ejemplares_alquilados": 2
     },
     "7": {
         "autor": "Suzanne Collins",
@@ -88,7 +94,8 @@
         "nro_paginas": 374,
         "cant_ejemplares": 8,
         "disponibilidad": true,
-        "ejemplares_disponibles": 7
+        "ejemplares_disponibles": 5,
+        "ejemplares_alquilados": 0
     },
     "8": {
         "autor": "Stephen King",
@@ -101,7 +108,8 @@
         "nro_paginas": 1138,
         "cant_ejemplares": 5,
         "disponibilidad": false,
-        "ejemplares_disponibles": 0
+        "ejemplares_disponibles": 0,
+        "ejemplares_alquilados": 5
     },
     "9": {
         "autor": "Isaac Asimov",
@@ -114,7 +122,8 @@
         "nro_paginas": 255,
         "cant_ejemplares": 4,
         "disponibilidad": true,
-        "ejemplares_disponibles": 4
+        "ejemplares_disponibles": 5,
+        "ejemplares_alquilados": -1
     },
     "10": {
         "autor": "Haruki Murakami",
@@ -127,7 +136,8 @@
         "nro_paginas": 298,
         "cant_ejemplares": 3,
         "disponibilidad": false,
-        "ejemplares_disponibles": 0
+        "ejemplares_disponibles": 0,
+        "ejemplares_alquilados": 3
     },
     "11": {
         "autor": "Mary Shelley",
@@ -140,7 +150,8 @@
         "nro_paginas": 280,
         "cant_ejemplares": 6,
         "disponibilidad": true,
-        "ejemplares_disponibles": 4
+        "ejemplares_disponibles": 4,
+        "ejemplares_alquilados": 2
     },
     "12": {
         "autor": "F. Scott Fitzgerald",
@@ -153,7 +164,8 @@
         "nro_paginas": 180,
         "cant_ejemplares": 5,
         "disponibilidad": true,
-        "ejemplares_disponibles": 3
+        "ejemplares_disponibles": 3,
+        "ejemplares_alquilados": 2
     },
     "13": {
         "autor": "Jane Austen",
@@ -166,7 +178,8 @@
         "nro_paginas": 279,
         "cant_ejemplares": 7,
         "disponibilidad": true,
-        "ejemplares_disponibles": 7
+        "ejemplares_disponibles": 7,
+        "ejemplares_alquilados": 0
     },
     "14": {
         "autor": "Aldous Huxley",
@@ -179,7 +192,8 @@
         "nro_paginas": 259,
         "cant_ejemplares": 4,
         "disponibilidad": false,
-        "ejemplares_disponibles": 0
+        "ejemplares_disponibles": 0,
+        "ejemplares_alquilados": 4
     },
     "15": {
         "autor": "Leo Tolstoy",
@@ -192,7 +206,8 @@
         "nro_paginas": 1225,
         "cant_ejemplares": 3,
         "disponibilidad": true,
-        "ejemplares_disponibles": 2
+        "ejemplares_disponibles": 2,
+        "ejemplares_alquilados": 1
     },
     "16": {
         "autor": "Mark Twain",
@@ -201,23 +216,11 @@
         "isbn": 9780486400778,
         "editorial": "Dover Publications",
         "anio_publicacion": 1876,
-        "serie": "Tom Sawyer",
-        "nro_paginas": 224,
+        "serie": "N/A",
+        "nro_paginas": 212,
         "cant_ejemplares": 4,
         "disponibilidad": true,
-        "ejemplares_disponibles": 4
-    },
-    "17": {
-        "autor": "Homer",
-        "titulo": "La Iliada",
-        "genero": "Epico",
-        "isbn": 9780140275360,
-        "editorial": "Penguin Books",
-        "anio_publicacion": -800,
-        "serie": "N/A",
-        "nro_paginas": 704,
-        "cant_ejemplares": 2,
-        "disponibilidad": true,
-        "ejemplares_disponibles": 2
+        "ejemplares_disponibles": 1,
+        "ejemplares_alquilados": 1
     }
 }

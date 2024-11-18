@@ -1,0 +1,66 @@
+{
+    "cami": [
+        {
+            "isbn": 9780747532743,
+            "fecha_prestamo": "2024-10-23 12:45:32",
+            "fecha_devolucion": "2024-11-17, 17:45:16"
+        },
+        {
+            "isbn": 9780553573404,
+            "fecha_prestamo": "2024-10-23 12:50:00",
+            "fecha_devolucion": "2024-10-24 12:45:32"
+        },
+        {
+            "isbn": 9780439023528,
+            "fecha_prestamo": "2024-11-17 21:29:19",
+            "fecha_devolucion": "2024-11-17 22:10:03"
+        },
+        {
+            "isbn": 9780553573404,
+            "fecha_prestamo": "2024-11-17 22:21:33",
+            "fecha_devolucion": null
+        },
+        {
+            "isbn": 9780553573404,
+            "fecha_prestamo": "2024-11-17 22:22:41",
+            "fecha_devolucion": null
+        },
+        {
+            "isbn": 9780553573404,
+            "fecha_prestamo": "2024-11-17 22:25:49",
+            "fecha_devolucion": null
+        },
+        {
+            "isbn": 9780553573404,
+            "fecha_prestamo": "2024-11-17 22:27:15",
+            "fecha_devolucion": null
+        },
+        {
+            "isbn": 9780553573404,
+            "fecha_prestamo": "2024-11-17 22:30:06",
+            "fecha_devolucion": null
+        }
+    ],
+    "dani": [
+        {
+            "isbn": 9780007136834,
+            "fecha_prestamo": "2024-10-23 13:05:12",
+            "fecha_devolucion": "2024-10-24 12:45:32"
+        },
+        {
+            "isbn": 9780307474278,
+            "fecha_prestamo": "2024-10-23 13:10:45",
+            "fecha_devolucion": "2024-10-24 12:45:32"
+        },
+        {
+            "isbn": 9780439023528,
+            "fecha_prestamo": "2024-11-17 21:25:06",
+            "fecha_devolucion": "2024-11-17 22:12:19"
+        },
+        {
+            "isbn": 9780439023528,
+            "fecha_prestamo": "2024-11-17 21:26:31",
+            "fecha_devolucion": "2024-11-17 22:12:19"
+        }
+    ]
+}

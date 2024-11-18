@@ -1,16 +1,21 @@
 import pdb
-from data_store import users_data as ud
-from data_store import books_data as bd
+
 from utils import users_utils as uu
 from utils import system_utils as su
-import utils.book_utils as bu
 import constantes as c
 import random
 import json
 
-stock_json = lambda isbn: True if [libro for libro in json.load(open("libros.json")) if libro["isbn"] == isbn] else False
+stock_json = lambda isbn: (
+    True
+    if [
+        libro
+        for libro in dict(json.load(open("./data_store/books_data.json"))).values()
+        if libro["isbn"] == isbn
+    ]
+    else False
+)
 
-stock_bd = lambda isbn: True if [libro for libro in bd.libros if libro["isbn"] == isbn] else False
 
 def busqueda_libros(clave, valor):
     """Búsqueda de libros segun: título, autor, género, ISBN, editorial, año de publicación, serie.
@@ -20,7 +25,7 @@ def busqueda_libros(clave, valor):
     """
 
     libros = []
-    with open('./data_store/books_data.json', 'r', encoding='utf-8') as file:
+    with open("./data_store/books_data.json", "r", encoding="utf-8") as file:
         biblioteca = dict(json.load(file))
 
         for libro in biblioteca:
@@ -30,16 +35,17 @@ def busqueda_libros(clave, valor):
 
     return libros
 
+
 def cargar_libros(
-        titulo,
-        autor,
-        genero,
-        isbn,
-        editorial,
-        anio_publicacion,
-        serie_libros,
-        nro_paginas,
-        cant_ejemplares,
+    titulo,
+    autor,
+    genero,
+    isbn,
+    editorial,
+    anio_publicacion,
+    serie_libros,
+    nro_paginas,
+    cant_ejemplares,
 ):
     """Cargar libro en stock de biblioteca. Se pueden cargar varios ejemplares del mismo.
     :param titulo: Str, título del libro.
@@ -56,12 +62,13 @@ def cargar_libros(
     # chequear si el libro ya existe en la biblioteca
     libro_en_stock = stock_json(isbn=isbn)
 
-    with open('./data_store/books_data.json', 'r+', encoding='utf-8') as file:
+    with open("./data_store/books_data.json", "r", encoding="utf-8") as file:
         biblioteca = dict(json.load(file))
-        if libro_en_stock:
-            libro = obtener_libro(isbn)
-            libro["cant_ejemplares"] += cant_ejemplares
-            libro["ejemplares_disponibles"] += cant_ejemplares
+
+        if libro_en_stock is True:
+            clave_libro, _ = obtener_libro(isbn=isbn)
+            biblioteca[clave_libro]["cant_ejemplares"] += cant_ejemplares
+            biblioteca[clave_libro]["ejemplares_disponibles"] += cant_ejemplares
         else:
 
             nuevo_libro = {
@@ -77,26 +84,27 @@ def cargar_libros(
                 "disponibilidad": True,
                 "ejemplares_disponibles": cant_ejemplares,
             }
-            bd.libros.append(nuevo_libro)
+            indice = len(biblioteca) + 1
+            biblioteca.update({str(indice): nuevo_libro})
 
-    return bd.libros
+    with open("./data_store/books_data.json", "w", encoding="utf-8") as file:
+        json.dump(biblioteca, file, indent=4)
+
+    return biblioteca
 
 
-def obtener_libro(ISBN):
+def obtener_libro(isbn):
     """Obtener un libro y su detalle según su ISBN.
-    :param ISBN: Str. El número ISBN del libro que se desea obtener.
+    :param isbn: Str. El número ISBN del libro que se desea obtener.
     :return: El libro correspondiente al ISBN si se encuentra, o None si no se encuentra o si ocurre un error.
     """
     try:
         # Abrir el archivo en modo lectura
-        with open('./data_store/books_data.json', 'r', encoding='utf-8') as file:
+        with open("./data_store/books_data.json", "r", encoding="utf-8") as file:
             data = json.load(file)
-      
-        if isinstance(data, list):
-            # Buscar el libro por ISBN
             for libro in data:
-                if libro["isbn"] == ISBN:
-                    return libro
+                if data[libro]["isbn"] == isbn:
+                    return libro, data[libro]
 
     except FileNotFoundError:
         print("El archivo 'books_data.json' no existe.")
@@ -107,10 +115,9 @@ def obtener_libro(ISBN):
         return None
 
 
-
-def editar_libros(ISBN, indice, valor):
+def editar_libros(isbn, indice, valor):
     """Edita los metadatos de un libro según el campo y su nuevo valor.
-    :param ISBN: Str. El número ISBN del libro que se quiere editar.
+    :param isbn: Str. El número ISBN del libro que se quiere editar.
     :param indice: Int. El índice en la lista 'c.valor_bd' que indica qué campo se desea modificar.
     :param valor: Str. El nuevo valor que se asignará al campo especificado. Si el campo requiere un número,
                   se intentará convertir a entero.
@@ -120,20 +127,24 @@ def editar_libros(ISBN, indice, valor):
         print("Índice fuera de rango.")
         return None
 
-    if c.valor_bd[indice] in ["cant_ejemplares", "disponibilidad", "ejemplares_disponibles"]:
+    if c.valor_bd[indice] in [
+        "cant_ejemplares",
+        "disponibilidad",
+        "ejemplares_disponibles",
+    ]:
         try:
             valor = int(valor)
         except ValueError:
             print(f"El valor para {c.valor_bd[indice]} debe ser un número entero.")
             return None
 
-    with open('./data_store/books_data.json', 'r+', encoding='utf-8') as file:
+    with open("./data_store/books_data.json", "r+", encoding="utf-8") as file:
         data = json.load(file)
 
         libro_editado = None
 
         for libro_id, libro in data.items():
-            if libro["isbn"] == int(ISBN):
+            if libro["isbn"] == int(isbn):
                 print(f"Libro antes de la edición: {libro[c.valor_bd[indice]]}")
 
                 libro[c.valor_bd[indice]] = valor
@@ -153,126 +164,138 @@ def editar_libros(ISBN, indice, valor):
 
 
 def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
-    """Altera 2 historales
-     1) El de libros alquilados. Se fija que esté en la lista. Si no lo encuentra agrega el ISBN y la cantidad. 
+    """Altera 2 historiales
+     1) El de libros alquilados. Se fija que esté en la lista. Si no lo encuentra agrega el ISBN y la cantidad.
       Si lo encuentra, solo modifica la cantidad,
      2) El de usuario. En caso de que no lo haya leido antes, lo agrega a su historial
      Luego cambia el estado de un libro segun la cantidad de pedidos que tiene.
     :param isbn: Str, titulo del libro a pedir."""
 
-    with open('./data_store/books_data.json', 'r+', encoding='utf-8') as file:
-
-        libro = obtener_libro(ISBN=isbn)
-
-        status_libro = libro["disponibilidad"]
-        ejemplares_disponibles = libro["ejemplares_disponibles"]
-
+    with open("./data_store/books_data.json", "r", encoding="utf-8") as file:
+        biblioteca = dict(json.load(file))
+        libro, _ = obtener_libro(isbn=isbn)
         if libro is None:
             ejemplares_disponibles = -1
             status_libro = False
 
-        #modificar_alquilar_libro
-        if (status_libro) and (ejemplares_disponibles > cant_pedidos):
-            ejemplares_disponibles = libro["ejemplares_disponibles"] - cant_pedidos
+        else:
+            status_libro = biblioteca[libro]["disponibilidad"]
+            ejemplares_disponibles = biblioteca[libro]["ejemplares_disponibles"]
 
-            fecha_hoy = su.fecha_actual
-            uu.agregar_libro_historial(nombre_usuario, isbn, fecha_hoy)
-            uu.agregar_alquilados(isbn, cant_pedidos)
-            if isbn in ud.alquilados:
-                ud.alquilados[isbn] += cant_pedidos
-            else:
-                ud.alquilados[isbn] = cant_pedidos
+            # modificar_alquilar_libro
+            if status_libro and (ejemplares_disponibles >= cant_pedidos):
+                uu.agregar_libro_historial(nombre_usuario, isbn)
+                uu.agregar_alquilados(isbn, cant_pedidos)
 
-        elif status_libro and ejemplares_disponibles == cant_pedidos:
-            libro["ejemplares_disponibles"] = 0
-            libro["disponibilidad"] = True
-
-            fecha_hoy = su.fecha_actual
-            uu.agregar_libro_historial(nombre_usuario, isbn, fecha_hoy)
-            uu.agregar_alquilados(isbn, cant_pedidos)
-
-        elif status_libro and ejemplares_disponibles < cant_pedidos:
-            ejemplares_disponibles = ejemplares_disponibles
-            status_libro = False
+            elif status_libro and ejemplares_disponibles < cant_pedidos:
+                ejemplares_disponibles = ejemplares_disponibles
+                status_libro = False
 
         return [status_libro, ejemplares_disponibles]
 
 
-def devolver_libro(ISBN, nombre):
+def devolver_libro(isbn, nombre):
     """Verifica si el libro fue alquilado anteriormente por el usuario.
-    :param ISBN: Int, codigo ISBN del libro que se quiere eliminar de la biblioteca.
+    :param isbn: Int, codigo ISBN del libro que se quiere eliminar de la biblioteca.
     :param nombre: Str, nombre del usuario que quiere devolver el libro
     :return: Bool, False si el ISBN no se encuentra en el historial de libros alquilados,
     True si se devuelve correctamente el libro.
     """
-    with open('./data_store/books_data.json', 'r+', encoding='utf-8') as file:
+    with open(
+        "./data_store/books_data.json", "r", encoding="utf-8"
+    ) as file_biblio, open(
+        "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
+    ) as file_historiales:
+        biblioteca = dict(json.load(file_biblio))
+        historiales = dict(json.load(file_historiales))
         devolucion = False
+        book_id, _ = obtener_libro(isbn)
+        if book_id:
+            biblioteca[book_id]["disponibilidad"] = True
+            biblioteca[book_id]["ejemplares_disponibles"] += 1
+            biblioteca[book_id]["ejemplares_alquilados"] -= 1
 
-        if ISBN in ud.alquilados:
-            copias = ud.alquilados[ISBN]
-
-            libro = obtener_libro(ISBN)
-            if libro:
-                libro["disponibilidad"] = True
-                libro["ejemplares_disponibles"] += 1
-
-                copias -= 1
-                if copias == 0:
-                    del ud.alquilados[ISBN]
-                else:
-                    ud.alquilados[ISBN] = copias
-
-                fecha_hoy = su.fecha_actual()
-
-                for historial in ud.historiales:
-                    if historial[0] == nombre:
-                        historial[2].append((ISBN, fecha_hoy))
-                        penalizaciones = lambda fsalida, fregreso: (historial[2] - historial[1]).days <= 7
+            fecha_hoy = su.fecha_actual()
+        for usuario in historiales:
+            if usuario == nombre:
+                for i in range(len(historiales[usuario])):
+                    if historiales[usuario][i]["isbn"] == isbn:
+                        historiales[usuario][i]["fecha_devolucion"] = (
+                            fecha_hoy.strftime("%Y-%m-%d %H:%M:%S")
+                        )
+                        penalizaciones = (
+                            lambda fsalida, fregreso: (
+                                historiales[usuario][i]["fecha_devolucion"]
+                                - historiales[usuario][i]["fecha_prestamo"]
+                            ).days
+                            <= 7
+                        )
                         if not penalizaciones:
-                            uu.agregar_penalizados(nombre, ISBN)
-                devolucion = True
+                            uu.agregar_penalizados(nombre)
+                            devolucion = True
 
+        with open(
+            "./data_store/books_data.json", "w", encoding="utf-8"
+        ) as file_biblio, open(
+            "./data_store/withdrawn_books_per_user.json", "w", encoding="utf-8"
+        ) as file_historiales:
+            json.dump(biblioteca, file_biblio, indent=4)
+            json.dump(historiales, file_historiales, indent=4)
         return devolucion
 
-    def recomendaciones(genero, usuario):
-        """Devuelve una recomendación segun el genero que pida el usuario. Chequea que no
-        sea un libro que haya leido anteriormente.
-        :param genero: Str, genero del cual el usuario quiere una recomendacion.
-        :param usuario: Str, usuario que pide la recomendacion.
-        :return libro: List, libro recomendado.
-        """
 
-        recomendaciones_por_genero = []
-        historial_preexistente = []
-        aleatorio_libro = None
+def recomendaciones(genero, usuario):
+    """Devuelve una recomendación segun el genero que pida el usuario. Chequea que no
+    sea un libro que haya leido anteriormente.
+    :param genero: Str, genero del cual el usuario quiere una recomendacion.
+    :param usuario: Str, usuario que pide la recomendacion.
+    :return libro: List, libro recomendado.
+    """
 
-        for historial_usuario in ud.historiales:
-            if usuario == historial_usuario[0]:
-                historial_preexistente = historial_usuario[1]
+    with open("./data_store/books_data.json", "r", encoding="utf-8") as file_biblio:
+        biblioteca = dict(json.load(file_biblio))
 
-        for libro in bd.libros:
-            if (libro["genero"].lower() == genero) and (
-                    libro["isbn"] not in historial_preexistente
-            ):
-                recomendaciones_por_genero.append(libro)
+    with open(
+        "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
+    ) as file_historiales:
+        historiales = dict(json.load(file_historiales))
+    recomendaciones_por_genero = []
+    historial_preexistente = []
+    aleatorio_libro = None
 
-        # comparar la lista de recomendaciones_por_genero con el historial recorriendolo con un for.
-        # si alguno de recomendaciones NO esta en el historial lo añado a una nueva lista
-        # el random lo aplico sobre esa lista nueva creada
+    for historial_usuario in historiales:
+        if usuario == historial_usuario:
+            historial_preexistente = historial_usuario[1]
 
-        if len(recomendaciones_por_genero) > 0:
-            aleatorio_libro = random.choice(recomendaciones_por_genero)
+    for id_libro in biblioteca:
+        if (biblioteca[id_libro]["genero"].lower() == genero) and (
+            biblioteca[id_libro]["isbn"] not in historial_preexistente
+        ):
+            recomendaciones_por_genero.append(biblioteca[id_libro]["titulo"])
 
-        return aleatorio_libro
+    # comparar la lista de recomendaciones_por_genero con el historial recorriendolo con un for.
+    # si alguno de recomendaciones NO esta en el historial lo añado a una nueva lista
+    # el random lo aplico sobre esa lista nueva creada
 
-    def borrar_libro(ISBN):
-        """Eliminar libro de la biblioteca.
-        :param ISBN: Int, codigo ISBN del libro que se quiere eliminar de la biblioteca.
-        :return bd.libros: Matrix, biblioteca actualizada."""
-        bandera = False
-        for i, libro in enumerate(bd.libros):
-            if ISBN == libro["isbn"]:
-                del bd.libros[i]
-                bandera = True
+    if len(recomendaciones_por_genero) > 0:
+        aleatorio_libro = random.choice(recomendaciones_por_genero)
 
-        return bandera
+    return aleatorio_libro
+
+
+def borrar_libro(isbn):
+    """Eliminar libro de la biblioteca.
+    :param isbn: Int, codigo ISBN del libro que se quiere eliminar de la biblioteca.
+    :return bd.libros: Matrix, biblioteca actualizada."""
+    bandera = False
+    with open("./data_store/books_data.json", "r", encoding="utf-8") as file_biblio:
+        biblioteca = dict(json.load(file_biblio))
+
+    for i, libro in enumerate(biblioteca):
+        if isbn == libro["isbn"]:
+            del biblioteca[i]
+            bandera = True
+    with open("./data_store/books_data.json", "w", encoding="utf-8") as file_biblio:
+        json.dump(biblioteca, file_biblio, indent=4)
+
+    return bandera
