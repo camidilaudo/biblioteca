@@ -49,9 +49,10 @@ def validacion_enteros(valor):
     while bandera:
         try:
             numero = int(valor)
-            if numero < 0:
-                print("\033[31mError: Debes ingresar un número entero mayor a 0.\033[0m")
-                valor = input("Ingresa un número: ")
+
+            if numero < 0: 
+                print ("No puede ingresar un número negativo")
+                numero = int(input("Ingrese un número positivo: "))
             else:
                 bandera = False
         except ValueError:

@@ -174,7 +174,11 @@ def menu_bibliotecario():
                     input("Ingrese un número para editar o -1 para salir: ")
                 )
                 numero = su.validacion_enteros(pedir_numero)
-
+                while numero is None and numero != -1:
+                    pedir_numero = int(
+                        input("Ingrese un número para editar o -1 para salir: ")
+                    )
+                    numero = su.validacion_enteros(pedir_numero)
                 if numero != -1:
                     pedir_nuevo_valor = input(
                         "Ingrese el nuevo valor para el campo seleccionado: "
