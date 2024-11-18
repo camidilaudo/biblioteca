@@ -100,17 +100,17 @@ def obtener_libro(isbn):
         # Abrir el archivo en modo lectura
         with open("./data_store/books_data.json", "r", encoding="utf-8") as file:
             data = json.load(file)
-            for libro in data:
-                if data[libro]["isbn"] == isbn:
-                    return libro, data[libro]
+
+            for id_libro, detalles in data.items():
+                if str(detalles["isbn"]) == str(isbn):
+                    return id_libro, detalles
 
     except FileNotFoundError:
         print("El archivo 'books_data.json' no existe.")
-        return None
-
     except json.JSONDecodeError:
         print("\033[31mError al leer el archivo JSON. Verifica el formato del archivo.\033[0m")
-        return None
+
+    return None
 
 
 def editar_libros(isbn, indice, valor):
