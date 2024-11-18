@@ -216,7 +216,7 @@
         "isbn": 9780486400778,
         "editorial": "Dover Publications",
         "anio_publicacion": 1876,
-        "serie": "N/A",
+        "serie": "-1",
         "nro_paginas": 212,
         "cant_ejemplares": 4,
         "disponibilidad": true,
@@ -224,16 +224,16 @@
         "ejemplares_alquilados": 1
     },
     "17": {
-        "autor": "-1",
-        "titulo": "l",
-        "genero": "-1",
-        "isbn": 1,
-        "editorial": "1",
-        "anio_publicacion": 1,
-        "serie": "1",
-        "nro_paginas": 1,
-        "cant_ejemplares": 1,
+        "autor": "lala",
+        "titulo": "lala",
+        "genero": "lala",
+        "isbn": 5,
+        "editorial": "lala",
+        "anio_publicacion": 1234,
+        "serie": "lala",
+        "nro_paginas": 6,
+        "cant_ejemplares": 10,
         "disponibilidad": true,
-        "ejemplares_disponibles": 1
+        "ejemplares_disponibles": 10
     }
 }

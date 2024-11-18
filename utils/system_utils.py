@@ -54,16 +54,15 @@ def validacion_enteros(valor):
                 valor = input ("Ingrese un número positivo: ")      
             else:
                 bandera = False
-
         except ValueError:
-            print("\033[31mError: Debes ingresar un número entero.\033[0m")
+            print("\033[31mError: Debes ingresar un número entero mayor a 0.\033[0m")
             valor = input("Ingresa un número: ")
     return numero
 
 
 def validar_constantes(clave):
     """Verifica si el usuario le estan ingresando un valor valido dentro de la lista de contactos
-    :returnTrue o False segun si se le ingreso una respuesta correcta o no
+    :return:True o False segun si se le ingreso una respuesta correcta o no
     """
     validar = False
     texto_normalizado = clave.lower()
