@@ -1,3 +1,5 @@
+import pdb
+
 import utils.print_utils as pu
 import utils.book_utils as bu
 import utils.users_utils as us
@@ -12,11 +14,11 @@ def menu_cliente(nombre_usuario):
         numero = input("Ingresá un número: ")
         print("---------------------------------------------------------------")
         while (
-            numero != "1"
-            and numero != "2"
-            and numero != "3"
-            and numero != "4"
-            and numero != "-1"
+                numero != "1"
+                and numero != "2"
+                and numero != "3"
+                and numero != "4"
+                and numero != "-1"
         ):
             print("\033[31mError: Opción incorrecta.\033[0m")
             print("")
@@ -102,12 +104,12 @@ def menu_bibliotecario():
         numero = input("Ingresá un número: ")
         print("---------------------------------------------------------------")
         while (
-            numero != "1"
-            and numero != "2"
-            and numero != "3"
-            and numero != "-1"
-            and numero != "4"
-            and numero != "5"
+                numero != "1"
+                and numero != "2"
+                and numero != "3"
+                and numero != "-1"
+                and numero != "4"
+                and numero != "5"
         ):
             print("\033[31mError: Opción incorrecta.\033[0m")
             print("")
@@ -153,54 +155,59 @@ def menu_bibliotecario():
 
         # Editar libro
         elif numero == "2":
-            validar = None
+            bandera = False
 
-            while validar != -1:
+            while not bandera:
                 ISBN_editar = input(
                     "Ingrese el ISBN que quiere editar o -1 para salir: "
                 )
-                validar = su.validacion_enteros(ISBN_editar)
+                bandera = su.volver_atras(ISBN_editar)
+                # pdb.set_trace()
+                if not bandera:
+                    validar = su.validacion_enteros(ISBN_editar)
 
-                libro = bu.obtener_libro(isbn=validar)
+                    libro = bu.obtener_libro(isbn=validar)
 
-                if libro is None:
-                    print("No encontramos el libro. Intente con otro ISBN.")
-                    continue
+                    if libro is None:
+                        print("No encontramos el libro. Intente con otro ISBN.")
+                        continue
 
-                print("Libro encontrado:")
-                id_libro, detalles = libro
-                pu.imprimir_libro(detalles)
+                    print("Libro encontrado:")
+                    id_libro, detalles = libro
+                    pu.imprimir_libro(detalles)
 
-                pedir_numero = int(
-                    input("Ingrese un número para editar o -1 para salir: ")
-                )
-                numero = su.validacion_enteros(pedir_numero)
-                while numero is None and numero != -1:
-                    pedir_numero = int(
-                        input("Ingrese un número para editar o -1 para salir: ")
-                    )
-                    numero = su.validacion_enteros(pedir_numero)
-                if numero != -1:
-                    pedir_nuevo_valor = input(
-                        "Ingrese el nuevo valor para el campo seleccionado: "
-                    )
-                    nuevo_valor = su.ingreso_Valido(pedir_nuevo_valor)
+                    pedir_numero = input("Ingrese un número para editar o -1 para salir: ")
+                    bandera = su.volver_atras(pedir_numero)
+                    if not bandera:
+                        numero = su.validacion_enteros(pedir_numero)
+                    while numero is None and bandera is False:
+                        pedir_numero = input("Ingrese un número para editar o -1 para salir: ")
 
-                    libro_editado = bu.editar_libros(
-                        isbn=ISBN_editar, indice=numero, valor=nuevo_valor
-                    )
+                        bandera = su.volver_atras(pedir_numero)
+                        if not bandera:
+                            numero = su.validacion_enteros(pedir_numero)
 
-                    if libro_editado is not None:
-                        print("Libro editado con éxito:")
-                        pu.imprimir_libro(libro_editado)
+                    if numero != -1 and not bandera:
+                        pedir_nuevo_valor = input(
+                            "Ingrese el nuevo valor para el campo seleccionado: "
+                        )
+                        nuevo_valor = su.ingreso_Valido(pedir_nuevo_valor)
+
+                        libro_editado = bu.editar_libros(
+                            isbn=ISBN_editar, indice=numero, valor=nuevo_valor
+                        )
+
+                        if libro_editado is not None:
+                            print("Libro editado con éxito:")
+                            pu.imprimir_libro(libro_editado)
+                        else:
+                            print("Ocurrió un problema al editar el libro.")
                     else:
-                        print("Ocurrió un problema al editar el libro.")
-                else:
-                    # Salir si el índice es -1
-                    validar = -1
+                        # Salir si el índice es -1
+                        bandera = False
 
-                print("---------------------------------------------------------------")
-                input("Para continuar presione ENTER: ")
+                    print("---------------------------------------------------------------")
+                    input("Para continuar presione ENTER: ")
 
         # alquilar libro
         elif numero == "3":
@@ -310,7 +317,7 @@ def menu_bibliotecario():
                     devolver = bu.devolver_libro(isbn, usuario)
 
                     if devolver:
-                        _,libro = bu.obtener_libro(isbn)
+                        _, libro = bu.obtener_libro(isbn)
                         print(f"El libro {libro['titulo']} fue devuelto por {usuario}!")
                     else:
                         print("ISBN no encontrado o usuario incorrecto. Intente nuevamente.")

@@ -62,7 +62,7 @@ def validacion_enteros(valor):
 
 def validar_constantes(clave):
     """Verifica si el usuario le estan ingresando un valor valido dentro de la lista de contactos
-    :returnTrue o False segun si se le ingreso una respuesta correcta o no
+    :return:True o False segun si se le ingreso una respuesta correcta o no
     """
     validar = False
     texto_normalizado = clave.lower()
