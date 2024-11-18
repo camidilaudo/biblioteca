@@ -107,6 +107,7 @@ def menu_bibliotecario():
             and numero != "3"
             and numero != "-1"
             and numero != "4"
+            and numero != "5"
         ):
             print("\033[31mError: Opción incorrecta.\033[0m")
             print("")
@@ -308,7 +309,7 @@ def menu_bibliotecario():
                     devolver = bu.devolver_libro(isbn, usuario)
 
                     if devolver:
-                        libro = bu.obtener_libro(isbn)
+                        _,libro = bu.obtener_libro(isbn)
                         print(f"El libro {libro['titulo']} fue devuelto por {usuario}!")
                     else:
                         print("ISBN no encontrado. Intente nuevamente.")

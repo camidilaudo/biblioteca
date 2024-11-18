@@ -24,8 +24,8 @@
         "nro_paginas": 694,
         "cant_ejemplares": 3,
         "disponibilidad": true,
-        "ejemplares_disponibles": 1,
-        "ejemplares_alquilados": 0
+        "ejemplares_disponibles": 4,
+        "ejemplares_alquilados": -3
     },
     "3": {
         "autor": "Agatha Christie",
