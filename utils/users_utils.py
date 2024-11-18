@@ -206,6 +206,7 @@ def validar_contrasenia(contrasenia):
 
 
 def validar_usuario(nombre_usuario):
+    "Valida que el usuario este registrado."
     with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
         dict_usuarios = dict(json.load(file))
     validar = False
@@ -216,6 +217,7 @@ def validar_usuario(nombre_usuario):
 
 
 def usuario_penalizado(nombre_usuario):
+    "Verifica si el usuario esta penalizado."
     with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
         dict_usuarios = dict(json.load(file))
         for usuario in dict_usuarios.values():
@@ -226,6 +228,7 @@ def usuario_penalizado(nombre_usuario):
 
 
 def despenalizar_usuarios():
+    "Funcion que se ejecuta al comienzo del programa para cambiar el estado de los usuarios penalizados."
     with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
         dict_usuarios = dict(json.load(file))
         for usuario in dict_usuarios:

@@ -1,5 +1,3 @@
-import pdb
-
 from utils import users_utils as uu
 from utils import system_utils as su
 import constantes as c
@@ -219,7 +217,7 @@ def devolver_libro(isbn, nombre):
         for usuario in historiales:
             if usuario == nombre:
                 for i in range(len(historiales[usuario])):
-                    if historiales[usuario][i]["isbn"] == isbn:
+                    if historiales[usuario][i]["isbn"] == isbn and historiales[usuario][i]["fecha_devolucion"] is None:
                         historiales[usuario][i]["fecha_devolucion"] = (
                             fecha_hoy.strftime("%Y-%m-%d %H:%M:%S")
                         )
