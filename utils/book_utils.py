@@ -1,4 +1,3 @@
-import pdb
 
 from utils import users_utils as uu
 from utils import system_utils as su
@@ -98,7 +97,6 @@ def obtener_libro(isbn):
         # Abrir el archivo en modo lectura
         with open("./data_store/books_data.json", "r", encoding="utf-8") as file:
             data = json.load(file)
-
             for libro in data:
                 if data[libro]["isbn"] == isbn:
                     return libro, data[libro]
@@ -170,9 +168,7 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
 
     with open("./data_store/books_data.json", "r", encoding="utf-8") as file:
         biblioteca = dict(json.load(file))
-
-        libro = obtener_libro(isbn=isbn)
-
+        libro, _ = obtener_libro(isbn=isbn)
         if libro is None:
             ejemplares_disponibles = -1
             status_libro = False
@@ -183,11 +179,8 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
 
             # modificar_alquilar_libro
             if status_libro and (ejemplares_disponibles >= cant_pedidos):
-
-                fecha_hoy = su.fecha_actual
-                uu.agregar_libro_historial(nombre_usuario, isbn, fecha_hoy)
+                uu.agregar_libro_historial(nombre_usuario, isbn)
                 uu.agregar_alquilados(isbn, cant_pedidos)
-
 
             elif status_libro and ejemplares_disponibles < cant_pedidos:
                 ejemplares_disponibles = ejemplares_disponibles
@@ -258,13 +251,14 @@ def recomendaciones(genero, usuario):
     with open("./data_store/books_data.json", "r", encoding="utf-8") as file_biblio:
         biblioteca = dict(json.load(file_biblio))
 
-    with open("./data_store/withdrawn_books_per_user.json", "w", encoding="utf-8") as file_historiales:
+    with open(
+            "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
+    ) as file_historiales:
         historiales = dict(json.load(file_historiales))
     recomendaciones_por_genero = []
     historial_preexistente = []
     aleatorio_libro = None
 
-    pdb.set_trace()
     for historial_usuario in historiales:
         if usuario == historial_usuario:
             historial_preexistente = historial_usuario[1]
@@ -285,9 +279,6 @@ def recomendaciones(genero, usuario):
     return aleatorio_libro
 
 
-recomendaciones("terror", "dani")
-
-
 def borrar_libro(isbn):
     """Eliminar libro de la biblioteca.
     :param isbn: Int, codigo ISBN del libro que se quiere eliminar de la biblioteca.
@@ -300,9 +291,7 @@ def borrar_libro(isbn):
         if isbn == libro["isbn"]:
             del biblioteca[i]
             bandera = True
-    with open(
-            "./data_store/books_data.json", "w", encoding="utf-8"
-    ) as file_biblio:
+    with open("./data_store/books_data.json", "w", encoding="utf-8") as file_biblio:
         json.dump(biblioteca, file_biblio, indent=4)
 
     return bandera

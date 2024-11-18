@@ -46,7 +46,7 @@ claves_bd = {
     7: "cant_ejemplares",
     8: "disponibilidad",
     9: "ejemplares_disponibles",
-    10:"ejemplares_alquilados"
+    10: "ejemplares_alquilados",
 }
 
 # migracion_archivos

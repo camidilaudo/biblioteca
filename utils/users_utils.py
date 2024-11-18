@@ -1,5 +1,4 @@
 import json
-import pdb
 import re
 import csv
 from datetime import timedelta, datetime
@@ -55,7 +54,7 @@ def login_usuario(nombre_usuario, contrasenia):
     return tipo_usuario
 
 
-def agregar_libro_historial(nombre_usuario, isbn, fecha):
+def agregar_libro_historial(nombre_usuario, isbn):
     """Agrega el ISBN de un libro al historial del cliente.
     :param nombre_usuario: Str, username del usuario que retiro el libro.
     :param isbn: Int, código ISBN del libro que retiro.
@@ -64,7 +63,7 @@ def agregar_libro_historial(nombre_usuario, isbn, fecha):
     existe_usuario = False
 
     with open(
-            "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
+        "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
     ) as file:
         dict_historial = dict(json.load(file))
     for usuario in dict_historial:
@@ -73,27 +72,28 @@ def agregar_libro_historial(nombre_usuario, isbn, fecha):
     if existe_usuario is True:
         nuevo_libro = {
             "isbn": isbn,
-            "fecha_prestamo": fecha,
+            "fecha_prestamo": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "fecha_devolucion": None,
         }
-        dict_historial[usuario].append(nuevo_libro)
+        dict_historial[nombre_usuario].append(nuevo_libro)
     else:
         nuevo_historial = {
-            f"{nombre_usuario}": [{
-                "isbn": isbn,
-                "fecha_prestamo": fecha,
-                "fecha_devolucion": None,
-            }]
+            f"{nombre_usuario}": [
+                {
+                    "isbn": isbn,
+                    "fecha_prestamo": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    "fecha_devolucion": None,
+                }
+            ]
         }
 
         dict_historial.update(nuevo_historial)
     with open(
-            "./data_store/withdrawn_books_per_user.json", "w", encoding="utf-8"
+        "./data_store/withdrawn_books_per_user.json", "w", encoding="utf-8"
     ) as file:
         json.dump(dict_historial, file, indent=4)
 
     return dict_historial
-
 
 
 def agregar_penalizados(nombre_usuario):
@@ -111,8 +111,9 @@ def agregar_penalizados(nombre_usuario):
             if dic_usuarios[user]["nombre"] == nombre_usuario:
                 user_id = user
                 dic_usuarios[user_id]["esta_penalizado"] = True
-                dic_usuarios[user_id]["fecha_despenalizacion"] = (su.fecha_actual + timedelta(days=7)).strftime(
-                    "%Y-%m-%d %H:%M:%S")
+                dic_usuarios[user_id]["fecha_despenalizacion"] = (
+                    su.fecha_actual + timedelta(days=7)
+                ).strftime("%Y-%m-%d %H:%M:%S")
 
         json.dump(dic_usuarios, file, indent=4)
     return dic_usuarios
@@ -138,7 +139,9 @@ def agregar_alquilados(isbn, cant_pedidos):
         else:
             historial_alquilados.append([isbn, cant_pedidos])
 
-    with open("./data_store/withdrawn_books.csv", "w", encoding="utf-8", newline="") as file:
+    with open(
+        "./data_store/withdrawn_books.csv", "w", encoding="utf-8", newline=""
+    ) as file:
         writer = csv.writer(file)
         writer.writerows(historial_alquilados)
 
@@ -163,7 +166,7 @@ def ver_propio_historial(usuario):
     :param usuario: Str, nombre del usuario.
     :return historial_nombres: titulos del historial de retiros del usuario."""
     with open(
-            "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
+        "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
     ) as file:
         historial_general = dict(json.load(file))
     with open("./data_store/books_data.json", "r", encoding="utf-8") as file_biblio:
@@ -209,9 +212,9 @@ def validar_usuario(nombre_usuario):
 def usuario_penalizado(nombre_usuario):
     with open("./data_store/users_data.json", "r", encoding="utf-8") as file:
         dict_usuarios = dict(json.load(file))
-        for usuario in dict_usuarios:
-            if usuario == nombre_usuario:
-                estado = dict_usuarios[usuario]["esta_penalizado"]
+        for usuario in dict_usuarios.values():
+            if usuario["nombre"] == nombre_usuario:
+                estado = usuario["esta_penalizado"]
 
     return estado
 
@@ -221,13 +224,15 @@ def despenalizar_usuarios():
         dict_usuarios = dict(json.load(file))
         for usuario in dict_usuarios:
             if dict_usuarios[usuario]["esta_penalizado"] is True:
-                fecha_despenalizacion = datetime.strptime(dict_usuarios[usuario]["fecha_despenalizacion"],
-                                                         "%Y-%m-%d %H:%M:%S")
+                fecha_despenalizacion = datetime.strptime(
+                    dict_usuarios[usuario]["fecha_despenalizacion"], "%Y-%m-%d %H:%M:%S"
+                )
                 fecha_hoy = datetime.now()
                 if (fecha_despenalizacion - fecha_hoy).days <= 0:
                     dict_usuarios[usuario]["esta_penalizado"] = False
 
     with open("./data_store/users_data.json", "w", encoding="utf-8") as file:
         json.dump(dict_usuarios, file, indent=4)
+
 
 despenalizar_usuarios()
