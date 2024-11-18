@@ -1,5 +1,4 @@
 import os
-import pdb
 from datetime import datetime, timedelta
 import constantes as c
 
@@ -50,7 +49,6 @@ def validacion_enteros(valor):
     while bandera:
         try:
             numero = int(valor)
-            pdb.set_trace()
             if numero < 0:
                 print("\033[31mNo puede ingresar un número negativo\033[0m")
                 valor = ("Ingrese un número positivo: ")
