@@ -22,16 +22,30 @@
     },
     "4": {
         "tipo_usuario": 1,
-        "nombre": "pepita",
+        "nombre": "bebi",
         "contrasenia": "Yomeamo2!",
         "esta_penalizado": false,
-        "fecha_despenalizacion": "2024-11-17 00:00:00"
+        "fecha_despenalizacion": null
     },
     "5": {
-        "tipo_usuario": 2,
-        "nombre": "marquito",
+        "tipo_usuario": 1,
+        "nombre": "JIMENA",
         "contrasenia": "Yomeamo2!",
         "esta_penalizado": false,
-        "fecha_despenalizacion": "2024-11-17 00:00:00"
+        "fecha_despenalizacion": null
+    },
+    "6": {
+        "tipo_usuario": 1,
+        "nombre": "mila",
+        "contrasenia": "Boquita1!",
+        "esta_penalizado": false,
+        "fecha_despenalizacion": null
+    },
+    "7": {
+        "tipo_usuario": 2,
+        "nombre": "domino",
+        "contrasenia": "Boquita1!",
+        "esta_penalizado": false,
+        "fecha_despenalizacion": null
     }
 }
