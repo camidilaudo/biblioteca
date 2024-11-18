@@ -290,9 +290,10 @@ def borrar_libro(isbn):
         biblioteca = dict(json.load(file_biblio))
 
     for i, libro in enumerate(biblioteca):
-        if isbn == libro["isbn"]:
-            del biblioteca[i]
+        if isbn == biblioteca[libro]["isbn"]:
+            del biblioteca[libro]
             bandera = True
+            break
     with open("./data_store/books_data.json", "w", encoding="utf-8") as file_biblio:
         json.dump(biblioteca, file_biblio, indent=4)
 

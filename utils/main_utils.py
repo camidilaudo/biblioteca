@@ -107,6 +107,7 @@ def menu_bibliotecario():
             and numero != "3"
             and numero != "-1"
             and numero != "4"
+            and numero != "5"
         ):
             print("\033[31mError: Opción incorrecta.\033[0m")
             print("")
