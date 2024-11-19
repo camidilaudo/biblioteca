@@ -124,7 +124,7 @@ def agregar_penalizados(nombre_usuario):
 def agregar_alquilados(isbn, cant_pedidos):
     """Agrega el ISBN de un libro a la lista de libros alquilados
     :param isbn: Int, código ISBN del libro que retiro.
-    :param cant_pedidos, int,  cuantos libros quiere alquilar.
+    :param cant_pedidos: int, cuantos libros quiere alquilar.
     :return alquilados: diccionario, historial de todos los libros alquilados."""
 
     existe_libro = False
@@ -236,7 +236,7 @@ def despenalizar_usuarios():
                     dict_usuarios[usuario]["fecha_despenalizacion"], "%Y-%m-%d %H:%M:%S"
                 )
                 fecha_hoy = datetime.now()
-                if (fecha_despenalizacion - fecha_hoy).days <= 0:
+                if (fecha_despenalizacion - fecha_hoy).days < 0:
                     dict_usuarios[usuario]["esta_penalizado"] = False
 
     with open("./data_store/users_data.json", "w", encoding="utf-8") as file:

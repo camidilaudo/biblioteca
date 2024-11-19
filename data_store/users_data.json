@@ -47,5 +47,12 @@
         "contrasenia": "Boquita1!",
         "esta_penalizado": false,
         "fecha_despenalizacion": null
+    },
+    "8": {
+        "tipo_usuario": 2,
+        "nombre": "julieta",
+        "contrasenia": "Banquetita56!",
+        "esta_penalizado": false,
+        "fecha_despenalizacion": null
     }
 }
