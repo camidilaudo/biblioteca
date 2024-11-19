@@ -236,19 +236,6 @@
         "disponibilidad": true,
         "ejemplares_disponibles": 10
     },
-    "18": {
-        "autor": "1",
-        "titulo": "1",
-        "genero": "1",
-        "isbn": 1,
-        "editorial": "1",
-        "anio_publicacion": 1,
-        "serie": "1",
-        "nro_paginas": 1,
-        "cant_ejemplares": 1,
-        "disponibilidad": true,
-        "ejemplares_disponibles": 1
-    },
     "19": {
         "autor": "1",
         "titulo": "1",

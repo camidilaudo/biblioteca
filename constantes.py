@@ -16,6 +16,9 @@ generos = [
     "realismo magico",
     "distopia",
     "ficcion",
+    "ciencia ficcion",
+    "thriller",
+    "romance"
 ]
 
 valor_bd = [

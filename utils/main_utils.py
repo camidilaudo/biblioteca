@@ -1,3 +1,5 @@
+import pdb
+
 import utils.print_utils as pu
 import utils.book_utils as bu
 import utils.users_utils as us
@@ -53,7 +55,8 @@ def menu_cliente(nombre_usuario):
             ISBN = su.validacion_enteros(pedir_isbn)
             libro = bu.obtener_libro(ISBN)
             if libro is not None:
-                pu.imprimir_libro(libro)
+                _,detalle_libro = libro
+                pu.imprimir_libro(detalle_libro)
             else:
                 print("No encontramos el libro, volve a intentar!")
             print("---------------------------------------------------------------")
@@ -73,9 +76,8 @@ def menu_cliente(nombre_usuario):
                 print("¡Te leiste todos los libros de esta categoria!")
                 print("Podes volver a probar con otro genero.")
             else:
-                print("Te recomendamos este libro: ")
+                print(f"Te recomendamos este libro: {recomendacion_libro}")
                 print("")
-                pu.imprimir_libro(recomendacion_libro)
             print("---------------------------------------------------------------")
             input("Para continuar presione ENTER: ")
 
@@ -107,6 +109,7 @@ def menu_bibliotecario():
             and numero != "3"
             and numero != "-1"
             and numero != "4"
+            and numero != "5"
         ):
             print("\033[31mError: Opción incorrecta.\033[0m")
             print("")
@@ -325,8 +328,9 @@ def menu_bibliotecario():
 
         # borrar libro
         elif numero == "5":
-            libro_borrado = int(input("Ingrese en ISBN del libro que desea borrar: "))
-            borrar_libro = bu.borrar_libro(libro_borrado)
+            libro_borrado = input("Ingrese en ISBN del libro que desea borrar: ")
+            isbn = su.validacion_cantidades(libro_borrado)
+            borrar_libro = bu.borrar_libro(isbn)
             if borrar_libro:
                 print("Su libro se ha borrado con exito.")
             else:
