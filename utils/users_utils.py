@@ -124,7 +124,7 @@ def agregar_penalizados(nombre_usuario):
 def agregar_alquilados(isbn, cant_pedidos):
     """Agrega el ISBN de un libro a la lista de libros alquilados
     :param isbn: Int, código ISBN del libro que retiro.
-    :param cant_pedidos, int,  cuantos libros quiere alquilar.
+    :param cant_pedidos: int, cuantos libros quiere alquilar.
     :return alquilados: diccionario, historial de todos los libros alquilados."""
 
     existe_libro = False
