@@ -168,7 +168,9 @@ def menu_bibliotecario():
                     continue
 
                 print("Libro encontrado:")
-                pu.imprimir_libro(libro)
+
+                _, detalle_libro = libro
+                pu.imprimir_libro(detalle_libro)
 
                 pedir_numero = input("Ingrese un número para editar o -1 para salir: ")
 
