@@ -62,5 +62,12 @@
             "fecha_prestamo": "2024-11-17 21:26:31",
             "fecha_devolucion": "2024-11-17 22:12:19"
         }
+    ],
+    "domino": [
+        {
+            "isbn": 9780439023528,
+            "fecha_prestamo": "2024-11-19 08:35:27",
+            "fecha_devolucion": null
+        }
     ]
 }

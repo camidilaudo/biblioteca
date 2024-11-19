@@ -129,13 +129,15 @@ def editar_libros(isbn, indice, valor):
 
     if c.valor_bd[indice] in [
         "cant_ejemplares",
-        "disponibilidad",
+        "anio_publicacion",
         "ejemplares_disponibles",
+        "nro_paginas",
+        "ejemplares_alquilados"
     ]:
         try:
-            valor = int(valor)
+            valor = su.validacion_cantidades(valor)
         except ValueError:
-            print(f"El valor para {c.valor_bd[indice]} debe ser un número entero.")
+            print(f"El valor para {c.valor_bd[indice]} debe ser un número entero positivo.")
             return None
 
     with open("./data_store/books_data.json", "r+", encoding="utf-8") as file:

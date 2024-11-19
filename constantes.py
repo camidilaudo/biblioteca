@@ -29,6 +29,7 @@ valor_bd = [
     "cant_ejemplares",
     "disponibilidad",
     "ejemplares_disponibles",
+    "ejemplares_alquilados"
 ]
 
 

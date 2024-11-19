@@ -169,9 +169,8 @@ def menu_bibliotecario():
                 print("Libro encontrado:")
                 pu.imprimir_libro(libro)
 
-                pedir_numero = int(
-                    input("Ingrese un número para editar o -1 para salir: ")
-                )
+                pedir_numero = input("Ingrese un número para editar o -1 para salir: ")
+
                 numero = su.validacion_enteros(pedir_numero)
 
                 if numero != -1:
@@ -258,10 +257,11 @@ def menu_bibliotecario():
                                                 usuario
                                             )
                                             if not encontrar_usuario:
-                                                print("\033[31mError. El usuario no existe.\033[0m")
+                                                print("\033[31mError. El usuario no existe o es bibliotecario.\033[0m")
+                                                bandera = False
                                             if estado_usuario is True:
                                                 print(
-                                                    "Usuario penalizado. No puede alquilar."
+                                                    "\033[31mUsuario penalizado. No puede alquilar.\033[0m"
                                                 )
                                                 bandera = False
 
