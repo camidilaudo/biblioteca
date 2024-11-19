@@ -222,8 +222,9 @@ def devolver_libro(isbn, nombre):
                 fecha_hoy = su.fecha_actual()
             for usuario in historiales:
                 if usuario == nombre:
+                    libros_devueltos = 0
                     for i in range(len(historiales[usuario])):
-                        if historiales[usuario][i]["isbn"] == isbn and historiales[usuario][i]["fecha_devolucion"] is None:
+                        if historiales[usuario][i]["isbn"] == isbn and historiales[usuario][i]["fecha_devolucion"] is None and libros_devueltos < 1:
                             historiales[usuario][i]["fecha_devolucion"] = (
                                 fecha_hoy.strftime("%Y-%m-%d %H:%M:%S")
                             )
@@ -237,6 +238,7 @@ def devolver_libro(isbn, nombre):
                             if not penalizaciones:
                                 uu.agregar_penalizados(nombre)
                             devolucion = True
+                            libros_devueltos += 1
 
             with open(
                 "./data_store/books_data.json", "w", encoding="utf-8"
