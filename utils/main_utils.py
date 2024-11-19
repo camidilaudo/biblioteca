@@ -29,7 +29,7 @@ def menu_cliente(nombre_usuario):
             clave = input("Ingrese el campo por el cual va a realizar la búsqueda (titulo, autor, genero, editoral, anio_publicacion): ")
             es_valido = su.validar_constantes(clave)
             while es_valido is False:
-                print("Ese campo no existe en nuestra biblioteca, prueba con otro")
+                print("\033[31mEse campo no existe en nuestra biblioteca, prueba con otro. \033[0m")
                 clave = str(
                     input("Ingrese el campo por el cual va a realizar la búsqueda: ")
                 )
@@ -39,7 +39,7 @@ def menu_cliente(nombre_usuario):
             campo_a_buscar= su.ingreso_Valido(valor)
             libros_encontrados = bu.busqueda_libros(clave, campo_a_buscar)
             if not libros_encontrados:
-                print("No contamos con ese libro en nuestra biblioteca")
+                print("\033[31mNo contamos con ese libro en nuestra biblioteca.\033[0m")
                 print(f"Se encontraron {len(libros_encontrados)}")
                 print("---------------------------------------------------------------")
                 input("Para continuar presione ENTER: ")
@@ -57,7 +57,7 @@ def menu_cliente(nombre_usuario):
                 _, detalle_libro = libro
                 pu.imprimir_libro(detalle_libro)
             else:
-                print("No encontramos el libro, volve a intentar!")
+                print("\033[31mNo encontramos el libro, volve a intentar!\033[0m")
             print("---------------------------------------------------------------")
             input("Para continuar presione ENTER: ")
 
@@ -66,7 +66,7 @@ def menu_cliente(nombre_usuario):
             genero_libro = input("Ingrese un género: ")
             genero_valido = su.validar_constantes(genero_libro)
             while genero_valido is False:
-                print("El género ingresado es incorrecto, por favor volver a ingresar")
+                print("\033[31mEl género ingresado es incorrecto, por favor volver a ingresar.\033[0m")
                 genero_libro = input("Ingrese un género: ")
                 genero_valido = su.validar_constantes(genero_libro)
 
@@ -165,7 +165,7 @@ def menu_bibliotecario():
                 libro = bu.obtener_libro(isbn=validar)
 
                 if libro is None:
-                    print("No encontramos el libro. Intente con otro ISBN.")
+                    print("\033[31mNo encontramos el libro. Intente con otro ISBN.\033[0m")
                     continue
 
                 print("Libro encontrado:")
@@ -191,7 +191,7 @@ def menu_bibliotecario():
                         print("Libro editado con éxito:")
                         pu.imprimir_libro(libro_editado)
                     else:
-                        print("Ocurrió un problema al editar el libro.")
+                        print("\033[31mOcurrió un problema al editar el libro.\033[0m")
                 else:
                     # Salir si el índice es -1
                     validar = -1
@@ -203,9 +203,10 @@ def menu_bibliotecario():
         elif numero == "3":
             bandera = True
             while bandera:
-                titulo = input(
+                input_usuario = input(
                     "Ingrese el nombre del libro que quiere alquilar o -1 para salir: "
                 )
+                titulo = su.ingreso_Valido(input_usuario)
                 if titulo == "-1":
                     bandera = False
 
@@ -394,7 +395,7 @@ def registro_usuario(tipo_usuario):
         if contrasenia != verificar_contrasenia:
             print("\033[31mError. Las contraseñas no coinciden.\033[0m")
         else:
-            print("Tu contraseña es débil.")
+            print("\033[31mTu contraseña es débil.\033[0m")
             print(
                 "Debe tener entre 8 y 15 caracteres, y al menos un número, una letra minúscula, una letra mayúscula y un símbolo"
             )
@@ -411,5 +412,5 @@ def registro_usuario(tipo_usuario):
         print("Usuario registrado correctamente !")
         return nombre_usuario
     else:
-        print("El usuario ingresado ya existe.")
+        print("\033[31mEl usuario ingresado ya existe.\033[0m")
         return None
