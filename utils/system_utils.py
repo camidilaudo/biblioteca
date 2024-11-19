@@ -67,7 +67,7 @@ def validacion_cantidades(valor):
             numero = validacion_enteros(valor)
             if numero < 0:
                 print("\033[31mNo puede ingresar un número negativo\033[0m")
-                valor = ("Ingrese un número positivo: ")
+                valor = "Ingrese un número positivo: "
             else:
                 bandera = False
         except ValueError:
@@ -98,6 +98,7 @@ def volver_atras(entrada):
 
 
 def ingreso_Valido(ingreso):
+    "Funcion que valida los inputs del usuario para que no sean cadenas vacias."
     bandera = True
     while bandera:
         verificar = (

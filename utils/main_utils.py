@@ -55,7 +55,7 @@ def menu_cliente(nombre_usuario):
             ISBN = su.validacion_enteros(pedir_isbn)
             libro = bu.obtener_libro(ISBN)
             if libro is not None:
-                _,detalle_libro = libro
+                _, detalle_libro = libro
                 pu.imprimir_libro(detalle_libro)
             else:
                 print("No encontramos el libro, volve a intentar!")
@@ -260,7 +260,9 @@ def menu_bibliotecario():
                                                 usuario
                                             )
                                             if not encontrar_usuario:
-                                                print("\033[31mError. El usuario no existe o es bibliotecario.\033[0m")
+                                                print(
+                                                    "\033[31mError. El usuario no existe o es bibliotecario.\033[0m"
+                                                )
                                                 bandera = False
                                             if estado_usuario is True:
                                                 print(
@@ -310,10 +312,12 @@ def menu_bibliotecario():
                     devolver = bu.devolver_libro(isbn, usuario)
 
                     if devolver:
-                        _,libro = bu.obtener_libro(isbn)
+                        _, libro = bu.obtener_libro(isbn)
                         print(f"El libro {libro['titulo']} fue devuelto por {usuario}!")
                     else:
-                        print("\033[31mLibro no encontrado como pendiente de devolucion en su lista de retiros. Intente nuevamente.\033[0m")
+                        print(
+                            "\033[31mLibro no encontrado como pendiente de devolucion en su lista de retiros. Intente nuevamente.\033[0m"
+                        )
 
                     try:
                         continuar = int(
@@ -334,7 +338,7 @@ def menu_bibliotecario():
             if borrar_libro:
                 print("Su libro se ha borrado con exito.")
             else:
-                print("Libro no encontrado, por favor volve a intentar!")
+                print("\033[31mLibro no encontrado, por favor volve a intentar!\033[0m")
 
             input("Para continuar presione ENTER: ")
             su.limpiar_terminal()

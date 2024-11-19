@@ -33,6 +33,7 @@ def imprimir_historial(lista):
 
 
 def imprimir_menu_cliente():
+    "Funcion encargada de imprimir el menu del cliente."
     print("Elegí una opción para continuar: ")
     print("1- Buscar libros.")
     print("2- Buscar información detallada de un libro.")
@@ -42,6 +43,7 @@ def imprimir_menu_cliente():
 
 
 def imprimir_menu_bibliotecario():
+    "Funcion encargada de imprimir el menu del bibliotecario"
     print("Elegí una opción para continuar: ")
     print("1- Cargar libros.")
     print("2- Editar libro.")

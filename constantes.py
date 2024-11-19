@@ -18,7 +18,7 @@ generos = [
     "ficcion",
     "ciencia ficcion",
     "thriller",
-    "romance"
+    "romance",
 ]
 
 valor_bd = [
@@ -32,7 +32,7 @@ valor_bd = [
     "cant_ejemplares",
     "disponibilidad",
     "ejemplares_disponibles",
-    "ejemplares_alquilados"
+    "ejemplares_alquilados",
 ]
 
 

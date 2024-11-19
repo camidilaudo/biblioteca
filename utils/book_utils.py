@@ -1,5 +1,3 @@
-import pdb
-
 from utils import users_utils as uu
 from utils import system_utils as su
 import constantes as c
@@ -37,15 +35,15 @@ def busqueda_libros(clave, valor):
 
 
 def cargar_libros(
-        titulo,
-        autor,
-        genero,
-        isbn,
-        editorial,
-        anio_publicacion,
-        serie_libros,
-        nro_paginas,
-        cant_ejemplares,
+    titulo,
+    autor,
+    genero,
+    isbn,
+    editorial,
+    anio_publicacion,
+    serie_libros,
+    nro_paginas,
+    cant_ejemplares,
 ):
     """Cargar libro en stock de biblioteca. Se pueden cargar varios ejemplares del mismo.
     :param titulo: Str, título del libro.
@@ -108,9 +106,11 @@ def obtener_libro(isbn):
                     return id_libro, detalles
 
     except FileNotFoundError:
-        print("El archivo 'books_data.json' no existe.")
+        print("\033[31El archivo 'books_data.json' no existe.\033[0m")
     except json.JSONDecodeError:
-        print("\033[31mError al leer el archivo JSON. Verifica el formato del archivo.\033[0m")
+        print(
+            "\033[31mError al leer el archivo JSON. Verifica el formato del archivo.\033[0m"
+        )
 
     return None
 
@@ -132,12 +132,14 @@ def editar_libros(isbn, indice, valor):
         "anio_publicacion",
         "ejemplares_disponibles",
         "nro_paginas",
-        "ejemplares_alquilados"
+        "ejemplares_alquilados",
     ]:
         try:
             valor = su.validacion_cantidades(valor)
         except ValueError:
-            print(f"El valor para {c.valor_bd[indice]} debe ser un número entero positivo.")
+            print(
+                f"El valor para {c.valor_bd[indice]} debe ser un número entero positivo."
+            )
             return None
 
     with open("./data_store/books_data.json", "r+", encoding="utf-8") as file:
@@ -171,7 +173,10 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
       Si lo encuentra, solo modifica la cantidad,
      2) El de usuario. En caso de que no lo haya leido antes, lo agrega a su historial
      Luego cambia el estado de un libro segun la cantidad de pedidos que tiene.
-    :param isbn: Str, titulo del libro a pedir."""
+    :param isbn: Str, titulo del libro a pedir.
+    :param cant_pedidos: Int, cantidad de libros a alquilar.
+    :param nombre_usuario: Str, nombre del usuario que los va a alquilar.
+    :return: una lista con la disponibilidad del libros y las cantidades disponibles."""
 
     with open("./data_store/books_data.json", "r", encoding="utf-8") as file:
         biblioteca = dict(json.load(file))
@@ -204,7 +209,7 @@ def devolver_libro(isbn, nombre):
     True si se devuelve correctamente el libro.
     """
     with open(
-            "./data_store/books_data.json", "r", encoding="utf-8"
+        "./data_store/books_data.json", "r", encoding="utf-8"
     ) as file_biblio, open(
         "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
     ) as file_historiales:
@@ -224,17 +229,20 @@ def devolver_libro(isbn, nombre):
                 if usuario == nombre:
                     libros_devueltos = 0
                     for i in range(len(historiales[usuario])):
-                        if historiales[usuario][i]["isbn"] == isbn and historiales[usuario][i][
-                            "fecha_devolucion"] is None and libros_devueltos < 1:
+                        if (
+                            historiales[usuario][i]["isbn"] == isbn
+                            and historiales[usuario][i]["fecha_devolucion"] is None
+                            and libros_devueltos < 1
+                        ):
                             historiales[usuario][i]["fecha_devolucion"] = (
                                 fecha_hoy.strftime("%Y-%m-%d %H:%M:%S")
                             )
                             penalizaciones = (
                                 lambda fsalida, fregreso: (
-                                                                  historiales[usuario][i]["fecha_devolucion"]
-                                                                  - historiales[usuario][i]["fecha_prestamo"]
-                                                          ).days
-                                                          <= 7
+                                    historiales[usuario][i]["fecha_devolucion"]
+                                    - historiales[usuario][i]["fecha_prestamo"]
+                                ).days
+                                <= 7
                             )
                             if not penalizaciones:
                                 uu.agregar_penalizados(nombre)
@@ -242,7 +250,7 @@ def devolver_libro(isbn, nombre):
                             libros_devueltos += 1
 
             with open(
-                    "./data_store/books_data.json", "w", encoding="utf-8"
+                "./data_store/books_data.json", "w", encoding="utf-8"
             ) as file_biblio, open(
                 "./data_store/withdrawn_books_per_user.json", "w", encoding="utf-8"
             ) as file_historiales:
@@ -263,7 +271,7 @@ def recomendaciones(genero, usuario):
         biblioteca = dict(json.load(file_biblio))
 
     with open(
-            "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
+        "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
     ) as file_historiales:
         historiales = dict(json.load(file_historiales))
     recomendaciones_por_genero = []
@@ -279,7 +287,7 @@ def recomendaciones(genero, usuario):
         isbn_leidos.append(libro["isbn"])
     for id_libro in biblioteca:
         if (biblioteca[id_libro]["genero"].lower() == genero) and (
-                biblioteca[id_libro]["isbn"] not in isbn_leidos
+            biblioteca[id_libro]["isbn"] not in isbn_leidos
         ):
             recomendaciones_por_genero.append(biblioteca[id_libro]["titulo"])
 
@@ -296,7 +304,7 @@ def recomendaciones(genero, usuario):
 def borrar_libro(isbn):
     """Eliminar libro de la biblioteca.
     :param isbn: Int, codigo ISBN del libro que se quiere eliminar de la biblioteca.
-    :return bd.libros: Matrix, biblioteca actualizada."""
+    :return bandera: True o False para indicar que el libro fue borrado correctamente."""
     bandera = False
     with open("./data_store/books_data.json", "r", encoding="utf-8") as file_biblio:
         biblioteca = dict(json.load(file_biblio))
