@@ -26,7 +26,7 @@ def menu_cliente(nombre_usuario):
         # Buscar libro
         if numero == "1":
 
-            clave = input("Ingrese el campo por el cual va a realizar la búsqueda: ")
+            clave = input("Ingrese el campo por el cual va a realizar la búsqueda (titulo, autor, genero, editoral, anio_publicacion): ")
             es_valido = su.validar_constantes(clave)
             while es_valido is False:
                 print("Ese campo no existe en nuestra biblioteca, prueba con otro")
@@ -35,8 +35,9 @@ def menu_cliente(nombre_usuario):
                 )
                 es_valido = su.validar_constantes(clave)
 
-            valor = str(input("Ingrese el valor del campo: "))
-            libros_encontrados = bu.busqueda_libros(clave, valor)
+            valor = input("Ingrese el valor del campo: ")
+            campo_a_buscar= su.ingreso_Valido(valor)
+            libros_encontrados = bu.busqueda_libros(clave, campo_a_buscar)
             if not libros_encontrados:
                 print("No contamos con ese libro en nuestra biblioteca")
                 print(f"Se encontraron {len(libros_encontrados)}")
