@@ -49,6 +49,22 @@ def validacion_enteros(valor):
     while bandera:
         try:
             numero = int(valor)
+            bandera = False
+        except ValueError:
+            print("\033[31mError: Debes ingresar un número entero.\033[0m")
+            valor = input("Ingresa un número: ")
+    return numero
+
+
+def validacion_cantidades(valor):
+    """Verifica si el usuario esta ingresando una cantidad numerica mayor a 0.
+    :return número validado
+    """
+    bandera = True
+    numero = None
+    while bandera:
+        try:
+            numero = validacion_enteros(valor)
             if numero < 0:
                 print("\033[31mNo puede ingresar un número negativo\033[0m")
                 valor = ("Ingrese un número positivo: ")
@@ -56,7 +72,7 @@ def validacion_enteros(valor):
                 bandera = False
         except ValueError:
             print("\033[31mError: Debes ingresar un número entero mayor a 0.\033[0m")
-            valor = input("Ingresa un número: ")
+            valor = input("Ingresa un número mayor a 0: ")
     return numero
 
 

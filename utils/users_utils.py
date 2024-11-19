@@ -236,7 +236,7 @@ def despenalizar_usuarios():
                     dict_usuarios[usuario]["fecha_despenalizacion"], "%Y-%m-%d %H:%M:%S"
                 )
                 fecha_hoy = datetime.now()
-                if (fecha_despenalizacion - fecha_hoy).days <= 0:
+                if (fecha_despenalizacion - fecha_hoy).days < 0:
                     dict_usuarios[usuario]["esta_penalizado"] = False
 
     with open("./data_store/users_data.json", "w", encoding="utf-8") as file:
