@@ -3,7 +3,7 @@
         "tipo_usuario": 2,
         "nombre": "dani",
         "contrasenia": "123",
-        "esta_penalizado": true,
+        "esta_penalizado": false,
         "fecha_despenalizacion": "2024-11-20 00:00:00"
     },
     "2": {

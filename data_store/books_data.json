@@ -234,19 +234,21 @@
         "nro_paginas": "45",
         "cant_ejemplares": 10,
         "disponibilidad": true,
-        "ejemplares_disponibles": 10
+        "ejemplares_disponibles": 10,
+        "ejemplares_alquilados": 0
     },
     "19": {
-        "autor": "1",
-        "titulo": "1",
-        "genero": "1",
-        "isbn": 12,
-        "editorial": "r",
-        "anio_publicacion": 234,
-        "serie": "t",
-        "nro_paginas": 6,
-        "cant_ejemplares": 7,
+        "autor": "el maestro roshi",
+        "titulo": "el libro de goku",
+        "genero": "aventura",
+        "isbn": 91826739,
+        "editorial": "anime",
+        "anio_publicacion": 1998,
+        "serie": "-",
+        "nro_paginas": 987,
+        "cant_ejemplares": 5,
         "disponibilidad": true,
-        "ejemplares_disponibles": 7
+        "ejemplares_disponibles": 5,
+        "ejemplares_alquilados": 0
     }
 }

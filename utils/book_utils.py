@@ -81,6 +81,7 @@ def cargar_libros(
                 "cant_ejemplares": cant_ejemplares,
                 "disponibilidad": True,
                 "ejemplares_disponibles": cant_ejemplares,
+                "ejemplares_alquilados": 0
             }
             indice = len(biblioteca) + 1
             biblioteca.update({str(indice): nuevo_libro})

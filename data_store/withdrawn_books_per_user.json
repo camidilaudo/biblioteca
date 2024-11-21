@@ -61,8 +61,17 @@
             "isbn": 9780439023528,
             "fecha_prestamo": "2024-11-17 21:26:31",
             "fecha_devolucion": "2024-11-17 22:12:19"
+        },
+        {
+            "isbn": 47899642,
+            "fecha_prestamo": "2024-11-20 21:14:47",
+            "fecha_devolucion": null
+        },
+        {
+            "isbn": 91826739,
+            "fecha_prestamo": "2024-11-20 21:16:56",
+            "fecha_devolucion": "2024-11-20 21:17:38"
         }
     ],
-    "domino": [
-    ]
+    "domino": []
 }
