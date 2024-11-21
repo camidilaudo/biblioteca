@@ -71,6 +71,11 @@
             "isbn": 91826739,
             "fecha_prestamo": "2024-11-20 21:16:56",
             "fecha_devolucion": "2024-11-20 21:17:38"
+        },
+        {
+            "isbn": 1987473892,
+            "fecha_prestamo": "2024-11-20 21:28:05",
+            "fecha_devolucion": null
         }
     ],
     "domino": []

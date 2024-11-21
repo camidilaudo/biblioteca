@@ -111,3 +111,25 @@ def ingreso_Valido(ingreso):
             print("No puede ingresar un campo vacío")
             ingreso = input("Ingrese su respuesta: ")
     return verificar
+
+
+def validacion_anio(valor):
+    """Verifica si el usuario esta ingresando una fecha de publicacion numerica mayor a 0 pero menor al anio en curso.
+    :return número validado
+    """
+    bandera = True
+    numero = None
+    while bandera:
+        try:
+            numero = validacion_cantidades(valor)
+            anio_corriente = int(datetime.now().strftime("%Y"))
+            if numero > anio_corriente:
+                print("\033[31mNo puede ingresar un año mayor al corriente\033[0m")
+                valor = input("Ingrese un año valido: ")
+
+            else:
+                bandera = False
+        except ValueError:
+            print("\033[31mError: Debes ingresar un número entero mayor a 0.\033[0m")
+            valor = input("Ingresa un número mayor a 0: ")
+    return numero

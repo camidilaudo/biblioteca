@@ -128,7 +128,7 @@ def menu_bibliotecario():
             pedir_editorial = input("Ingrese el editorial: ")
             editorial = su.ingreso_Valido(pedir_editorial)
             pedir_anio_publicacion = input("Ingrese el año publicacion: ")
-            anio_publicacion = su.validacion_cantidades(pedir_anio_publicacion)
+            anio_publicacion = su.validacion_anio(pedir_anio_publicacion)
             pedir_serie_libros = input("Ingrese la serie del libro: ")
             serie_libros = su.ingreso_Valido(pedir_serie_libros)
             pedir_nro_paginas = input("Ingrese el número de paginas: ")

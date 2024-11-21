@@ -238,17 +238,17 @@
         "ejemplares_alquilados": 0
     },
     "19": {
-        "autor": "el maestro roshi",
-        "titulo": "el libro de goku",
-        "genero": "aventura",
-        "isbn": 91826739,
-        "editorial": "anime",
-        "anio_publicacion": 1998,
-        "serie": "-",
-        "nro_paginas": 987,
-        "cant_ejemplares": 5,
-        "disponibilidad": true,
-        "ejemplares_disponibles": 5,
-        "ejemplares_alquilados": 0
+        "autor": "marco bruzzese",
+        "titulo": "gati",
+        "genero": "perchita",
+        "isbn": 1987473892,
+        "editorial": "banquetita",
+        "anio_publicacion": 1737,
+        "serie": "my 1000lbs life",
+        "nro_paginas": 9821928,
+        "cant_ejemplares": 1,
+        "disponibilidad": false,
+        "ejemplares_disponibles": 0,
+        "ejemplares_alquilados": 1
     }
 }
