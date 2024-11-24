@@ -3,7 +3,7 @@ import re
 import csv
 from datetime import timedelta, datetime
 from utils import system_utils as su
-from utils.book_utils import editar_libros, obtener_libro
+from utils import book_utils as bu
 
 
 def registrar_usuario(tipo_usuario, nombre, contrasenia_usuario):
@@ -149,14 +149,14 @@ def agregar_alquilados(isbn, cant_pedidos):
         writer = csv.writer(file)
         writer.writerows(historial_alquilados)
 
-        _, libro = obtener_libro(isbn=isbn)
+        _, libro = bu.obtener_libro(isbn=isbn)
         # Actualizo la biblioteca
         ejemplares_disponibles = libro["ejemplares_disponibles"] - cant_pedidos
         ejemplares_alquilados = libro["ejemplares_alquilados"] + cant_pedidos
-        editar_libros(isbn=isbn, indice=9, valor=ejemplares_disponibles)
-        editar_libros(isbn=isbn, indice=10, valor=ejemplares_alquilados)
+        bu.editar_libros(isbn=isbn, indice=9, valor=ejemplares_disponibles)
+        bu.editar_libros(isbn=isbn, indice=10, valor=ejemplares_alquilados)
         if ejemplares_disponibles == 0:
-            editar_libros(isbn=isbn, indice=8, valor=False)
+            bu.editar_libros(isbn=isbn, indice=8, valor=False)
 
     # Creo el diccionario de libros alquilados y los devuelvo
     rows = historial_alquilados[1:]
