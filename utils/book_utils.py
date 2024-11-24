@@ -150,7 +150,7 @@ def editar_libros(isbn, indice, valor):
 
         for libro_id, libro in data.items():
             if libro["isbn"] == int(isbn):
-                print(f"Libro antes de la edición: {libro[c.valor_bd[indice]]}")
+                print(f"Campo --{c.valor_bd[indice].upper()}-- antes de la edición: {libro[c.valor_bd[indice]]}")
 
                 libro[c.valor_bd[indice]] = valor
                 libro_editado = libro
@@ -160,10 +160,10 @@ def editar_libros(isbn, indice, valor):
             json.dump(data, file, ensure_ascii=False, indent=4)
             file.truncate()
 
-            print(f"Libro después de la edición: {libro[c.valor_bd[indice]]}")
+            print(f"Campo --{c.valor_bd[indice].upper()}-- después de la edición: {libro_editado[c.valor_bd[indice]]}")
             print("Libro editado con éxito.")
         else:
-            print("No se encontró el libro para editar.")
+            print("\033[31No se encontró el libro para editar.\033[0m")
 
         return libro_editado
 

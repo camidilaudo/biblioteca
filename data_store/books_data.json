@@ -224,17 +224,17 @@
         "ejemplares_alquilados": 1
     },
     "17": {
-        "autor": "lala",
-        "titulo": "lala",
-        "genero": "lala",
+        "autor": "Dani",
+        "titulo": "El nuevo libro",
+        "genero": "terror",
         "isbn": 5,
         "editorial": "lala",
         "anio_publicacion": 1234,
         "serie": "lala",
         "nro_paginas": "45",
-        "cant_ejemplares": 10,
+        "cant_ejemplares": 17,
         "disponibilidad": true,
-        "ejemplares_disponibles": 10,
+        "ejemplares_disponibles": 17,
         "ejemplares_alquilados": 0
     },
     "19": {

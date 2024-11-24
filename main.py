@@ -12,7 +12,9 @@ def main():
     continuar = True
     while continuar:
         mu.mostrar_menu_principal()
-        opcion_principal = input("Ingrese una opción: ")
+        opcion_principal = input("¡Hola! 🎉 Elige una opción: ")
+
+        # Validación de opción
         validar_num = su.validacion_enteros(opcion_principal)
         su.limpiar_terminal()
 
@@ -21,7 +23,7 @@ def main():
             sesion_valida = iniciar_sesion_usuario in c.tipos_usuario
 
             while not sesion_valida:
-                print("Usuario o contraseña incorrecta.")
+                print("\033[31m⚠️ Error: Usuario o contraseña incorrecta. Intenta nuevamente.\033[0m")
                 iniciar_sesion_usuario, nombre_usuario = mu.iniciar_sesion()
 
                 if su.volver_atras(iniciar_sesion_usuario):
@@ -35,34 +37,30 @@ def main():
             elif iniciar_sesion_usuario == c.bibliotecario:
                 mu.menu_bibliotecario()
 
-        elif validar_num == 2:
+        elif validar_num == 2:  # Registro de usuario
             registro_valido = False
             while not registro_valido:
                 mu.mostrar_menu_registro()
-                opcion_registro = input("Ingrese una opción: ")
-                tipo_usuario = su.validacion_enteros(opcion_registro)
+                opcion_registro = input("¿Qué tipo de usuario eres🤔?:  ")
 
                 if su.volver_atras(opcion_registro):
                     registro_valido = True
                 else:
+                    tipo_usuario = su.validacion_enteros(opcion_registro)
                     if tipo_usuario == c.bibliotecario:
                         print("\n=== VERIFICACIÓN DE ACCESO ===")
-                        contrasenia_general = input("Ingrese el código de acceso: ")
+                        contrasenia_general = input("Código de acceso: 🔑 ")
                         acceso_valido = contrasenia_general == c.contrasenia_general
 
                         while not acceso_valido:
-                            contrasenia_general = input(
-                                "\033[31mError: Ingrese el código correcto o -1 para salir:\033[0m "
-                            )
+                            contrasenia_general = input("\033[31m❌ Código incorrecto, prueba de nuevo: \033[0m")
                             if su.volver_atras(contrasenia_general):
                                 acceso_valido = True
                                 tipo_usuario = None
                             else:
-                                acceso_valido = (
-                                    contrasenia_general == c.contrasenia_general
-                                )
+                                acceso_valido = contrasenia_general == c.contrasenia_general
 
-                        if acceso_valido and tipo_usuario is not None:
+                        if acceso_valido:
                             nombre_usuario = mu.registro_usuario(tipo_usuario)
                             registro_valido = nombre_usuario is not None
                             if registro_valido:
@@ -75,9 +73,11 @@ def main():
                             mu.menu_cliente(nombre_usuario)
 
                     else:
-                        print("\033[31mError. Número inválido.\033[0m")
+                        print("\033[31m❌ Error. Opción no válida.\033[0m")
+
         else:
-            print("\033[31mError. Número inválido.\033[0m")
+            print("\033[31m❌ Error. Opción no válida.\033[0m")
 
 
+# Ejecutar el programa principal
 main()
