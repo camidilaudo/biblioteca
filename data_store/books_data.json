@@ -24,8 +24,8 @@
         "nro_paginas": 694,
         "cant_ejemplares": 3,
         "disponibilidad": true,
-        "ejemplares_disponibles": 2,
-        "ejemplares_alquilados": -3
+        "ejemplares_disponibles": 4,
+        "ejemplares_alquilados": -5
     },
     "3": {
         "autor": "Agatha Christie",
@@ -236,19 +236,5 @@
         "disponibilidad": true,
         "ejemplares_disponibles": 17,
         "ejemplares_alquilados": 0
-    },
-    "19": {
-        "autor": "marco bruzzese",
-        "titulo": "gati",
-        "genero": "perchita",
-        "isbn": 1987473892,
-        "editorial": "banquetita",
-        "anio_publicacion": 1737,
-        "serie": "my 1000lbs life",
-        "nro_paginas": 9821928,
-        "cant_ejemplares": 1,
-        "disponibilidad": false,
-        "ejemplares_disponibles": 0,
-        "ejemplares_alquilados": 1
     }
 }

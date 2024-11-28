@@ -23,7 +23,9 @@ def main():
             sesion_valida = iniciar_sesion_usuario in c.tipos_usuario
 
             while not sesion_valida:
-                print("\033[31m⚠️ Error: Usuario o contraseña incorrecta. Intenta nuevamente.\033[0m")
+                print(
+                    "\033[31m⚠️ Error: Usuario o contraseña incorrecta. Intenta nuevamente.\033[0m"
+                )
                 iniciar_sesion_usuario, nombre_usuario = mu.iniciar_sesion()
 
                 if su.volver_atras(iniciar_sesion_usuario):
@@ -53,12 +55,16 @@ def main():
                         acceso_valido = contrasenia_general == c.contrasenia_general
 
                         while not acceso_valido:
-                            contrasenia_general = input("\033[31m❌ Código incorrecto, prueba de nuevo: \033[0m")
+                            contrasenia_general = input(
+                                "\033[31m❌ Código incorrecto, prueba de nuevo: \033[0m"
+                            )
                             if su.volver_atras(contrasenia_general):
                                 acceso_valido = True
                                 tipo_usuario = None
                             else:
-                                acceso_valido = contrasenia_general == c.contrasenia_general
+                                acceso_valido = (
+                                    contrasenia_general == c.contrasenia_general
+                                )
 
                         if acceso_valido:
                             nombre_usuario = mu.registro_usuario(tipo_usuario)

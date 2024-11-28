@@ -81,7 +81,7 @@ def cargar_libros(
                 "cant_ejemplares": cant_ejemplares,
                 "disponibilidad": True,
                 "ejemplares_disponibles": cant_ejemplares,
-                "ejemplares_alquilados": 0
+                "ejemplares_alquilados": 0,
             }
             indice = len(biblioteca) + 1
             biblioteca.update({str(indice): nuevo_libro})
@@ -104,7 +104,7 @@ def obtener_libro(isbn):
 
             for id_libro, detalles in data.items():
                 if str(detalles["isbn"]) == str(isbn):
-                    return  id_libro, detalles
+                    return id_libro, detalles
 
     except FileNotFoundError:
         print("\033[31El archivo 'books_data.json' no existe.\033[0m")
@@ -150,7 +150,9 @@ def editar_libros(isbn, indice, valor):
 
         for libro_id, libro in data.items():
             if libro["isbn"] == int(isbn):
-                print(f"Campo --{c.valor_bd[indice].upper()}-- antes de la edición: {libro[c.valor_bd[indice]]}")
+                print(
+                    f"Campo --{c.valor_bd[indice].upper()}-- antes de la edición: {libro[c.valor_bd[indice]]}"
+                )
 
                 libro[c.valor_bd[indice]] = valor
                 libro_editado = libro
@@ -160,7 +162,9 @@ def editar_libros(isbn, indice, valor):
             json.dump(data, file, ensure_ascii=False, indent=4)
             file.truncate()
 
-            print(f"Campo --{c.valor_bd[indice].upper()}-- después de la edición: {libro_editado[c.valor_bd[indice]]}")
+            print(
+                f"Campo --{c.valor_bd[indice].upper()}-- después de la edición: {libro_editado[c.valor_bd[indice]]}"
+            )
             print("Libro editado con éxito.")
         else:
             print("\033[31No se encontró el libro para editar.\033[0m")
@@ -287,7 +291,9 @@ def recomendaciones(genero, usuario):
     for libro in historial_preexistente:
         isbn_leidos.append(libro["isbn"])
     for id_libro in biblioteca:
-        if (biblioteca[id_libro]["genero"].lower() == genero) and (biblioteca[id_libro]["isbn"] not in isbn_leidos):
+        if (biblioteca[id_libro]["genero"].lower() == genero) and (
+            biblioteca[id_libro]["isbn"] not in isbn_leidos
+        ):
             recomendaciones_por_genero.append(biblioteca[id_libro]["titulo"])
 
     # comparar la lista de recomendaciones_por_genero con el historial recorriendolo con un for.
@@ -303,7 +309,8 @@ def recomendaciones(genero, usuario):
 def borrar_libro(isbn):
     """Eliminar libro de la biblioteca.
     :param isbn: Int, codigo ISBN del libro que se quiere eliminar de la biblioteca.
-    :return bandera: True o False para indicar que el libro fue borrado correctamente."""
+    :return bandera: True o False para indicar que el libro fue borrado correctamente.
+    """
     bandera = False
     with open("./data_store/books_data.json", "r", encoding="utf-8") as file_biblio:
         biblioteca = dict(json.load(file_biblio))

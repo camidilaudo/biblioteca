@@ -136,11 +136,11 @@ def agregar_alquilados(isbn, cant_pedidos):
                 existe_libro = True
                 indice = i
         if existe_libro:
-                historial_cant_libro = int(historial_alquilados[indice][1])
-                historial_cant_libro += cant_pedidos
-                historial_alquilados[indice][1] = historial_cant_libro
+            historial_cant_libro = int(historial_alquilados[indice][1])
+            historial_cant_libro += cant_pedidos
+            historial_alquilados[indice][1] = historial_cant_libro
         else:
-                historial_alquilados.append([isbn, cant_pedidos])
+            historial_alquilados.append([isbn, cant_pedidos])
 
     with open(
         "./data_store/withdrawn_books.csv", "w", encoding="utf-8", newline=""

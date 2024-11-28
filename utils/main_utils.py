@@ -10,8 +10,9 @@ def menu_cliente(nombre_usuario):
     """Ejecución del menú del cliente."""
     numero = "0"
     while numero != "-1":
+        su.limpiar_terminal()
         pu.imprimir_menu_cliente()
-        numero = input("¡Selecciona una opción! 📚 ")
+        numero = input("¡Selecciona una opción! 📚: ")
 
         print("---------------------------------------------------------------")
 
@@ -34,7 +35,9 @@ def menu_cliente(nombre_usuario):
             libros_encontrados = bu.busqueda_libros(clave, campo_a_buscar)
 
             if not libros_encontrados:
-                print("\033[31m❌ No encontramos ese libro en nuestra biblioteca.\033[0m")
+                print(
+                    "\033[31m❌ No encontramos ese libro en nuestra biblioteca.\033[0m"
+                )
             else:
                 pu.imprimir_res_busqueda(libros_encontrados)
             print("---------------------------------------------------------------")
@@ -56,7 +59,9 @@ def menu_cliente(nombre_usuario):
             genero_libro = input("¿Qué género te gustaría leer? 🎭: ")
             genero_valido = su.validar_constantes(genero_libro)
             while not genero_valido:
-                print("\033[31m❌ El género ingresado es incorrecto. Intenta nuevamente.\033[0m")
+                print(
+                    "\033[31m❌ El género ingresado es incorrecto. Intenta nuevamente.\033[0m"
+                )
                 genero_libro = input("Por favor, ingresa un género válido: ")
                 genero_valido = su.validar_constantes(genero_libro)
 
@@ -87,6 +92,7 @@ def menu_bibliotecario():
     """Ejecución del menú del bibliotecario."""
     numero = "0"
     while numero != "-1":
+        su.limpiar_terminal()
         pu.imprimir_menu_bibliotecario()
         numero = input("Selecciona una opción 📚: ")
         print("---------------------------------------------------------------")
@@ -129,7 +135,7 @@ def menu_bibliotecario():
                 cant_ejemplares,
             )
             print("Estos son los libros actualmente en la biblioteca: ")
-            #TODO: Revisar este print, no imprime bien todos lso libros de la biblioteca
+
             for libro in registrar_libros:
                 print("***************************************************************")
                 pu.imprimir_libro(registrar_libros[libro])
@@ -144,41 +150,46 @@ def menu_bibliotecario():
                 libro = bu.obtener_libro(isbn=validar)
 
                 if libro is None and validar != -1:
-                    print("\033[31m❌ No encontramos el libro. Intenta con otro ISBN.\033[0m")
+                    print(
+                        "\033[31m❌ No encontramos el libro. Intenta con otro ISBN.\033[0m"
+                    )
                     continue
 
-                print("Libro encontrado:")
-                _, detalle_libro = libro
-                pu.imprimir_libro(detalle_libro)
+                if validar != -1:
+                    print("Libro encontrado:")
+                    _, detalle_libro = libro
+                    pu.imprimir_libro(detalle_libro)
 
-                pedir_numero = input("¿Qué número deseas editar? o -1 para salir: ")
+                    pedir_numero = input("¿Qué número deseas editar? o -1 para salir: ")
 
-                numero = su.validacion_enteros(pedir_numero)
+                    numero = su.validacion_enteros(pedir_numero)
 
-                if numero != -1:
-                    pedir_nuevo_valor = input("¿Qué nuevo valor quieres ingresar? 🖋️: ")
-                    nuevo_valor = su.ingreso_Valido(pedir_nuevo_valor)
+                    if numero != -1:
+                        pedir_nuevo_valor = input("¿Qué nuevo valor quieres ingresar? 🖋️: ")
+                        nuevo_valor = su.ingreso_Valido(pedir_nuevo_valor)
 
-                    libro_editado = bu.editar_libros(
-                        isbn=ISBN_editar, indice=numero, valor=nuevo_valor
-                    )
+                        libro_editado = bu.editar_libros(
+                            isbn=ISBN_editar, indice=numero, valor=nuevo_valor
+                        )
 
-                    if libro_editado is not None:
-                        print("Los nuevos valores del libro son: ")
-                        pu.imprimir_libro(libro_editado)
+                        if libro_editado is not None:
+                            print("Los nuevos valores del libro son: ")
+                            pu.imprimir_libro(libro_editado)
+                        else:
+                            print("\033[31m❌ Hubo un problema al editar el libro.\033[0m")
                     else:
-                        print("\033[31m❌ Hubo un problema al editar el libro.\033[0m")
-                else:
-                    # Salir si el índice es -1
-                    validar = -1
+                        # Salir si el índice es -1
+                        validar = -1
 
-                print("---------------------------------------------------------------")
-                input("Para continuar, presiona ENTER... ")
+                    print("---------------------------------------------------------------")
+                    input("Para continuar, presiona ENTER... ")
 
         elif numero == "3":  # Alquilar libro
             bandera = True
             while bandera:
-                input_usuario = input("¿Qué libro deseas alquilar? 📚 o -1 para salir: ")
+                input_usuario = input(
+                    "¿Qué libro deseas alquilar? 📚 o -1 para salir: "
+                )
                 titulo = su.ingreso_Valido(input_usuario)
                 if titulo == "-1":
                     bandera = False
@@ -208,13 +219,19 @@ def menu_bibliotecario():
                             if bandera:
                                 buscar_isbn = bu.obtener_libro(entrada)
                                 if buscar_isbn is None:
-                                    print("\033[31m❌ El ISBN es incorrecto o no existe.\033[0m")
+                                    print(
+                                        "\033[31m❌ El ISBN es incorrecto o no existe.\033[0m"
+                                    )
                                     continue
                                 else:
                                     nro_pedidos = None
                                     while nro_pedidos is None and bandera:
-                                        cantidad_pedidos = input("¿Cuántos ejemplares deseas? 📦: ")
-                                        nro_pedidos = su.validacion_enteros(cantidad_pedidos)
+                                        cantidad_pedidos = input(
+                                            "¿Cuántos ejemplares deseas? 📦: "
+                                        )
+                                        nro_pedidos = su.validacion_enteros(
+                                            cantidad_pedidos
+                                        )
                                         if nro_pedidos == -1:
                                             bandera = False
                                         else:
@@ -243,15 +260,23 @@ def menu_bibliotecario():
                                             entrada, nro_pedidos, usuario
                                         )
                                         if libro_alquilado[0]:
-                                            _, libro_actualizado = bu.obtener_libro(entrada)
-                                            print("***************************************************************")
+                                            _, libro_actualizado = bu.obtener_libro(
+                                                entrada
+                                            )
+                                            print(
+                                                "***************************************************************"
+                                            )
                                             print("El libro se alquiló con éxito. 🎉")
                                             print(
-                                                f"Quedan {libro_actualizado['ejemplares_disponibles']} unidades disponibles.")
+                                                f"Quedan {libro_actualizado['ejemplares_disponibles']} unidades disponibles."
+                                            )
                                             print(
-                                                f"Debe devolverlo antes del: {su.fecha_devolucion().strftime('%Y-%m-%d %H:%M:%S')}")
+                                                f"Debe devolverlo antes del: {su.fecha_devolucion().strftime('%Y-%m-%d %H:%M:%S')}"
+                                            )
                                     elif libro_alquilado[1] < nro_pedidos:
-                                        print("\033[31m❌ No hay suficientes ejemplares disponibles.\033[0m")
+                                        print(
+                                            "\033[31m❌ No hay suficientes ejemplares disponibles.\033[0m"
+                                        )
 
                         elif continuar_ejecucion == -1:
                             bandera = False
@@ -261,7 +286,9 @@ def menu_bibliotecario():
         elif numero == "4":  # Devolver libro
             isbn = 0
             while isbn != -1:
-                pedir_isbn = input("Ingresa el ISBN del libro a devolver 📖 o -1 para salir: ")
+                pedir_isbn = input(
+                    "Ingresa el ISBN del libro a devolver 📖 o -1 para salir: "
+                )
                 isbn = su.validacion_enteros(pedir_isbn)
 
                 if isbn != -1:
@@ -270,12 +297,16 @@ def menu_bibliotecario():
 
                     if devolver:
                         _, libro = bu.obtener_libro(isbn)
-                        print(f"El libro {libro['titulo']} fue devuelto por {usuario}! 🎉")
+                        print(
+                            f"El libro {libro['titulo']} fue devuelto por {usuario}! 🎉"
+                        )
                     else:
                         print("\033[31m❌ Libro no encontrado para devolución.\033[0m")
 
                     try:
-                        continuar = int(input("Presiona 1 para continuar o -1 para salir: "))
+                        continuar = int(
+                            input("Presiona 1 para continuar o -1 para salir: ")
+                        )
                     except ValueError:
                         print("Por favor, ingresa 1 o 0. 🧐")
                         continuar = 1

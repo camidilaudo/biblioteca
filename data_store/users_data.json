@@ -54,5 +54,12 @@
         "contrasenia": "Banquetita56!",
         "esta_penalizado": false,
         "fecha_despenalizacion": null
+    },
+    "9": {
+        "tipo_usuario": 1,
+        "nombre": "Blanca",
+        "contrasenia": "Pass@123",
+        "esta_penalizado": false,
+        "fecha_despenalizacion": null
     }
 }
