@@ -1,4 +1,7 @@
+import pdb
+
 import pytest
+from datetime import timedelta, datetime
 from unittest.mock import patch, mock_open
 import json
 import utils.book_utils as bu
@@ -28,6 +31,25 @@ def mock_books_data():
     }
     with patch("builtins.open", mock_open(read_data=json.dumps(books_data))):
         yield books_data  # Solo yield aquí para devolver los datos
+
+
+@pytest.fixture
+def mock_withdrawn_books_data():
+    withdrawn_books_per_user = {
+        "cami": [
+            {
+                "isbn": 9780747532743,
+                "fecha_prestamo": "2024-10-23 12:45:32",
+                "fecha_devolucion": "2024-11-17, 17:45:16"
+            },
+            {
+                "isbn": 9780553573404,
+                "fecha_prestamo": "2024-10-23 12:50:00",
+                "fecha_devolucion": None
+            }]
+    }
+    with patch("builtins.open", mock_open(read_data=json.dumps(withdrawn_books_per_user))):
+        yield withdrawn_books_per_user  # Solo yield aquí para devolver los datos
 
 
 # Casos de prueba para inicio de sesión
@@ -62,10 +84,17 @@ def test_registrar_bibliotecario(mock_users_data):
         assert resultado is True  # Registro exitoso
 
 
-def test_registrar_usuario_existente(mock_users_data):
+def test_registrar_cliente_existente(mock_users_data):
     with patch("builtins.input", side_effect=["cliente1", "Cliente123", "Cliente123"]):
         resultado = us.registrar_usuario(2, "cliente1", "Cliente123")
         assert resultado is False  # El usuario ya existe
+
+
+def test_registrar_bibliotecario_existente(mock_users_data):
+    with patch("builtins.input", side_effect=["cliente1", "Cliente123", "Cliente123"]):
+        resultado = us.registrar_usuario(1, "cliente1", "Cliente123")
+        assert resultado is False
+
 
 # Casos de prueba para carga de libros
 def test_cargar_libro(mock_books_data):
@@ -74,7 +103,12 @@ def test_cargar_libro(mock_books_data):
                             "300", "10"]):
         resultado = bu.cargar_libros("Nuevo Libro", "Autor Nuevo", "Ficción", 987654, "Editorial XYZ", 2023, "Serie A",
                                      300, 10)
-        assert resultado is not None  # Se cargó correctamente el libro
+
+        assert len(resultado) == 2
+        assert resultado['2'] == {'autor': 'Autor Nuevo', 'titulo': 'Nuevo Libro', 'genero': 'Ficción', 'isbn': 987654,
+                                  'editorial': 'Editorial XYZ', 'anio_publicacion': 2023, 'serie': 'Serie A',
+                                  'nro_paginas': 300, 'cant_ejemplares': 10, 'disponibilidad': True,
+                                  'ejemplares_disponibles': 10, 'ejemplares_alquilados': 0}
 
 
 # Casos de prueba para alquilar libros
@@ -85,10 +119,16 @@ def test_alquilar_libro(mock_books_data):
 
 
 # Casos de prueba para devolver libros
-def test_devolver_libro(mock_books_data):
-    with patch("builtins.input", side_effect=["123456", "cliente1"]):
-        resultado = bu.devolver_libro(123456, "cliente1")
-        assert resultado is True  # El libro fue devuelto correctamente
+def test_devolver_libro(mock_withdrawn_books_data):
+    nuevo_libro = {
+        "isbn": 123456,
+        "fecha_prestamo": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "fecha_devolucion": None,
+    }
+    # Agregar al usuario 'cami'
+    mock_withdrawn_books_data["cami"].append(nuevo_libro)
+    resultado = bu.devolver_libro(123456, "cami")
+    assert resultado is True  # El libro fue devuelto correctamente
 
 
 # Casos de prueba para buscar libros
