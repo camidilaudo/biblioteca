@@ -57,26 +57,40 @@ class TestUsersUtils(unittest.TestCase):
     @patch("utils.users_utils.su.fecha_actual", return_value=datetime(2023, 1, 10))
     def test_agregar_penalizados(self, mock_fecha_actual, mock_file):
         # Mock de usuarios iniciales
-        mock_file.return_value.read.return_value = json.dumps({
-            "1": {"nombre": "Usuario1", "esta_penalizado": False, "fecha_despenalizacion": None}
-        })
+        mock_file.return_value.read.return_value = json.dumps({"1": {
+        "tipo_usuario": 1,
+        "nombre": "Usuario1",
+        "contrasenia": "Yomeamo2!",
+        "esta_penalizado": False,
+        "fecha_despenalizacion": None
+    }})
+
+        # Simula la escritura en el archivo
+        mock_file.return_value.write = MagicMock()
 
         # Penalizar usuario
         result = uu.agregar_penalizados("Usuario1")
+
+        # Validar el resultado
         self.assertTrue(result["1"]["esta_penalizado"])
-        self.assertIsNotNone(result["1"]["fecha_despenalizacion"])
+        self.assertEqual(
+            result["1"]["fecha_despenalizacion"], "2023-01-17 00:00:00"  # 7 días después
+        )
+
+        # Verificar que el archivo fue escrito
+        mock_file().write.assert_called()
 
     @patch("utils.users_utils.open", new_callable=mock_open)
     @patch("utils.users_utils.bu.editar_libros")
     @patch("utils.users_utils.bu.obtener_libro",
            return_value=(None, {"ejemplares_disponibles": 5, "ejemplares_alquilados": 2}))
     def test_agregar_alquilados(self, mock_obtener_libro, mock_editar_libros, mock_file):
-        # Mock de historial inicial
-        mock_file.return_value.read.return_value = "isbn,cant_pedidos\n12345,2\n"
+        # Mock de historial inicial como CSV
+        mock_file.return_value.__iter__ = lambda self: iter(["isbn,cant_pedidos\n", "12345,2\n"])
 
-        # Agregar ejemplares alquilados
+        # Llamada a la función
         result = uu.agregar_alquilados(12345, 2)
-        pdb.set_trace()
+
         # Validar el resultado
         self.assertIn("12345", result)
         self.assertEqual(result["12345"], 4)  # 2 originales + 2 agregados
@@ -146,6 +160,7 @@ class TestUsersUtils(unittest.TestCase):
         # Despenalizar usuarios
         uu.despenalizar_usuarios()
         mock_file().write.assert_called()
+
 
 if __name__ == "__main__":
     unittest.main()

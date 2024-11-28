@@ -1,5 +1,4 @@
 import json
-import pdb
 import re
 import csv
 from datetime import timedelta, datetime
@@ -115,9 +114,8 @@ def agregar_penalizados(nombre_usuario):
                 user_id = user
                 dic_usuarios[user_id]["esta_penalizado"] = True
                 dic_usuarios[user_id]["fecha_despenalizacion"] = (
-                    su.fecha_actual + timedelta(days=7)
+                    su.fecha_actual() + timedelta(days=7)
                 ).strftime("%Y-%m-%d %H:%M:%S")
-
         json.dump(dic_usuarios, file, indent=4)
     return dic_usuarios
 
@@ -138,11 +136,11 @@ def agregar_alquilados(isbn, cant_pedidos):
                 existe_libro = True
                 indice = i
         if existe_libro:
-            historial_cant_libro = int(historial_alquilados[indice][1])
-            historial_cant_libro += cant_pedidos
-            historial_alquilados[indice][1] = historial_cant_libro
+                historial_cant_libro = int(historial_alquilados[indice][1])
+                historial_cant_libro += cant_pedidos
+                historial_alquilados[indice][1] = historial_cant_libro
         else:
-            historial_alquilados.append([isbn, cant_pedidos])
+                historial_alquilados.append([isbn, cant_pedidos])
 
     with open(
         "./data_store/withdrawn_books.csv", "w", encoding="utf-8", newline=""

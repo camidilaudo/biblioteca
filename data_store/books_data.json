@@ -94,8 +94,8 @@
         "nro_paginas": 374,
         "cant_ejemplares": 8,
         "disponibilidad": true,
-        "ejemplares_disponibles": 7,
-        "ejemplares_alquilados": 1
+        "ejemplares_disponibles": 6,
+        "ejemplares_alquilados": 2
     },
     "8": {
         "autor": "Stephen King",
@@ -178,8 +178,8 @@
         "nro_paginas": 279,
         "cant_ejemplares": 7,
         "disponibilidad": true,
-        "ejemplares_disponibles": 7,
-        "ejemplares_alquilados": 0
+        "ejemplares_disponibles": 6,
+        "ejemplares_alquilados": 1
     },
     "14": {
         "autor": "Aldous Huxley",
@@ -205,9 +205,9 @@
         "serie": "N/A",
         "nro_paginas": 1225,
         "cant_ejemplares": 3,
-        "disponibilidad": true,
-        "ejemplares_disponibles": 2,
-        "ejemplares_alquilados": 1
+        "disponibilidad": false,
+        "ejemplares_disponibles": 0,
+        "ejemplares_alquilados": 3
     },
     "16": {
         "autor": "Mark Twain",
