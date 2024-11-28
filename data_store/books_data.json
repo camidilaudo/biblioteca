@@ -24,7 +24,7 @@
         "nro_paginas": 694,
         "cant_ejemplares": 3,
         "disponibilidad": true,
-        "ejemplares_disponibles": 4,
+        "ejemplares_disponibles": 2,
         "ejemplares_alquilados": -3
     },
     "3": {
@@ -94,8 +94,8 @@
         "nro_paginas": 374,
         "cant_ejemplares": 8,
         "disponibilidad": true,
-        "ejemplares_disponibles": 8,
-        "ejemplares_alquilados": -4
+        "ejemplares_disponibles": 7,
+        "ejemplares_alquilados": 1
     },
     "8": {
         "autor": "Stephen King",

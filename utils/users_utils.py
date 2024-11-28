@@ -1,4 +1,5 @@
 import json
+import pdb
 import re
 import csv
 from datetime import timedelta, datetime
@@ -157,7 +158,6 @@ def agregar_alquilados(isbn, cant_pedidos):
         bu.editar_libros(isbn=isbn, indice=10, valor=ejemplares_alquilados)
         if ejemplares_disponibles == 0:
             bu.editar_libros(isbn=isbn, indice=8, valor=False)
-
     # Creo el diccionario de libros alquilados y los devuelvo
     rows = historial_alquilados[1:]
     libros_alquilados = {row[0]: int(row[1]) for row in rows}

@@ -1,3 +1,5 @@
+import pdb
+
 import utils.print_utils as pu
 import utils.book_utils as bu
 import utils.users_utils as us
@@ -215,6 +217,27 @@ def menu_bibliotecario():
                                         nro_pedidos = su.validacion_enteros(cantidad_pedidos)
                                         if nro_pedidos == -1:
                                             bandera = False
+                                        else:
+                                            usuario = input(
+                                                "Ingrese el nombre de usuario que va a alquilarlos: "
+                                            )
+                                            encontrar_usuario = us.validar_usuario(
+                                                usuario
+                                            )
+                                            estado_usuario = us.usuario_penalizado(
+                                                usuario
+                                            )
+                                            if not encontrar_usuario:
+                                                print(
+                                                    "\033[31mError❌. El usuario no existe o es bibliotecario.\033[0m"
+                                                )
+                                                bandera = False
+                                            if estado_usuario is True:
+                                                print(
+                                                    "\033[31mUsuario penalizado⚠️. No puede alquilar.\033[0m"
+                                                )
+                                                bandera = False
+
                                     if bandera:
                                         libro_alquilado = bu.alquilar_libro(
                                             entrada, nro_pedidos, usuario
