@@ -287,9 +287,7 @@ def recomendaciones(genero, usuario):
     for libro in historial_preexistente:
         isbn_leidos.append(libro["isbn"])
     for id_libro in biblioteca:
-        if (biblioteca[id_libro]["genero"].lower() == genero) and (
-            biblioteca[id_libro]["isbn"] not in isbn_leidos
-        ):
+        if (biblioteca[id_libro]["genero"].lower() == genero) and (biblioteca[id_libro]["isbn"] not in isbn_leidos):
             recomendaciones_por_genero.append(biblioteca[id_libro]["titulo"])
 
     # comparar la lista de recomendaciones_por_genero con el historial recorriendolo con un for.

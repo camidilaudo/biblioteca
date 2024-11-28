@@ -88,29 +88,107 @@ class TestBookUtils(unittest.TestCase):
     @patch("utils.book_utils.uu.agregar_penalizados")
     @patch("utils.book_utils.su.fecha_actual", return_value=datetime(2023, 1, 10))
     def test_devolver_libro(self, mock_fecha_actual, mock_agregar_penalizados, mock_file):
-        mock_file.side_effect = [
-            mock_open(read_data=json.dumps({
-                "1": {"isbn": 12345, "ejemplares_disponibles": 2, "disponibilidad": False}
-            })).return_value,
-            mock_open(read_data=json.dumps({
-                "Usuario1": [{"isbn": 12345, "fecha_prestamo": "2023-01-01 12:00:00", "fecha_devolucion": None}]
-            })).return_value,
-        ]
+        # Mock para books_data.json
+        mock_books = mock_open(read_data=json.dumps({
+            "1": {
+        "autor": "Agatha Christie",
+        "titulo": "Diez Negritos",
+        "genero": "Misterio",
+        "isbn": 12345,
+        "editorial": "HarperCollins",
+        "anio_publicacion": 1939,
+        "serie": "Hercule Poirot",
+        "nro_paginas": 264,
+        "cant_ejemplares": 7,
+        "disponibilidad": True,
+        "ejemplares_disponibles": 2,
+        "ejemplares_alquilados": 5
+    }
+        }))
+
+        # Mock para withdrawn_books_per_user.json
+        mock_historial = mock_open(read_data=json.dumps({
+            "Usuario1": [{"isbn": 12345, "fecha_prestamo": "2023-01-01 12:00:00", "fecha_devolucion": None}]
+        }))
+
+        # Definir side_effect para devolver diferentes mocks según el archivo
+        def mock_file_side_effect(filepath, mode, *args, **kwargs):
+            if filepath == "./data_store/books_data.json" and mode == "r":
+                return mock_books()
+            elif filepath == "./data_store/withdrawn_books_per_user.json" and mode == "r":
+                return mock_historial()
+            elif filepath == "./data_store/books_data.json" and mode == "w":
+                return mock_books()
+            elif filepath == "./data_store/withdrawn_books_per_user.json" and mode == "w":
+                return mock_historial()
+            else:
+                raise FileNotFoundError(f"Archivo inesperado: {filepath}")
+
+        mock_file.side_effect = mock_file_side_effect
+
+        # Llamar a la función
         result = bu.devolver_libro(12345, "Usuario1")
+
+        # Verificar que el libro fue devuelto correctamente
         self.assertTrue(result)
+
+        # Verificar que el estado del libro cambió
+        mock_books().write.assert_called()
+        mock_historial().write.assert_called()
+
+        # Verificar que no se aplicaron penalizaciones
+        mock_agregar_penalizados.assert_not_called()
 
     @patch("utils.book_utils.open", new_callable=mock_open)
     def test_recomendaciones(self, mock_file):
+        # Mock para books_data.json
+        mock_books_data = json.dumps({
+            "1": {
+                "autor": "Agatha Christie",
+                "titulo": "Diez Negritos",
+                "genero": "Misterio",
+                "isbn": 12345,
+                "editorial": "HarperCollins",
+                "anio_publicacion": 1939,
+                "serie": "Hercule Poirot",
+                "nro_paginas": 264,
+                "cant_ejemplares": 7,
+                "disponibilidad": True,
+                "ejemplares_disponibles": 2,
+                "ejemplares_alquilados": 5
+            },
+            "2": {
+                "autor": "Arthur Conan Doyle",
+                "titulo": "Estudio en Escarlata",
+                "genero": "Misterio",
+                "isbn": 54321,
+                "editorial": "George Newnes",
+                "anio_publicacion": 1887,
+                "serie": "Sherlock Holmes",
+                "nro_paginas": 188,
+                "cant_ejemplares": 3,
+                "disponibilidad": True,
+                "ejemplares_disponibles": 1,
+                "ejemplares_alquilados": 2
+            }
+        })
+
+        # Mock para withdrawn_books_per_user.json
+        mock_user_history = json.dumps({
+            "Usuario1": [{"isbn": 54321}]  # Usuario ya leyó "Estudio en Escarlata"
+        })
+
+        # Configurar side_effect para devolver los datos adecuados
         mock_file.side_effect = [
-            mock_open(read_data=json.dumps({
-                "1": {"titulo": "Libro1", "genero": "Ficcion", "isbn": 12345}
-            })).return_value,
-            mock_open(read_data=json.dumps({
-                "Usuario1": [{"isbn": 54321}]
-            })).return_value,
+            mock_open(read_data=mock_books_data).return_value,
+            mock_open(read_data=mock_user_history).return_value,
         ]
-        result = bu.recomendaciones("Ficcion", "Usuario1")
-        self.assertEqual(result, "Libro1")
+
+        # Llamar a la función
+        result = bu.recomendaciones("misterio", "Usuario1")
+
+        # Verificar que el libro recomendado sea "Diez Negritos"
+        self.assertEqual("Diez Negritos", result)
 
     @patch("utils.book_utils.open", new_callable=mock_open)
     def test_borrar_libro(self, mock_file):
