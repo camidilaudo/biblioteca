@@ -61,8 +61,65 @@
             "isbn": 9780439023528,
             "fecha_prestamo": "2024-11-17 21:26:31",
             "fecha_devolucion": "2024-11-17 22:12:19"
+        },
+        {
+            "isbn": 47899642,
+            "fecha_prestamo": "2024-11-20 21:14:47",
+            "fecha_devolucion": null
+        },
+        {
+            "isbn": 91826739,
+            "fecha_prestamo": "2024-11-20 21:16:56",
+            "fecha_devolucion": "2024-11-20 21:17:38"
+        },
+        {
+            "isbn": 1987473892,
+            "fecha_prestamo": "2024-11-20 21:28:05",
+            "fecha_devolucion": null
+        },
+        {
+            "isbn": 9780439023528,
+            "fecha_prestamo": "2024-11-28 15:49:05",
+            "fecha_devolucion": null
+        },
+        {
+            "isbn": 9780553573404,
+            "fecha_prestamo": "2024-11-28 15:50:27",
+            "fecha_devolucion": "2024-11-28 17:42:31"
+        },
+        {
+            "isbn": 9780553573404,
+            "fecha_prestamo": "2024-11-28 15:52:14",
+            "fecha_devolucion": "2024-11-28 17:43:02"
+        },
+        {
+            "isbn": 9780199232765,
+            "fecha_prestamo": "2024-11-28 16:31:24",
+            "fecha_devolucion": null
+        },
+        {
+            "isbn": 9780439023528,
+            "fecha_prestamo": "2024-11-28 16:32:05",
+            "fecha_devolucion": null
+        },
+        {
+            "isbn": 9780199232765,
+            "fecha_prestamo": "2024-11-28 16:40:52",
+            "fecha_devolucion": null
         }
     ],
     "domino": [
+        {
+            "isbn": 9780141040349,
+            "fecha_prestamo": "2024-11-28 16:34:15",
+            "fecha_devolucion": null
+        }
+    ],
+    "julieta": [
+        {
+            "isbn": 909090,
+            "fecha_prestamo": "2024-11-28 17:15:28",
+            "fecha_devolucion": "2024-11-28 17:15:48"
+        }
     ]
 }
