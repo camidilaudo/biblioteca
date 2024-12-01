@@ -4,6 +4,7 @@ import utils.print_utils as pu
 import utils.book_utils as bu
 import utils.users_utils as us
 import utils.system_utils as su
+import sys
 
 
 def menu_cliente(nombre_usuario):
@@ -84,6 +85,7 @@ def menu_cliente(nombre_usuario):
             input("Para continuar, presiona ENTER... ")
         else:
             print("¡Gracias por visitar nuestra biblioteca! 🎉")
+            sys.exit()
 
         su.limpiar_terminal()
 
@@ -328,6 +330,7 @@ def menu_bibliotecario():
 
         else:
             print("¡Gracias por tu visita! 🎉")
+            sys.exit()
 
 
 # Las funciones que contienen la interfaz de usuario fueron mejoradas.
