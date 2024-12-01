@@ -374,30 +374,31 @@ def registro_usuario(tipo_usuario):
     "Funcion que registra al usuario."
     print("\n=== CREACIÓN DE CUENTA ===")
     nombre_usuario = input("Ingrese un nombre de usuario: ")
+    validar = us.validar_usuario(nombre_usuario)
+    while validar:
+        print("\033[31mError. El usuario ingresado ya existe en el sistema. Intente de nuevo\033[0m")
+        nombre_usuario = input("Ingrese un nombre de usuario: ")
+        validar = us.validar_usuario(nombre_usuario)
+
+    print(
+        "La contraseña debe tener entre 8 y 15 caracteres, y al menos un número, una letra minúscula, una letra "
+        "mayúscula y un símbolo")
     contrasenia = input("Ingrese la contraseña del usuario: ")
-    verificar_contrasenia = input("Volvé a ingresar la contraseña: ")
     cumple_requisito = us.validar_contrasenia(contrasenia)
 
-    while contrasenia != verificar_contrasenia or not cumple_requisito:
-        if contrasenia != verificar_contrasenia:
-            print("\033[31mError. Las contraseñas no coinciden.\033[0m")
-        else:
-            print("\033[31mTu contraseña es débil.\033[0m")
-            print(
-                "Debe tener entre 8 y 15 caracteres, y al menos un número, una letra minúscula, una letra mayúscula y un símbolo"
-            )
-
-        contrasenia = input("Ingrese la contraseña del usuario o -1 para salir: ")
-        if su.volver_atras(contrasenia):
-            return False
-
-        verificar_contrasenia = input("Volvé a ingresar la contraseña: ")
+    while not cumple_requisito:
+        print("\033[31mTu contraseña es débil.\033[0m")
+        print("La contraseña debe tener entre 8 y 15 caracteres, y al menos un número, una letra minúscula, "
+              "una letra mayúscula y un símbolo.")
+        contrasenia = input("Ingrese la contraseña del usuario: ")
         cumple_requisito = us.validar_contrasenia(contrasenia)
+
+    verificar_contrasenia = input("Volvé a ingresar la contraseña para confirmar: ")
+    while contrasenia != verificar_contrasenia:
+        print("\033[31mError. Las contraseñas no coinciden.\033[0m")
+        verificar_contrasenia = input("Vuelva a ingresa la contraseña: ")
 
     if us.registrar_usuario(tipo_usuario, nombre_usuario, contrasenia):
         su.limpiar_terminal()
         print("Usuario registrado correctamente !")
         return nombre_usuario
-    else:
-        print("\033[31mEl usuario ingresado ya existe.\033[0m")
-        return None

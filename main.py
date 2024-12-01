@@ -59,7 +59,7 @@ def main():
                                 "\033[31m❌ Código incorrecto, prueba de nuevo: \033[0m"
                             )
                             if su.volver_atras(contrasenia_general):
-                                acceso_valido = True
+                                acceso_valido = False
                                 tipo_usuario = None
                             else:
                                 acceso_valido = (
