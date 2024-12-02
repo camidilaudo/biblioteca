@@ -136,17 +136,17 @@
         {
             "isbn": 9780747532743,
             "fecha_prestamo": "2024-12-02 10:09:08",
-            "fecha_devolucion": null
+            "fecha_devolucion": "2024-12-02 10:11:02"
         },
         {
             "isbn": 9780747532743,
             "fecha_prestamo": "2024-12-02 10:09:08",
-            "fecha_devolucion": null
+            "fecha_devolucion": "2024-12-02 10:33:23"
         },
         {
             "isbn": 9780747532743,
             "fecha_prestamo": "2024-12-02 10:09:08",
-            "fecha_devolucion": null
+            "fecha_devolucion": "2024-12-02 10:40:07"
         }
     ]
 }

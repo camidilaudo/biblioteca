@@ -305,13 +305,17 @@ def menu_bibliotecario():
                     else:
                         print("\033[31m❌ Libro no encontrado para devolución.\033[0m")
 
-                    try:
-                        continuar = int(
-                            input("Presiona 1 para continuar o -1 para salir: ")
-                        )
-                    except ValueError:
-                        print("Por favor, ingresa 1 o 0. 🧐")
-                        continuar = 1
+                    continuar_valido = False  # Variable de control para el bucle
+
+                    while not continuar_valido:
+                        try:
+                            continuar = int(input("Presiona 1 para continuar o -1 para salir: "))
+                            if continuar in (1, -1):
+                                continuar_valido = True
+                            else:
+                                print("Por favor, ingresa únicamente 1 o -1. 🧐")
+                        except ValueError:
+                            print("Por favor, ingresa un número válido (1 o -1). 🧐")
 
                     if continuar == -1:
                         isbn = -1
