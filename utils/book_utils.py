@@ -196,7 +196,7 @@ def alquilar_libro(isbn, cant_pedidos, nombre_usuario):
 
             # modificar_alquilar_libro
             if status_libro and (ejemplares_disponibles >= cant_pedidos):
-                uu.agregar_libro_historial(nombre_usuario, isbn)
+                uu.agregar_libro_historial(nombre_usuario, isbn, cant_pedidos)
                 uu.agregar_alquilados(isbn, cant_pedidos)
 
             elif status_libro and ejemplares_disponibles < cant_pedidos:

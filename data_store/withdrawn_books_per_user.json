@@ -39,6 +39,16 @@
             "isbn": 9780553573404,
             "fecha_prestamo": "2024-11-17 22:30:06",
             "fecha_devolucion": "2024-11-18 13:57:36"
+        },
+        {
+            "isbn": 85956789,
+            "fecha_prestamo": "2024-12-02 10:04:03",
+            "fecha_devolucion": null
+        },
+        {
+            "isbn": 85956789,
+            "fecha_prestamo": "2024-12-02 10:04:03",
+            "fecha_devolucion": null
         }
     ],
     "dani": [
@@ -120,6 +130,13 @@
             "isbn": 909090,
             "fecha_prestamo": "2024-11-28 17:15:28",
             "fecha_devolucion": "2024-11-28 17:15:48"
+        }
+    ],
+    "valentina": [
+        {
+            "isbn": 9780439023528,
+            "fecha_prestamo": "2024-12-02 10:05:57",
+            "fecha_devolucion": null
         }
     ]
 }

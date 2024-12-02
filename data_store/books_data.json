@@ -94,8 +94,8 @@
         "nro_paginas": 374,
         "cant_ejemplares": 8,
         "disponibilidad": true,
-        "ejemplares_disponibles": 6,
-        "ejemplares_alquilados": 2
+        "ejemplares_disponibles": 5,
+        "ejemplares_alquilados": 3
     },
     "8": {
         "autor": "Stephen King",
@@ -236,5 +236,19 @@
         "disponibilidad": true,
         "ejemplares_disponibles": 17,
         "ejemplares_alquilados": 0
+    },
+    "18": {
+        "autor": "Mariana Enriquez",
+        "titulo": "Un lugar soleado para gente sombria",
+        "genero": "Terror",
+        "isbn": 85956789,
+        "editorial": "Planeta",
+        "anio_publicacion": 2024,
+        "serie": "no",
+        "nro_paginas": 896,
+        "cant_ejemplares": 8,
+        "disponibilidad": true,
+        "ejemplares_disponibles": 4,
+        "ejemplares_alquilados": 4
     }
 }
