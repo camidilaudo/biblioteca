@@ -74,12 +74,12 @@ def agregar_libro_historial(nombre_usuario, isbn, cant_pedidos):
             if usuario == nombre_usuario:
                 existe_usuario = True
         if existe_usuario is True:
-                nuevo_libro = {
-                    "isbn": isbn,
-                    "fecha_prestamo": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                    "fecha_devolucion": None,
-                }
-                dict_historial[nombre_usuario].append(nuevo_libro)
+            nuevo_libro = {
+                "isbn": isbn,
+                "fecha_prestamo": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "fecha_devolucion": None,
+            }
+            dict_historial[nombre_usuario].append(nuevo_libro)
         else:
             nuevo_historial = {
                 f"{nombre_usuario}": [

@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, mock_open, MagicMock
 import json
 from datetime import datetime
-import utils.users_utils as uu
+from utils import users_utils as uu
 
 
 class TestUsersUtils(unittest.TestCase):
@@ -92,11 +92,11 @@ class TestUsersUtils(unittest.TestCase):
         )
 
         # Agregar libro a historial existente
-        result = uu.agregar_libro_historial("Usuario1", 67890)
+        result = uu.agregar_libro_historial("Usuario1", 67890,1)
         self.assertEqual(len(result["Usuario1"]), 2)
 
         # Crear nuevo historial para un usuario
-        result = uu.agregar_libro_historial("UsuarioNuevo", 12345)
+        result = uu.agregar_libro_historial("UsuarioNuevo", 12345,1)
         self.assertIn("UsuarioNuevo", result)
 
     @patch("utils.users_utils.open", new_callable=mock_open)
