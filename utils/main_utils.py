@@ -275,10 +275,10 @@ def menu_bibliotecario():
                                             print(
                                                 f"Debe devolverlo antes del: {su.fecha_devolucion().strftime('%Y-%m-%d %H:%M:%S')}"
                                             )
-                                    elif libro_alquilado[1] < nro_pedidos:
-                                        print(
-                                            "\033[31m❌ No hay suficientes ejemplares disponibles.\033[0m"
-                                        )
+                                        elif libro_alquilado[1] < nro_pedidos:
+                                            print(
+                                                "\033[31m❌ No hay suficientes ejemplares disponibles.\033[0m"
+                                            )
 
                         elif continuar_ejecucion == -1:
                             bandera = False

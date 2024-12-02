@@ -10,8 +10,8 @@
         "nro_paginas": "2",
         "cant_ejemplares": 5,
         "disponibilidad": true,
-        "ejemplares_disponibles": 5,
-        "ejemplares_alquilados": 0
+        "ejemplares_disponibles": 2,
+        "ejemplares_alquilados": 3
     },
     "2": {
         "autor": "George R.R. Martin",

@@ -134,8 +134,18 @@
     ],
     "valentina": [
         {
-            "isbn": 9780439023528,
-            "fecha_prestamo": "2024-12-02 10:05:57",
+            "isbn": 9780747532743,
+            "fecha_prestamo": "2024-12-02 10:09:08",
+            "fecha_devolucion": null
+        },
+        {
+            "isbn": 9780747532743,
+            "fecha_prestamo": "2024-12-02 10:09:08",
+            "fecha_devolucion": null
+        },
+        {
+            "isbn": 9780747532743,
+            "fecha_prestamo": "2024-12-02 10:09:08",
             "fecha_devolucion": null
         }
     ]
