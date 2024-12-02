@@ -1,10 +1,8 @@
-import pdb
 import unittest
-from unittest.mock import patch, mock_open, MagicMock
+from unittest.mock import patch, mock_open
 import json
 from datetime import datetime
-import random
-from utils import book_utils as bu  # Reemplaza con el nombre de tu módulo
+from utils import book_utils as bu
 
 
 class TestBookUtils(unittest.TestCase):
