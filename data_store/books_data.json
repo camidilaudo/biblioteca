@@ -64,9 +64,9 @@
         "anio_publicacion": 2003,
         "serie": "Robert Langdon",
         "nro_paginas": 489,
-        "cant_ejemplares": 6,
+        "cant_ejemplares": 10,
         "disponibilidad": true,
-        "ejemplares_disponibles": 1,
+        "ejemplares_disponibles": 5,
         "ejemplares_alquilados": 5
     },
     "6": {
@@ -250,5 +250,47 @@
         "disponibilidad": true,
         "ejemplares_disponibles": 4,
         "ejemplares_alquilados": 4
+    },
+    "19": {
+        "autor": "Dan Brown",
+        "titulo": "El codigo da vinci",
+        "genero": "Thriller",
+        "isbn": 9780307485,
+        "editorial": "Doubleday",
+        "anio_publicacion": 2003,
+        "serie": "Robert Langdon",
+        "nro_paginas": 489,
+        "cant_ejemplares": 6,
+        "disponibilidad": true,
+        "ejemplares_disponibles": 6,
+        "ejemplares_alquilados": 0
+    },
+    "20": {
+        "autor": "pepe",
+        "titulo": "pepe}",
+        "genero": "pepe",
+        "isbn": 3334,
+        "editorial": "1234",
+        "anio_publicacion": 1234,
+        "serie": "pepe",
+        "nro_paginas": 123,
+        "cant_ejemplares": 0,
+        "disponibilidad": false,
+        "ejemplares_disponibles": 0,
+        "ejemplares_alquilados": 0
+    },
+    "21": {
+        "autor": "lala",
+        "titulo": "lala",
+        "genero": "lala",
+        "isbn": 5556,
+        "editorial": "lala",
+        "anio_publicacion": 1234,
+        "serie": "lala",
+        "nro_paginas": 89,
+        "cant_ejemplares": 4,
+        "disponibilidad": true,
+        "ejemplares_disponibles": 4,
+        "ejemplares_alquilados": 0
     }
 }

@@ -82,5 +82,26 @@
         "contrasenia": "Pass@123",
         "esta_penalizado": false,
         "fecha_despenalizacion": null
+    },
+    "13": {
+        "tipo_usuario": 1,
+        "nombre": "Mati",
+        "contrasenia": "Pass!123",
+        "esta_penalizado": false,
+        "fecha_despenalizacion": null
+    },
+    "14": {
+        "tipo_usuario": 1,
+        "nombre": "agostina",
+        "contrasenia": "Lalala123!",
+        "esta_penalizado": false,
+        "fecha_despenalizacion": null
+    },
+    "15": {
+        "tipo_usuario": 2,
+        "nombre": "martin",
+        "contrasenia": "Lalala123!",
+        "esta_penalizado": false,
+        "fecha_despenalizacion": null
     }
 }

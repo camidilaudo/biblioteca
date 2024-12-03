@@ -179,7 +179,7 @@ def menu_bibliotecario():
                             pu.imprimir_libro(libro_editado)
                         else:
                             print(
-                                "\033[31m❌ Hubo un problema al editar el libro.\033[0m"
+                                "\033[31m❌ Hubo un problema al editar el libro o el libro no existe.\033[0m"
                             )
                     else:
                         # Salir si el índice es -1

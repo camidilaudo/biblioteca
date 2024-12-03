@@ -35,15 +35,15 @@ def busqueda_libros(clave, valor):
 
 
 def cargar_libros(
-    titulo,
-    autor,
-    genero,
-    isbn,
-    editorial,
-    anio_publicacion,
-    serie_libros,
-    nro_paginas,
-    cant_ejemplares,
+        titulo,
+        autor,
+        genero,
+        isbn,
+        editorial,
+        anio_publicacion,
+        serie_libros,
+        nro_paginas,
+        cant_ejemplares,
 ):
     """Cargar libro en stock de biblioteca. Se pueden cargar varios ejemplares del mismo.
     :param titulo: Str, título del libro.
@@ -107,7 +107,7 @@ def obtener_libro(isbn):
                     return id_libro, detalles
 
     except FileNotFoundError:
-        print("\033[31El archivo 'books_data.json' no existe.\033[0m")
+        print("\033[31mEl archivo 'books_data.json' no existe.\033[0m")
     except json.JSONDecodeError:
         print(
             "\033[31mError al leer el archivo JSON. Verifica el formato del archivo.\033[0m"
@@ -143,6 +143,17 @@ def editar_libros(isbn, indice, valor):
             )
             return None
 
+    if c.valor_bd[indice] in [
+        "disponibilidad",
+    ]:
+        if valor in {"True", "False"}:
+                valor = eval(valor)
+        else:
+            print(
+                f"\033[31mEl valor para {c.valor_bd[indice]} debe ser True o False.\033[0m"
+            )
+            return None
+
     with open("./data_store/books_data.json", "r+", encoding="utf-8") as file:
         data = json.load(file)
 
@@ -150,12 +161,18 @@ def editar_libros(isbn, indice, valor):
 
         for libro_id, libro in data.items():
             if libro["isbn"] == int(isbn):
-                print(
-                    f"Campo --{c.valor_bd[indice].upper()}-- antes de la edición: {libro[c.valor_bd[indice]]}"
-                )
+                if (c.valor_bd[indice] == "disponibilidad") and (
+                        (valor is True and libro["ejemplares_disponibles"] <= 0) or (
+                        valor is False and libro["ejemplares_disponibles"] > 0)):
+                    print(f"\033[31m ❌ No podes cambiar la disponibilidad a {valor} ya que tiene {libro["ejemplares_disponibles"]} ejemplares disponibles.\033[0m")
 
-                libro[c.valor_bd[indice]] = valor
-                libro_editado = libro
+                else:
+                    print(
+                        f"✍️ Campo --{c.valor_bd[indice].upper()}-- antes de la edición: {libro[c.valor_bd[indice]]}"
+                    )
+
+                    libro[c.valor_bd[indice]] = valor
+                    libro_editado = libro
 
         if libro_editado:
             file.seek(0)
@@ -163,11 +180,9 @@ def editar_libros(isbn, indice, valor):
             file.truncate()
 
             print(
-                f"Campo --{c.valor_bd[indice].upper()}-- después de la edición: {libro_editado[c.valor_bd[indice]]}"
+                f"✍️ Campo --{c.valor_bd[indice].upper()}-- después de la edición: {libro_editado[c.valor_bd[indice]]}"
             )
             print("Libro editado con éxito.")
-        else:
-            print("\033[31No se encontró el libro para editar.\033[0m")
 
         return libro_editado
 
@@ -214,7 +229,7 @@ def devolver_libro(isbn, nombre):
     True si se devuelve correctamente el libro.
     """
     with open(
-        "./data_store/books_data.json", "r", encoding="utf-8"
+            "./data_store/books_data.json", "r", encoding="utf-8"
     ) as file_biblio, open(
         "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
     ) as file_historiales:
@@ -235,19 +250,19 @@ def devolver_libro(isbn, nombre):
                     libros_devueltos = 0
                     for i in range(len(historiales[usuario])):
                         if (
-                            historiales[usuario][i]["isbn"] == isbn
-                            and historiales[usuario][i]["fecha_devolucion"] is None
-                            and libros_devueltos < 1
+                                historiales[usuario][i]["isbn"] == isbn
+                                and historiales[usuario][i]["fecha_devolucion"] is None
+                                and libros_devueltos < 1
                         ):
                             historiales[usuario][i]["fecha_devolucion"] = (
                                 fecha_hoy.strftime("%Y-%m-%d %H:%M:%S")
                             )
                             penalizaciones = (
                                 lambda fsalida, fregreso: (
-                                    historiales[usuario][i]["fecha_devolucion"]
-                                    - historiales[usuario][i]["fecha_prestamo"]
-                                ).days
-                                <= 7
+                                                                  historiales[usuario][i]["fecha_devolucion"]
+                                                                  - historiales[usuario][i]["fecha_prestamo"]
+                                                          ).days
+                                                          <= 7
                             )
                             if not penalizaciones:
                                 uu.agregar_penalizados(nombre)
@@ -255,7 +270,7 @@ def devolver_libro(isbn, nombre):
                             libros_devueltos += 1
 
             with open(
-                "./data_store/books_data.json", "w", encoding="utf-8"
+                    "./data_store/books_data.json", "w", encoding="utf-8"
             ) as file_biblio, open(
                 "./data_store/withdrawn_books_per_user.json", "w", encoding="utf-8"
             ) as file_historiales:
@@ -276,7 +291,7 @@ def recomendaciones(genero, usuario):
         biblioteca = dict(json.load(file_biblio))
 
     with open(
-        "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
+            "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
     ) as file_historiales:
         historiales = dict(json.load(file_historiales))
     recomendaciones_por_genero = []
@@ -292,7 +307,7 @@ def recomendaciones(genero, usuario):
         isbn_leidos.append(libro["isbn"])
     for id_libro in biblioteca:
         if (biblioteca[id_libro]["genero"].lower() == genero) and (
-            biblioteca[id_libro]["isbn"] not in isbn_leidos
+                biblioteca[id_libro]["isbn"] not in isbn_leidos
         ):
             recomendaciones_por_genero.append(biblioteca[id_libro]["titulo"])
 
