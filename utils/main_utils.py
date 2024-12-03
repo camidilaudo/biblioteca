@@ -22,7 +22,8 @@ def menu_cliente(nombre_usuario):
             numero = input("Por favor, ingresa una opción correcta: ")
 
         if numero == "1":  # Buscar libro
-            clave = input("¿Qué campo deseas buscar? (Título, autor, género, etc.): ")
+            clave = input("¿Qué campo deseas buscar? (autor,titulo,genero,editorial,anio_publicacion,serie,"
+                          "nro_paginas,cant_ejemplares,disponibilidad,ejemplares_disponibles,ejemplares_alquilados): ")
             es_valido = su.validar_constantes(clave)
             while not es_valido:
                 print("\033[31m❌ Ese campo no existe, intenta con otro.\033[0m")
