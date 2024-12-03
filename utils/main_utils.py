@@ -247,19 +247,23 @@ def menu_bibliotecario():
                                             encontrar_usuario = us.validar_usuario(
                                                 usuario
                                             )
-                                            estado_usuario = us.usuario_penalizado(
-                                                usuario
-                                            )
                                             if not encontrar_usuario:
                                                 print(
                                                     "\033[31mError❌. El usuario no existe o es bibliotecario.\033[0m"
                                                 )
                                                 bandera = False
-                                            if estado_usuario is True:
-                                                print(
-                                                    "\033[31mUsuario penalizado⚠️. No puede alquilar.\033[0m"
+                                                input("Para continuar, presiona ENTER... ")
+                                            else:
+                                                estado_usuario = us.usuario_penalizado(
+                                                    usuario
                                                 )
-                                                bandera = False
+
+                                                if estado_usuario:
+                                                    print(
+                                                        "\033[31mUsuario penalizado⚠️. No puede alquilar.\033[0m"
+                                                    )
+                                                    bandera = False
+                                                    input("Para continuar, presiona ENTER... ")
 
                                     if bandera:
                                         libro_alquilado = bu.alquilar_libro(

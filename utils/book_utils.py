@@ -1,3 +1,4 @@
+from datetime import datetime
 from utils import users_utils as uu
 from utils import system_utils as su
 import constantes as c
@@ -258,14 +259,21 @@ def devolver_libro(isbn, nombre):
                                 fecha_hoy.strftime("%Y-%m-%d %H:%M:%S")
                             )
                             penalizaciones = (
-                                lambda fsalida, fregreso: (
-                                                                  historiales[usuario][i]["fecha_devolucion"]
-                                                                  - historiales[usuario][i]["fecha_prestamo"]
-                                                          ).days
-                                                          <= 7
+                                lambda fsalida, fregreso: (fsalida - fregreso).days > 7
                             )
-                            if not penalizaciones:
+
+                            fecha_devolucion = historiales[usuario][i]["fecha_devolucion"]
+                            fecha_prestamo = historiales[usuario][i]["fecha_prestamo"]
+
+
+                            fsalida = datetime.strptime(fecha_devolucion, "%Y-%m-%d %H:%M:%S")
+                            fregreso = datetime.strptime(fecha_prestamo, "%Y-%m-%d %H:%M:%S")
+
+                            # Usar la lambda
+                            es_penalizado = penalizaciones(fsalida, fregreso)
+                            if es_penalizado:
                                 uu.agregar_penalizados(nombre)
+                                print("⚠️ Libro devuelto fuera de tiempo. El usuario queda penalizado por 7 dias.")
                             devolucion = True
                             libros_devueltos += 1
 
