@@ -58,13 +58,10 @@ def main():
                             contrasenia_general = input(
                                 "\033[31m❌ Código incorrecto, prueba de nuevo: \033[0m"
                             )
-                            if su.volver_atras(contrasenia_general):
-                                acceso_valido = True
-                                tipo_usuario = None
-                            else:
-                                acceso_valido = (
-                                    contrasenia_general == c.contrasenia_general
-                                )
+
+                            acceso_valido = (
+                                contrasenia_general == c.contrasenia_general
+                            )
 
                         if acceso_valido:
                             nombre_usuario = mu.registro_usuario(tipo_usuario)
