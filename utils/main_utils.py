@@ -1,5 +1,3 @@
-import pdb
-
 import utils.print_utils as pu
 import utils.book_utils as bu
 import utils.users_utils as us
@@ -167,7 +165,9 @@ def menu_bibliotecario():
                     numero = su.validacion_enteros(pedir_numero)
 
                     if numero != -1:
-                        pedir_nuevo_valor = input("¿Qué nuevo valor quieres ingresar? 🖋️: ")
+                        pedir_nuevo_valor = input(
+                            "¿Qué nuevo valor quieres ingresar? 🖋️: "
+                        )
                         nuevo_valor = su.ingreso_Valido(pedir_nuevo_valor)
 
                         libro_editado = bu.editar_libros(
@@ -178,12 +178,16 @@ def menu_bibliotecario():
                             print("Los nuevos valores del libro son: ")
                             pu.imprimir_libro(libro_editado)
                         else:
-                            print("\033[31m❌ Hubo un problema al editar el libro.\033[0m")
+                            print(
+                                "\033[31m❌ Hubo un problema al editar el libro o el libro no existe.\033[0m"
+                            )
                     else:
                         # Salir si el índice es -1
                         validar = -1
 
-                    print("---------------------------------------------------------------")
+                    print(
+                        "---------------------------------------------------------------"
+                    )
                     input("Para continuar, presiona ENTER... ")
 
         elif numero == "3":  # Alquilar libro
@@ -243,19 +247,23 @@ def menu_bibliotecario():
                                             encontrar_usuario = us.validar_usuario(
                                                 usuario
                                             )
-                                            estado_usuario = us.usuario_penalizado(
-                                                usuario
-                                            )
                                             if not encontrar_usuario:
                                                 print(
                                                     "\033[31mError❌. El usuario no existe o es bibliotecario.\033[0m"
                                                 )
                                                 bandera = False
-                                            if estado_usuario is True:
-                                                print(
-                                                    "\033[31mUsuario penalizado⚠️. No puede alquilar.\033[0m"
+                                                input("Para continuar, presiona ENTER... ")
+                                            else:
+                                                estado_usuario = us.usuario_penalizado(
+                                                    usuario
                                                 )
-                                                bandera = False
+
+                                                if estado_usuario:
+                                                    print(
+                                                        "\033[31mUsuario penalizado⚠️. No puede alquilar.\033[0m"
+                                                    )
+                                                    bandera = False
+                                                    input("Para continuar, presiona ENTER... ")
 
                                     if bandera:
                                         libro_alquilado = bu.alquilar_libro(
@@ -275,10 +283,10 @@ def menu_bibliotecario():
                                             print(
                                                 f"Debe devolverlo antes del: {su.fecha_devolucion().strftime('%Y-%m-%d %H:%M:%S')}"
                                             )
-                                    elif libro_alquilado[1] < nro_pedidos:
-                                        print(
-                                            "\033[31m❌ No hay suficientes ejemplares disponibles.\033[0m"
-                                        )
+                                        elif libro_alquilado[1] < nro_pedidos:
+                                            print(
+                                                "\033[31m❌ No hay suficientes ejemplares disponibles.\033[0m"
+                                            )
 
                         elif continuar_ejecucion == -1:
                             bandera = False
@@ -305,13 +313,19 @@ def menu_bibliotecario():
                     else:
                         print("\033[31m❌ Libro no encontrado para devolución.\033[0m")
 
-                    try:
-                        continuar = int(
-                            input("Presiona 1 para continuar o -1 para salir: ")
-                        )
-                    except ValueError:
-                        print("Por favor, ingresa 1 o 0. 🧐")
-                        continuar = 1
+                    continuar_valido = False  # Variable de control para el bucle
+
+                    while not continuar_valido:
+                        try:
+                            continuar = int(
+                                input("Presiona 1 para continuar o -1 para salir: ")
+                            )
+                            if continuar in (1, -1):
+                                continuar_valido = True
+                            else:
+                                print("Por favor, ingresa únicamente 1 o -1. 🧐")
+                        except ValueError:
+                            print("Por favor, ingresa un número válido (1 o -1). 🧐")
 
                     if continuar == -1:
                         isbn = -1
@@ -376,20 +390,25 @@ def registro_usuario(tipo_usuario):
     nombre_usuario = input("Ingrese un nombre de usuario: ")
     validar = us.validar_usuario(nombre_usuario)
     while validar:
-        print("\033[31mError. El usuario ingresado ya existe en el sistema. Intente de nuevo\033[0m")
+        print(
+            "\033[31mError. El usuario ingresado ya existe en el sistema. Intente de nuevo\033[0m"
+        )
         nombre_usuario = input("Ingrese un nombre de usuario: ")
         validar = us.validar_usuario(nombre_usuario)
 
     print(
         "La contraseña debe tener entre 8 y 15 caracteres, y al menos un número, una letra minúscula, una letra "
-        "mayúscula y un símbolo")
+        "mayúscula y un símbolo"
+    )
     contrasenia = input("Ingrese la contraseña del usuario: ")
     cumple_requisito = us.validar_contrasenia(contrasenia)
 
     while not cumple_requisito:
         print("\033[31mTu contraseña es débil.\033[0m")
-        print("La contraseña debe tener entre 8 y 15 caracteres, y al menos un número, una letra minúscula, "
-              "una letra mayúscula y un símbolo.")
+        print(
+            "La contraseña debe tener entre 8 y 15 caracteres, y al menos un número, una letra minúscula, "
+            "una letra mayúscula y un símbolo."
+        )
         contrasenia = input("Ingrese la contraseña del usuario: ")
         cumple_requisito = us.validar_contrasenia(contrasenia)
 

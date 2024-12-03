@@ -39,6 +39,16 @@
             "isbn": 9780553573404,
             "fecha_prestamo": "2024-11-17 22:30:06",
             "fecha_devolucion": "2024-11-18 13:57:36"
+        },
+        {
+            "isbn": 85956789,
+            "fecha_prestamo": "2024-12-02 10:04:03",
+            "fecha_devolucion": null
+        },
+        {
+            "isbn": 85956789,
+            "fecha_prestamo": "2024-12-02 10:04:03",
+            "fecha_devolucion": null
         }
     ],
     "dani": [
@@ -80,7 +90,7 @@
         {
             "isbn": 9780439023528,
             "fecha_prestamo": "2024-11-28 15:49:05",
-            "fecha_devolucion": null
+            "fecha_devolucion": "2024-12-03 10:44:33"
         },
         {
             "isbn": 9780553573404,
@@ -94,18 +104,18 @@
         },
         {
             "isbn": 9780199232765,
-            "fecha_prestamo": "2024-11-28 16:31:24",
-            "fecha_devolucion": null
+            "fecha_prestamo": "2024-10-28 16:31:24",
+            "fecha_devolucion": "2024-12-03 10:35:30"
         },
         {
             "isbn": 9780439023528,
-            "fecha_prestamo": "2024-11-28 16:32:05",
-            "fecha_devolucion": null
+            "fecha_prestamo": "2024-10-28 16:32:05",
+            "fecha_devolucion": "2024-12-03 10:45:28"
         },
         {
             "isbn": 9780199232765,
-            "fecha_prestamo": "2024-11-28 16:40:52",
-            "fecha_devolucion": null
+            "fecha_prestamo": "2024-10-28 16:40:52",
+            "fecha_devolucion": "2024-12-03 10:40:06"
         }
     ],
     "domino": [
@@ -120,6 +130,35 @@
             "isbn": 909090,
             "fecha_prestamo": "2024-11-28 17:15:28",
             "fecha_devolucion": "2024-11-28 17:15:48"
+        }
+    ],
+    "valentina": [
+        {
+            "isbn": 9780747532743,
+            "fecha_prestamo": "2024-12-02 10:09:08",
+            "fecha_devolucion": "2024-12-02 10:11:02"
+        },
+        {
+            "isbn": 9780747532743,
+            "fecha_prestamo": "2024-12-02 10:09:08",
+            "fecha_devolucion": "2024-12-02 10:33:23"
+        },
+        {
+            "isbn": 9780747532743,
+            "fecha_prestamo": "2024-12-02 10:09:08",
+            "fecha_devolucion": "2024-12-02 10:40:07"
+        }
+    ],
+    "martin": [
+        {
+            "isbn": 9780553573404,
+            "fecha_prestamo": "2024-11-03 10:26:51",
+            "fecha_devolucion": "2024-12-03 10:27:49"
+        },
+        {
+            "isbn": 9780553573404,
+            "fecha_prestamo": "2024-11-03 10:26:51",
+            "fecha_devolucion": "2024-12-03 10:31:27"
         }
     ]
 }

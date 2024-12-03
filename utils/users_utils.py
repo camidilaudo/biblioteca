@@ -56,7 +56,7 @@ def login_usuario(nombre_usuario, contrasenia):
     return tipo_usuario
 
 
-def agregar_libro_historial(nombre_usuario, isbn):
+def agregar_libro_historial(nombre_usuario, isbn, cant_pedidos):
     """Agrega el ISBN de un libro al historial del cliente.
     :param nombre_usuario: Str, username del usuario que retiro el libro.
     :param isbn: Int, código ISBN del libro que retiro.
@@ -68,28 +68,30 @@ def agregar_libro_historial(nombre_usuario, isbn):
         "./data_store/withdrawn_books_per_user.json", "r", encoding="utf-8"
     ) as file:
         dict_historial = dict(json.load(file))
-    for usuario in dict_historial:
-        if usuario == nombre_usuario:
-            existe_usuario = True
-    if existe_usuario is True:
-        nuevo_libro = {
-            "isbn": isbn,
-            "fecha_prestamo": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "fecha_devolucion": None,
-        }
-        dict_historial[nombre_usuario].append(nuevo_libro)
-    else:
-        nuevo_historial = {
-            f"{nombre_usuario}": [
-                {
-                    "isbn": isbn,
-                    "fecha_prestamo": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                    "fecha_devolucion": None,
-                }
-            ]
-        }
 
-        dict_historial.update(nuevo_historial)
+    for pedido in range(cant_pedidos):
+        for usuario in dict_historial:
+            if usuario == nombre_usuario:
+                existe_usuario = True
+        if existe_usuario is True:
+            nuevo_libro = {
+                "isbn": isbn,
+                "fecha_prestamo": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "fecha_devolucion": None,
+            }
+            dict_historial[nombre_usuario].append(nuevo_libro)
+        else:
+            nuevo_historial = {
+                f"{nombre_usuario}": [
+                    {
+                        "isbn": isbn,
+                        "fecha_prestamo": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                        "fecha_devolucion": None,
+                    }
+                ]
+            }
+
+            dict_historial.update(nuevo_historial)
     with open(
         "./data_store/withdrawn_books_per_user.json", "w", encoding="utf-8"
     ) as file:

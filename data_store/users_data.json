@@ -3,8 +3,8 @@
         "tipo_usuario": 2,
         "nombre": "dani",
         "contrasenia": "123",
-        "esta_penalizado": false,
-        "fecha_despenalizacion": "2024-11-20 00:00:00"
+        "esta_penalizado": true,
+        "fecha_despenalizacion": "2024-12-10 10:45:38"
     },
     "2": {
         "tipo_usuario": 2,
@@ -73,6 +73,34 @@
         "tipo_usuario": 2,
         "nombre": "valentina",
         "contrasenia": "Valentina@1",
+        "esta_penalizado": false,
+        "fecha_despenalizacion": null
+    },
+    "12": {
+        "tipo_usuario": 1,
+        "nombre": "mecha",
+        "contrasenia": "Pass@123",
+        "esta_penalizado": false,
+        "fecha_despenalizacion": null
+    },
+    "13": {
+        "tipo_usuario": 1,
+        "nombre": "Mati",
+        "contrasenia": "Pass!123",
+        "esta_penalizado": false,
+        "fecha_despenalizacion": null
+    },
+    "14": {
+        "tipo_usuario": 1,
+        "nombre": "agostina",
+        "contrasenia": "Lalala123!",
+        "esta_penalizado": false,
+        "fecha_despenalizacion": null
+    },
+    "15": {
+        "tipo_usuario": 2,
+        "nombre": "martin",
+        "contrasenia": "Lalala123!",
         "esta_penalizado": false,
         "fecha_despenalizacion": null
     }

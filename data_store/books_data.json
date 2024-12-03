@@ -24,8 +24,8 @@
         "nro_paginas": 694,
         "cant_ejemplares": 3,
         "disponibilidad": true,
-        "ejemplares_disponibles": 4,
-        "ejemplares_alquilados": -5
+        "ejemplares_disponibles": 3,
+        "ejemplares_alquilados": 0
     },
     "3": {
         "autor": "Agatha Christie",
@@ -64,9 +64,9 @@
         "anio_publicacion": 2003,
         "serie": "Robert Langdon",
         "nro_paginas": 489,
-        "cant_ejemplares": 6,
+        "cant_ejemplares": 10,
         "disponibilidad": true,
-        "ejemplares_disponibles": 1,
+        "ejemplares_disponibles": 5,
         "ejemplares_alquilados": 5
     },
     "6": {
@@ -94,8 +94,8 @@
         "nro_paginas": 374,
         "cant_ejemplares": 8,
         "disponibilidad": true,
-        "ejemplares_disponibles": 6,
-        "ejemplares_alquilados": 2
+        "ejemplares_disponibles": 8,
+        "ejemplares_alquilados": 0
     },
     "8": {
         "autor": "Stephen King",
@@ -122,8 +122,8 @@
         "nro_paginas": 255,
         "cant_ejemplares": 4,
         "disponibilidad": true,
-        "ejemplares_disponibles": 5,
-        "ejemplares_alquilados": -1
+        "ejemplares_disponibles": 4,
+        "ejemplares_alquilados": 0
     },
     "10": {
         "autor": "Haruki Murakami",
@@ -205,9 +205,9 @@
         "serie": "N/A",
         "nro_paginas": 1225,
         "cant_ejemplares": 3,
-        "disponibilidad": false,
-        "ejemplares_disponibles": 0,
-        "ejemplares_alquilados": 3
+        "disponibilidad": true,
+        "ejemplares_disponibles": 2,
+        "ejemplares_alquilados": 1
     },
     "16": {
         "autor": "Mark Twain",
@@ -221,20 +221,20 @@
         "cant_ejemplares": 4,
         "disponibilidad": true,
         "ejemplares_disponibles": 1,
-        "ejemplares_alquilados": 1
+        "ejemplares_alquilados": 3
     },
     "17": {
-        "autor": "Dani",
-        "titulo": "El nuevo libro",
-        "genero": "terror",
-        "isbn": 5,
-        "editorial": "lala",
-        "anio_publicacion": 1234,
-        "serie": "lala",
-        "nro_paginas": "45",
-        "cant_ejemplares": 17,
+        "autor": "Mariana Enriquez",
+        "titulo": "Un lugar soleado para gente sombria",
+        "genero": "Terror",
+        "isbn": 85956789,
+        "editorial": "Planeta",
+        "anio_publicacion": 2024,
+        "serie": "no",
+        "nro_paginas": 896,
+        "cant_ejemplares": 8,
         "disponibilidad": true,
-        "ejemplares_disponibles": 17,
-        "ejemplares_alquilados": 0
+        "ejemplares_disponibles": 4,
+        "ejemplares_alquilados": 4
     }
 }

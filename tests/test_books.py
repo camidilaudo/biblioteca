@@ -1,10 +1,8 @@
-import pdb
 import unittest
-from unittest.mock import patch, mock_open, MagicMock
+from unittest.mock import patch, mock_open
 import json
 from datetime import datetime
-import random
-from utils import book_utils as bu  # Reemplaza con el nombre de tu módulo
+from utils import book_utils as bu
 
 
 class TestBookUtils(unittest.TestCase):
@@ -247,8 +245,8 @@ class TestBookUtils(unittest.TestCase):
         mock_books().write.assert_called()
         mock_historial().write.assert_called()
 
-        # Verificar que no se aplicaron penalizaciones
-        mock_agregar_penalizados.assert_not_called()
+        # Verificar que se aplicaron penalizaciones
+        mock_agregar_penalizados.assert_called()
 
     @patch("utils.book_utils.open", new_callable=mock_open)
     def test_recomendaciones(self, mock_file):
